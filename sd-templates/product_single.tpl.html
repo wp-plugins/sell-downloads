@@ -1,0 +1,100 @@
+﻿<!-- SHOPPING CART -->
+<tpl ifset="product.shopping_cart">
+    {product.shopping_cart}	
+</tpl ifset="product.shopping_cart">
+			
+<div class="sell-downloads-product">
+	<div>
+		<div class="left-column single">
+			<!-- PRODUCT COVER -->
+			<tpl ifset="product.cover">
+			<div class="product-cover single">
+				<img src="{product.cover}">
+			</div>
+			</tpl ifset="product.cover">
+		</div>		
+		
+		<div class="right-column single">
+			
+			<!-- PRODUCT TITLE -->
+			<tpl ifset="product.title">
+				<div class="product-title single">
+				{product.title}
+				
+				<!-- PRODUCT PRICE -->
+				<tpl ifset="product.price">
+					<span class="product-price single">
+						{product.price}
+					</span>
+				</tpl ifset="product.price">
+		
+				</div>
+			</tpl ifset="product.title">
+			
+			<!-- PRODUCT TYPE -->
+			<tpl ifset="product.has_types">
+				<div class="product-type">
+					<ul>
+					<tpl loop="types">
+						<li><span class="arrow">›</span>{types.data}</li>
+					</tpl loop="types">	
+					</ul>
+				</div>
+			</tpl ifset="product.has_types">
+			
+			<!-- PRODUCT TIME -->
+			<tpl ifset="product.time">
+			<span class="label">Time: </span>
+			<b>{product.time}</b>
+			</tpl ifset="product.time">
+			
+			<!-- PRODUCT YEAR -->
+			<tpl ifset="product.year">
+			<span class="label">Year: </span>
+			<b>{product.year}</b>
+			</tpl ifset="product.year">
+			
+			<!-- PRODUCT SALES BUTTONS -->
+			<tpl ifset="product.salesbutton">
+				<div class="product-payment-buttons">
+				{product.salesbutton}
+				</div>
+			</tpl ifset="product.salesbutton">
+			
+            <!-- PRODUCT DEMO -->
+			<tpl ifset="product.demo">
+				<div class="single">
+				{product.demo}	
+				</div>
+			</tpl ifset="product.demo">
+            
+			<!-- MUSIC STORE LINK -->
+			<tpl ifset="product.store_page">
+				<div class="sell-downloads-link">
+					<a href="{product.store_page}"> Go to the store page </a>
+				</div>
+			</tpl ifset="product.store_page">
+		</div>
+	</div>	
+	<div class="clear"></div>
+	<div>
+		<ul class="sell-downloads-tabs">
+			<li class="active-tab">Description</li>
+		</ul>
+		<div class="sell-downloads-tabs-container active-tab">
+			<!-- PRODUCT DESCRIPTION -->
+			<tpl ifset="product.description">
+				<div class="product-description">
+				{product.description}
+				</div>
+			</tpl ifset="product.description">
+			
+			<!-- PRODUCT MORE INFO -->
+			<tpl ifset="product.info">
+				<div class="product-info">
+				<a href="{product.info}" target="_blank">More Info[+]</a>
+				</div>
+			</tpl ifset="product.info">
+		</div> <!-- End first tab container -->
+	</div>
+</div>
