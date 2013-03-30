@@ -904,8 +904,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* Remove title from sd_product
 		*/
 		function display_title($title){
-			global $id, $post;
-			if($id && $post && $post->post_type == 'sd_product'){
+			global $post;
+			if(in_the_loop() && $post && $post->post_type == 'sd_product'){
 				return '';
 			}else{
 				return $title;
@@ -925,12 +925,12 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* Display content of products through templates
 		*/
 		function display_content($content){
-			global $id, $post;
+			global $post;
 			
-			if($id && $post && $post->post_type == 'sd_product'){
+			if(in_the_loop() && $post && $post->post_type == 'sd_product'){
 				$tpl = new tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
 				$product = new SDProduct($post->ID);
-				$product->display_content(((is_singular()) ? 'single' : 'multiple'), $tpl);
+				return $product->display_content(((is_singular()) ? 'single' : 'multiple'), $tpl, 'return');
 			}else{
 				return $content;
 			}
