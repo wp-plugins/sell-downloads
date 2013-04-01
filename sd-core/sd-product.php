@@ -184,7 +184,7 @@ if(!class_exists('SDProduct')){
 							'.__('File for sale:', SD_TEXT_DOMAIN).'
 						</td>
 						<td>
-							<input type="text" name="sd_file_path" class="file_path" id="sd_file_path" value="'.(($data && $data->file) ? esc_attr($data->file) : '').'" placeholder="'.__('File path/URL', SD_TEXT_DOMAIN).'" /> <input type="button" class="button_for_upload button" value="'.__('Upload a file', SD_TEXT_DOMAIN).'" />
+							<input type="text" name="sd_file_path" class="file_path" id="sd_file_path" value="'.(($data && $data->file) ? esc_attr($data->file) : '').'" placeholder="'.__('File path/URL', SD_TEXT_DOMAIN).'" /> <input type="button" class="button_for_upload_sd button" value="'.__('Upload a file', SD_TEXT_DOMAIN).'" />
 						</td>
 					</tr>
 					<tr>
@@ -192,7 +192,7 @@ if(!class_exists('SDProduct')){
 							'.__('File for demo:', SD_TEXT_DOMAIN).'
 						</td>
 						<td>
-							<input type="text" name="sd_demo_file_path" id="sd_demo_file_path" class="file_path"  value="'.(($data && $data->demo) ? esc_attr($data->demo) : '').'" placeholder="'.__('File path/URL', SD_TEXT_DOMAIN).'" /> <input type="button" class="button_for_upload button" value="'.__('Upload a file', SD_TEXT_DOMAIN).'" />
+							<input type="text" name="sd_demo_file_path" id="sd_demo_file_path" class="file_path"  value="'.(($data && $data->demo) ? esc_attr($data->demo) : '').'" placeholder="'.__('File path/URL', SD_TEXT_DOMAIN).'" /> <input type="button" class="button_for_upload_sd button" value="'.__('Upload a file', SD_TEXT_DOMAIN).'" />
 						</td>
 					</tr>
 					<tr>
@@ -226,7 +226,7 @@ if(!class_exists('SDProduct')){
 							'.__('Image:', SD_TEXT_DOMAIN).'
 						</td>
 						<td>
-							<input type="text" name="sd_cover" class="file_path" id="sd_cover" value="'.(($data && $data->cover) ? $data->cover : '').'" placeholder="'.__('File path/URL', SD_TEXT_DOMAIN).'" /> <input type="button" class="button_for_upload button" value="'.__('Upload a file', SD_TEXT_DOMAIN).'" />
+							<input type="text" name="sd_cover" class="file_path" id="sd_cover" value="'.(($data && $data->cover) ? $data->cover : '').'" placeholder="'.__('File path/URL', SD_TEXT_DOMAIN).'" /> <input type="button" class="button_for_upload_sd button" value="'.__('Upload a file', SD_TEXT_DOMAIN).'" />
 						</td>
 					</tr>
 					<tr>

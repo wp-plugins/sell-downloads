@@ -1,4 +1,4 @@
-﻿jQuery(function(){
+jQuery(function(){
 	(function($){
 		// Methods definition
 		window['sd_remove'] = function(e){
@@ -26,7 +26,7 @@
 			}	
 		};
 		
-		window["send_to_download_url"] = function(html) {
+		window["send_to_download_url_sd"] = function(html) {
 
 			file_url = jQuery(html).attr('href');
 			if (file_url) {
@@ -65,7 +65,7 @@
 			});
 		};
 		
-		window['delete_purchase'] = function(id){
+		window['delete_purchase_sd'] = function(id){
 			if(confirm('Are you sure to delete the purchase record?')){
 				var f = $('#purchase_form');
 				f.append('<input type="hidden" name="purchase_id" value="'+id+'" />');
@@ -77,13 +77,13 @@
 		var file_path_field;
 		window["send_to_editor_default"] = window.send_to_editor;
 		
-		jQuery('.button_for_upload').live('click', function(){
+		jQuery('.button_for_upload_sd').live('click', function(){
 
 			file_path_field = jQuery(this).parent().find('.file_path');
 
 			formfield = jQuery(file_path_field).attr('name');
 
-			window.send_to_editor = window.send_to_download_url;
+			window.send_to_editor = window.send_to_download_url_sd;
 
 			tb_show('', 'media-upload.php?post_id=' + sell_downloads.post_id + '&amp;TB_iframe=true');
 			return false;

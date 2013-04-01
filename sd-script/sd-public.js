@@ -1,4 +1,4 @@
-﻿(function($){
+(function($){
 	
 	$('.sell-downloads-tabs').click(function(evt){
 		var m = $(this),
@@ -9,11 +9,11 @@
 		$('.sell-downloads-tabs-container').removeClass('active-tab').eq(m.children().index(t)).addClass('active-tab');
 	});
 	
-    $('.view-cart-btn').live('click', function(){
+    $('.view-cart-btn.sell-downloads').live('click', function(){
         document.location = sd_global['url']+'/sd-core/sd-shopping-cart.php';
     });
     
-    $('.shopping-cart-btn').live('click', function(){
+    $('.shopping-cart-btn.sell-downloads').live('click', function(){
         var e = $(this);
         e.fadeTo('fast', 0.5);
         $.getJSON(sd_global['url']+'/sd-core/sd-sc-ajax.php', {'action':'add','product_id':e.attr('alt')}, function(data){
