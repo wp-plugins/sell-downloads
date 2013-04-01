@@ -31,8 +31,8 @@
     if($_post->post_type == "sd_product") $obj = new SDProduct($id);
     else exit;
     
-    if (!isset($obj->price) || abs($payment_amount - $obj->price) > 0.1) exit;
-    if(register_purchase($id, $purchase_id, $payer_email, $payment_amount, $paypal_data)) $obj->purchases++;
+    if (!isset($obj->price) || abs($payment_amount - $obj->price) > 0.2) exit;
+    if(sell_downloads_register_purchase($id, $purchase_id, $payer_email, $payment_amount, $paypal_data)) $obj->purchases++;
     
 	$sd_notification_from_email 		= get_option('sd_notification_from_email', SD_NOTIFICATION_FROM_EMAIL);
 	$sd_notification_to_email   		= get_option('sd_notification_to_email', SD_NOTIFICATION_TO_EMAIL);

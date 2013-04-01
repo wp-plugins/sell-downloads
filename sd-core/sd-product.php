@@ -1,5 +1,5 @@
 <?php
-function debug($mssg){
+function sell_downloads_debug($mssg){
 	$h = fopen(dirname(__FILE__).'/test.txt', 'a');			
 	fwrite($h, $mssg.'|');
 	fclose($h);
@@ -358,7 +358,7 @@ if(!class_exists('SDProduct')){
 			
 			switch ($column){
 				case "type":
-					echo extract_attr_as_str($obj->type, 'name', ', ');
+					echo sell_downloads_extract_attr_as_str($obj->type, 'name', ', ');
 				break;
 				case "plays":
 					echo $obj->plays;

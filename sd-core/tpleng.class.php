@@ -6,7 +6,7 @@
 //
 // author:	Jonas Lasauskas as oryx
 // email:	oryx@mail.lt
-// web:		http://www.tpleng.tk/
+// web:		http://www.sell_downloads_tpleng.tk/
 // varsion:	1.2
 //
 // COPYRIGHT
@@ -40,7 +40,7 @@
 //
 //------------------------------------------------------------------------
 
-class tpleng {
+class sell_downloads_tpleng {
 
 
 	// parameters
@@ -54,13 +54,13 @@ class tpleng {
 	var $rotations = array();
 	var $rotation_count = array();
 	var $blocks = array();
-    var $debug = false;
+    var $sell_downloads_debug = false;
 
 
 	//------------------------------------------------------------------------
 	// initialize template engine
 	//------------------------------------------------------------------------
-	function tpleng ($root = './', $empty = 'empty') {
+	function sell_downloads_tpleng ($root = './', $empty = 'empty') {
 
 		// root
 		$this->root = $root;
@@ -75,7 +75,7 @@ class tpleng {
 
 		} // switch empty
 
-	} // constructor :: tpleng
+	} // constructor :: sell_downloads_tpleng
 
 
 
@@ -438,8 +438,8 @@ class tpleng {
 	// reports error
 	//------------------------------------------------------------------------
 	function _error ($text, $type) {
-		if($this->debug)
-			echo("\n<br><code><font color='#FF9000' size='2'>tpleng $type :: $text</font></code><br>\n");
+		if($this->sell_downloads_debug)
+			echo("\n<br><code><font color='#FF9000' size='2'>sell_downloads_tpleng $type :: $text</font></code><br>\n");
 		if (strtolower($type) == 'fatal') { exit(); }
 
 	} // private :: error

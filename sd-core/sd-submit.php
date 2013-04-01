@@ -8,7 +8,7 @@
     if(empty($cancel_url)) $cancel_url = home_url();
             
     if($ms_paypal_email){ // Check for sealer email
-        mt_srand(make_seed());
+        mt_srand(sell_downloads_make_seed());
         $randval = mt_rand(1,999999);
             
         $purchase_id = md5($randval.uniqid('', true));
