@@ -427,7 +427,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			if(is_admin()){
 				add_options_page('Sell Downloads', 'Sell Downloads', 'manage_options', $this->sell_downloads_slug.'-settings1', array(&$this, 'settings_page'));
 				
-				add_menu_page('Sell Downloads', 'Sell Downloads', 'edit_pages', $this->sell_downloads_slug, null, SD_CORE_IMAGES_URL."/sell-downloads-menu-icon.png", 4.777777777777);
+				add_menu_page('Sell Downloads', 'Sell Downloads', 'edit_pages', $this->sell_downloads_slug, null, SD_CORE_IMAGES_URL."/sell-downloads-menu-icon.png", 3.5);
 				
 				//Submenu for taxonomies
 				add_submenu_page($this->sell_downloads_slug, __( 'File Types', SD_TEXT_DOMAIN), __( 'Set File Types', SD_TEXT_DOMAIN), 'edit_pages', 'edit-tags.php?taxonomy=sd_type');
@@ -844,7 +844,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			// Create items section
 			$query = $_select." ".$_from." ".$_where." ".$_order_by." ".$_limit;
 			$results = $wpdb->get_results($query);
-			$tpl = new tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
+			$tpl = new sell_downloads_tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
 			
 			$width = floor(100/min($columns, max(count($results),1)));
 			$sell_downloads .= "<div class='sell-downloads-items'>";
@@ -928,7 +928,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $post;
 			
 			if(in_the_loop() && $post && $post->post_type == 'sd_product'){
-				$tpl = new tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
+				$tpl = new sell_downloads_tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
 				$product = new SDProduct($post->ID);
 				return $product->display_content(((is_singular()) ? 'single' : 'multiple'), $tpl, 'return');
 			}else{

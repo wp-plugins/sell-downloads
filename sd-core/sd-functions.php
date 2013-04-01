@@ -1,6 +1,6 @@
 <?php
 
-function extract_attr_as_str($arr, $attr, $separator){
+function sell_downloads_extract_attr_as_str($arr, $attr, $separator){
 	$result = '';
 	$c = count($arr);
 	if($c){
@@ -13,20 +13,20 @@ function extract_attr_as_str($arr, $attr, $separator){
 	}
 	
 	return $result;
-} // End extract_attr_as_str
+} // End sell_downloads_extract_attr_as_str
 
-function get_img_id($url){
+function sell_downloads_get_img_id($url){
 	global $wpdb;
 	$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM " . $wpdb->prefix . "posts" . " WHERE guid='%s';", $url )); 
     return $attachment[0];
-} // End get_img_id
+} // End sell_downloads_get_img_id
 
-function make_seed() {
+function sell_downloads_make_seed() {
     list($usec, $sec) = explode(' ', microtime());
     return (float) $sec + ((float) $usec * 100000);
 }
 
-function register_purchase($product_id, $purchase_id, $email, $amount, $paypal_data){
+function sell_downloads_register_purchase($product_id, $purchase_id, $email, $amount, $paypal_data){
     global $wpdb;
     return $wpdb->insert(
         $wpdb->prefix.SDDB_PURCHASE,
@@ -42,7 +42,7 @@ function register_purchase($product_id, $purchase_id, $email, $amount, $paypal_d
     );
 }
 	
-	function is_200($url){
+	function sell_downloads_is_200($url){
 		$options['http'] = array(
 			'method' => "HEAD",
 			'ignore_errors' => 1,
@@ -51,7 +51,7 @@ function register_purchase($product_id, $purchase_id, $email, $amount, $paypal_d
 		$body = file_get_contents($url, NULL, stream_context_create($options));
 		sscanf($http_response_header[0], 'HTTP/%*d.%*d %d', $code);
 		return $code === 200;
-	} // is_200
+	} // sell_downloads_is_200
 	
 	function sd_copy_download_links($file){
 		$ext  = pathinfo($file, PATHINFO_EXTENSION);
