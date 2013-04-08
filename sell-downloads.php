@@ -134,8 +134,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		*/
 		function admin_init(){
 			// Init the metaboxs for song and collection
-			add_meta_box('sd_product_metabox', __("Song's data", SD_TEXT_DOMAIN), array(&$this, 'metabox_form'), 'sd_product', 'normal', 'high');
-			add_meta_box('sd_product_metabox', __("Collection's data", SD_TEXT_DOMAIN), array(&$this, 'metabox_form'), 'ms_collection', 'normal', 'high');
+			add_meta_box('sd_product_metabox', __("Product's data", SD_TEXT_DOMAIN), array(&$this, 'metabox_form'), 'sd_product', 'normal', 'high');
 			add_action('save_post', array(&$this, 'save_data'));
 			
 			if (current_user_can('delete_posts')) add_action('delete_post', array(&$this, 'delete_post'));
