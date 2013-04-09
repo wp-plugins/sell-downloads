@@ -135,6 +135,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		function admin_init(){
 			// Init the metaboxs for song and collection
 			add_meta_box('sd_product_metabox', __("Product's data", SD_TEXT_DOMAIN), array(&$this, 'metabox_form'), 'sd_product', 'normal', 'high');
+            add_meta_box('sd_product_metabox_discount', __("Programming Discounts", SD_TEXT_DOMAIN), array(&$this, 'metabox_discount'), 'sd_product', 'normal', 'high');
 			add_action('save_post', array(&$this, 'save_data'));
 			
 			if (current_user_can('delete_posts')) add_action('delete_post', array(&$this, 'delete_post'));
@@ -406,7 +407,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $post;
             SDProduct::print_metabox();
 		} // End metabox_form
-		
+        
+		function metabox_discount($obj){
+            SDProduct::print_discount_metabox();
+		} // End metabox_form
+        
 /** SETTINGS PAGE FOR SELL DOWNLOADS CONFIGURATION AND SUBMENUS**/		
 		
 		// highlight the proper top level menu for taxonomies submenus
@@ -616,7 +621,51 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					  </div>
 					</div>
 					
-					<!-- NOTIFICATIONS BOX -->
+					<!--DISCOUNT BOX -->
+                    <div class="postbox">
+                        <h3 class='hndle' style="padding:5px;"><span><?php _e('Discount Settings', SD_TEXT_DOMAIN); ?></span></h3>
+						<div class="inside">
+                            <div style="color:#FF0000;">The discounts management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a></div>
+                            <div><input type="checkbox" DISABLED /> <?php _e('Display discount promotions in the music store page', SD_TEXT_DOMAIN)?></div>
+                            <h4><?php _e('Scheduled Discounts', SD_TEXT_DOMAIN);?></h4>
+                            <table class="form-table sd_discount_table" style="border:1px dotted #dfdfdf;">
+                                <tr>
+                                    <td style="font-weight:bold;"><?php _e('Percent of discount', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('In Sales over than ... ', SD_TEXT_DOMAIN); echo($currency); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Valid from dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Valid to dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Promotional text', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Status', SD_TEXT_DOMAIN); ?></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table class="form-table">
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Percent of discount (*)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /> %</td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Valid for sales over than (*)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /> USD</td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Valid from (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /></td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Valid to (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /></td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Promotional text', SD_TEXT_DOMAIN); ?></th>
+                                    <td><textarea DISABLED cols="60"></textarea></td>
+                                </tr>
+                                <tr><td colspan="2"><input type="button" class="button" value="<?php _e('Add/Update Discount'); ?>" DISABLED></td></tr>
+                            </table>
+                        </div>
+                    </div>
+					
+                    <!-- NOTIFICATIONS BOX -->
 					<div class="postbox">
 						<h3 class='hndle' style="padding:5px;"><span><?php _e('Notification Settings', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside">

@@ -1,5 +1,4 @@
 <?php
-
 	echo 'Start IPN';
 
 	$item_name = $_POST['item_name'];
