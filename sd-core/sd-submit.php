@@ -1,8 +1,8 @@
 <?php
     $ms_paypal_email = get_option('sd_paypal_email');
 
-	$baseurl = SD_H_URL.'/sd_action=ipn';
-	$returnurl = SD_URL.'/sd_download=download';
+	$baseurl = SD_H_URL.'?sd_action=ipn';
+	$returnurl = SD_H_URL.'?sd_download=download';
     $cancel_url = $_SERVER['HTTP_REFERER'];
     
     if(empty($cancel_url)) $cancel_url = home_url();
@@ -37,7 +37,7 @@
             ''.
             '<input type="hidden" name="return" value="'.$returnurl.'&purchase_id='.$purchase_id.'" />'.
             '<input type="hidden" name="cancel_return" value="'.$cancel_url.'" />'.
-            '<input type="hidden" name="notify_url" value="'.$baseurl.'&id='.$ID.'&purchase_id='.$purchase_id.'&rtn_act=purchased_product_music_store" />'.
+            '<input type="hidden" name="notify_url" value="'.$baseurl.'&id='.$ID.'&purchase_id='.$purchase_id.'&rtn_act=purchased_product_sell_downloads" />'.
             ''.
             '<input type="hidden" name="cmd" value="_xclick" />'.
             '<input type="hidden" name="page_style" value="Primary" />'.
