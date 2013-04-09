@@ -1,7 +1,7 @@
 === Sell Downloads ===
 Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Tags: downloads,sell downloads,sell, download,ecommerce, e-commerce, sell music, paypal,  sell files, shop
+Tags:download,sell download,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital
 Requires at least: 3.0.5
 Tested up to: 3.5.1
 Stable tag: 1.0.1
@@ -20,7 +20,9 @@ Sell Downloads is an online store for selling downloadable files: audio, video, 
 *	Allows a custom setup of the online store, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name.
 *	Allows to associate additional information to the products. 
 *   Allows to protect the files with the inclusion of a file's demo.
-*	Includes a module to track sales statistics.
+*	Includes a module to track sales statistics (only in the advanced version).
+*   Allows to define sales discounts (only in the advanced version).
+
 
 If you want more information about this plugin don't hesitate in checking the plugin's website:
 
@@ -59,6 +61,14 @@ The setup interface  includes the following fields:
 *   PayPal button: Select the PayPal button design. 
 *   Download link valid for: Set an expire time for the download links.
 
+**Discount settings**
+
+*   Percent to discount: Enter the percent to discount to the total sale cost.
+*   Valid for sales over than: Apply discount to sales superior to this value.
+*   Valid from (dd/mm/yyyy): Apply discount from the entered date.
+*   Valid to (dd/mm/yyyy): Apply discount until the entered date.
+*   Promotional text: Text to promote the discount.
+
 **Notification Settings**, both for buyers to complete a payment, and the store manager
  
 *   Notification "from" email: E-mail address that will appear as the sender of notifications.
@@ -76,6 +86,8 @@ To enter a new product/file press "Add New".
 
 The interface for entering data pertaining to a product is described below (screenshot-3):
 
+**Product's data**
+
 *   Enter Title Here: Enter the title-name of the product.
 *   Description: Description of the product. This field is optional, but offers the opportunity to provide additional information about the product.
 *   Sales Price: Retail price of the product.
@@ -86,6 +98,13 @@ The interface for entering data pertaining to a product is described below (scre
 *   Duration: Enter a value with time format. Useful for Audio and Video files.
 *   Publication Year: Enter a value with year format. Useful for files associated with a date, as the creation or publication date , for example a book or monograph.
 *   Additional Information: URL of a webpage with additional information about the product.
+
+**Programming discount**
+
+*   New price: The new price to apply to the product.
+*   Valid from (dd/mm/yyyy): Apply discount from the entered date.
+*   Valid to (dd/mm/yyyy): Apply discount until the entered date.
+*   Promotional text: Text to promote the discount.
 
 **Publishing the Sell Downloads**
 

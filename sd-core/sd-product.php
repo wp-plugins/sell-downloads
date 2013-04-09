@@ -264,6 +264,45 @@ if(!class_exists('SDProduct')){
 			';
 		} // End print_metabox
 		
+        public static function print_discount_metabox(){
+            ?>
+            
+            <!--DISCOUNT BOX -->
+            <div style="color:#FF0000;">The discounts management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a></div>
+            <h4><?php _e('Scheduled Discounts', SD_TEXT_DOMAIN);?></h4>
+            <table class="form-table sd_discount_table" style="border:1px dotted #dfdfdf;">
+                <tr>
+                    <td style="font-weight:bold;"><?php _e('New price in '.$currency, SD_TEXT_DOMAIN); ?></td>
+                    <td style="font-weight:bold;"><?php _e('Valid from dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
+                    <td style="font-weight:bold;"><?php _e('Valid to dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
+                    <td style="font-weight:bold;"><?php _e('Promotional text', SD_TEXT_DOMAIN); ?></td>
+                    <td style="font-weight:bold;"><?php _e('Status', SD_TEXT_DOMAIN); ?></td>
+                    <td></td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php _e('New price (*)', SD_TEXT_DOMAIN); ?></th>
+                    <td><input type="text" DISABLED /> USD</td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Valid from (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
+                    <td><input type="text" DISABLED /></td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Valid to (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
+                    <td><input type="text" DISABLED /></td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Promotional text', SD_TEXT_DOMAIN); ?></th>
+                    <td><textarea DISABLED cols="60"></textarea></td>
+                </tr>
+                <tr><td colspan="2"><input type="button" class="button" value="<?php _e('Add/Update Discount'); ?>" DISABLED ></td></tr>
+            </table>
+            <?php 
+        } // End print_discount_metabox
+        
+        
 		/*
 		* Save the song data
 		*

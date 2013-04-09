@@ -61,10 +61,12 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
 		if(file_exists($file_path))
 			return SD_URL.'/sd-downloads/'.$new_file_name.'?param='.$rand;
 		
-		if(file_put_contents($file_path, file_get_contents($file))){
+		if(copy($file, $file_path)){
 			return SD_URL.'/sd-downloads/'.$new_file_name.'?param='.$rand;
-		}
-		return false;
+		}else{
+            return $file;
+        }
+		
 	} // End sd_copy_download_links
 	
 	function sd_remove_download_links(){
