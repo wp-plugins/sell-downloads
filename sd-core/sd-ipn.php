@@ -45,12 +45,12 @@
 	
 	$information_payer = "Product: {$item_name}\n".
 						 "Amount: {$payment_amount} {$payment_currency}\n".
-						 "Download Link: ".SD_URL."/sd-core/sd-download.php?purchase_id={$_GET['purchase_id']}\n";
+						 "Download Link: ".SD_H_URL."?sd_download=download&purchase_id={$_GET['purchase_id']}\n";
 						 
 	$information_seller = "Product: {$item_name}\n".
 						  "Amount: {$payment_amount} {$payment_currency}\n".
 						  "Buyer Email: {$payer_email}\n".
-						  "Download Link: ".SD_URL."/sd-core/sd-download.php?purchase_id={$_GET['purchase_id']}\n";
+						  "Download Link: ".SD_H_URL."?sd_download=download&purchase_id={$_GET['purchase_id']}\n";
 						 
 	$sd_notification_to_payer_message  = str_replace("%INFORMATION%", $information_payer, $sd_notification_to_payer_message);
 	$sd_notification_to_seller_message = str_replace("%INFORMATION%", $information_seller, $sd_notification_to_seller_message);
