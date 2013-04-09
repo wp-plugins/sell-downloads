@@ -368,23 +368,28 @@ class sell_downloads_tpleng {
 	//------------------------------------------------------------------------
 	function _parse_ifset ($object, $vars, $loop_name = '') {
 
-		$object_pieces = explode('<tpl ifset="'.$loop_name, $object);
-		$parsed_object = array_shift($object_pieces);
-		foreach ($object_pieces as $object_piece) {
-			list($var_name, $end) = explode('">', $object_piece, 2);
-			list($ifset_text, $end) = explode('</tpl ifset="'.$loop_name.$var_name.'">', $end, 2);
-			if ( !isset($vars[$var_name]) ) {
-
-				$parsed_object .= $end;
-
-			} else {
-
-				$parsed_object .= $ifset_text.$end;
-
-			} // elseif
-
-		} // foreach
-		return($parsed_object);
+		if(!empty($loop_name)) str_replace('.', '\.', $loop_name);
+        
+        while(preg_match('/<tpl\s+ifset=["\']'.$loop_name.'([^"\']+)["\']\s*>/', $object, $matches)){
+            $p = strpos($object, $matches[0]);
+            
+            if(isset($vars[$matches[1]])){
+                $object = substr_replace($object, '', $p, strlen($matches[0]));
+                if(preg_match('/<\/tpl\s+ifset=["\']'.$loop_name.$matches[1].'["\']\s*>/', $object, $matches_end)){
+                    $p = strpos($object, $matches_end[0]);
+                    $object = substr_replace($object, '', $p, strlen($matches_end[0]));
+                }
+            }else{
+                if(preg_match('/<\/tpl\s+ifset=["\']'.$loop_name.$matches[1].'["\']\s*>/', $object, $matches_end)){
+                    $pe = strpos($object, $matches_end[0])+strlen($matches_end[0]);
+                    $object = substr_replace($object, '', $p, $pe-$p);
+                }else{
+                    $object = substr_replace($object, '', $p, strlen($matches[0]));
+                }
+            }
+            
+        }
+        return $object;
 
 	} // private :: parse_ifset
 
