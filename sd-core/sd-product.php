@@ -100,9 +100,14 @@ if(!class_exists('SDProduct')){
 				'title' => $this->post_title,
 				'cover' => $this->cover,
 				'link'	=> $this->guid,
-				'popularity' => $this->plays
+				'popularity' => $this->plays,
+                'social' => null
 			);
 			
+            if(get_option('sd_social_buttons')){
+                $product_data['social'] = get_permalink( $this->id );
+            }
+            
             if($this->time) $product_data['time'] = $this->time;
 			if($this->year) $product_data['year'] = $this->year;
 			if($this->info) $product_data['info'] = $this->info;
@@ -122,7 +127,7 @@ if(!class_exists('SDProduct')){
                     $paypal_button = SD_URL.'/paypal_buttons/'.get_option('sd_paypal_button', SD_PAYPAL_BUTTON);
                     $product_data['salesbutton'] = '<form action="'.$action.'" method="post"><input type="hidden" name="sd_product_type" value="single" /><input type="hidden" name="sd_product_id" value="'.$this->id.'" /><input type="image" src="'.$paypal_button.'" style="padding-top:5px;" /></form>';
                 }else{
-                    $product_data['salesbutton']  = '<a href="'.$this->file.'" target="_blank">'.__('Download Here', MS_TEXT_DOMAIN).'</a>';
+                    $product_data['salesbutton']  = '<a href="'.$this->file.'" target="_blank">'.__('Download Here', SD_TEXT_DOMAIN).'</a>';
                 }
             }    
 			
@@ -142,7 +147,7 @@ if(!class_exists('SDProduct')){
 				}
 				
 				$demo = $this->demo;
-				$product_data['demo'] = ($demo) ? '<a href="'.$demo.'" target="_blank">'.__('Download File Demo', SD_TEXT_DOMAIN).'</a>' : '';
+                $product_data['demo'] = ($demo) ? '<a href="/?sd_action=demo&file='.urlencode($demo).'" target="_blank">'.__('Download File Demo', SD_TEXT_DOMAIN).'</a>' : '';
 				
 				if(strlen($this->post_content)){
 					$product_data['description'] 	= $this->post_content;
@@ -170,7 +175,7 @@ if(!class_exists('SDProduct')){
 
 			wp_nonce_field( plugin_basename( __FILE__ ), 'sd_product_box_content_nonce' );
 			echo '
-				<table class="form-table">
+				<table class="form-table product-data">
 					<tr>
 						<td>
 							'.__('Sales price:', SD_TEXT_DOMAIN).'

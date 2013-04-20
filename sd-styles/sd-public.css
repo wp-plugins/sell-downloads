@@ -20,6 +20,8 @@
 .sell-downloads-product .right-column{	float:left; padding-left:10px; width:-moz-calc(100% - 260px); width:-webkit-calc(100% - 260px);	width:calc(100% - 160px);}
 
 /** COLUMNS ON SINGLE PAGES **/
+.sd_product .entry-title{display:none;}
+
 .sell-downloads-product .left-column{float:left;}
 .sell-downloads-product .right-column{	float:left; padding-left:10px; width:-moz-calc(100% - 260px); width:-webkit-calc(100% - 260px);	width:calc(100% - 260px);}
 

@@ -20,9 +20,15 @@ Sell Downloads is an online store for selling downloadable files: audio, video, 
 *	Allows a custom setup of the online store, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name.
 *	Allows to associate additional information to the products. 
 *   Allows to protect the files with the inclusion of a file's demo.
-*	Includes a module to track sales statistics (only in the advanced version).
-*   Allows to define sales discounts (only in the advanced version).
 
+The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a store for sell downloads on your website.
+
+
+**Premium Features:**
+
+*	Includes a module to track sales statistics.
+*   Allows to define sales discounts.
+*   Allows to define discount coupons.
 
 If you want more information about this plugin don't hesitate in checking the plugin's website:
 
@@ -48,7 +54,7 @@ Sell Downloads can be set up via the menu: "Sell Downloads > Sell Downloads Sett
 The setup interface  includes the following fields:
 
 *   URL of store page: Enter the URL of the webpage where the Sell Downloads was inserted. The URL of the store will be used to return from the product page to the store page.
-*   Allow to filter by type: Inserts a field into the Music Store webpage that allows to filter products by type (jpg, mp3, doc,....)
+*   Allow to filter by type: Inserts a field into the store webpage that allows to filter products by type (jpg, mp3, doc,....)
 *   Allow multiple pages: Allows paging of Sell Downloads products.
 *   Items per page: Defines the number of products per page in Sell Downloads.
 
@@ -61,13 +67,21 @@ The setup interface  includes the following fields:
 *   PayPal button: Select the PayPal button design. 
 *   Download link valid for: Set an expire time for the download links.
 
-**Discount settings**
+**Discount settings(premium version)**
 
 *   Percent to discount: Enter the percent to discount to the total sale cost.
 *   Valid for sales over than: Apply discount to sales superior to this value.
 *   Valid from (dd/mm/yyyy): Apply discount from the entered date.
 *   Valid to (dd/mm/yyyy): Apply discount until the entered date.
 *   Promotional text: Text to promote the discount.
+
+**Coupon settings(premium version)**
+
+*   Percent to discount: Enter the percent to discount to the total sale cost.
+*   Coupon: Enter the coupon code.
+*   Valid from (dd/mm/yyyy): The coupon is valid from the entered date.
+*   Valid to (dd/mm/yyyy): The coupon is valid to the entered date.
+
 
 **Notification Settings**, both for buyers to complete a payment, and the store manager
  
@@ -99,7 +113,7 @@ The interface for entering data pertaining to a product is described below (scre
 *   Publication Year: Enter a value with year format. Useful for files associated with a date, as the creation or publication date , for example a book or monograph.
 *   Additional Information: URL of a webpage with additional information about the product.
 
-**Programming discount**
+**Programming discount(premium version)**
 
 *   New price: The new price to apply to the product.
 *   Valid from (dd/mm/yyyy): Apply discount from the entered date.
@@ -119,7 +133,7 @@ The insertion process generates a shortcode which will be replaced by the store 
 
 Note: After inserting the store on a page of your WordPress, it is advisable to copy the URL of the relevant page, and enter in the Sell Downloads setup section, to allow the users to return to the store from the product page.
 
-**Sale Statistics**
+**Sale Statistics(premium version)**
 
 When a sale takes place, a notification email is sent to the Sell Downloads administrator. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-6)
 

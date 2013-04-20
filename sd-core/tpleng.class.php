@@ -54,7 +54,7 @@ class sell_downloads_tpleng {
 	var $rotations = array();
 	var $rotation_count = array();
 	var $blocks = array();
-    var $sell_downloads_debug = false;
+    var $debug = false;
 
 
 	//------------------------------------------------------------------------
@@ -196,7 +196,6 @@ class sell_downloads_tpleng {
 	// parse variables, loops, blocks
 	//------------------------------------------------------------------------
 	function parse ($var_name, $output = 'echo', $file_name = 'output.htm') {
-
 		if (isset($this->vars[$var_name])) {
 			
 			$object = $this->vars[$var_name];
@@ -226,26 +225,15 @@ class sell_downloads_tpleng {
 	// parse variables
 	//------------------------------------------------------------------------
 	function _parse_var ($object) {
-
-		$object_pieces = explode('{', $object);
-		$parsed_object = array_shift($object_pieces);
-		foreach ($object_pieces as $object_piece) {
-
-			list($var_name, $piece_end) = explode('}', $object_piece, 2);
-			if (isset($this->vars[$var_name])) {
-
-				$parsed_object .= $this->_parse_var($this->vars[$var_name]).$piece_end;
-
-			} else {
-
-				$parsed_object .= '{'.$var_name.'}'.$piece_end;
-
-			} // elseif
-
-		} // foreach
-		return($parsed_object);
-
-	} // private :: parse_var
+    	if(preg_match_all("/\{([^\{\}]+)\}/", $object, $matches)){
+            for($i=0; $i < count($matches[0]); $i++){
+                if(isset($this->vars[$matches[1][$i]]))
+                    $object = str_replace($matches[0][$i], $this->_parse_var($this->vars[$matches[1][$i]]), $object);
+            }
+        }
+        
+        return $object;
+    } // private :: parse_var
 
 
 
@@ -367,8 +355,8 @@ class sell_downloads_tpleng {
 	// parse ifset tags
 	//------------------------------------------------------------------------
 	function _parse_ifset ($object, $vars, $loop_name = '') {
-
-		if(!empty($loop_name)) str_replace('.', '\.', $loop_name);
+        
+        if(!empty($loop_name)) str_replace('.', '\.', $loop_name);
         
         while(preg_match('/<tpl\s+ifset=["\']'.$loop_name.'([^"\']+)["\']\s*>/', $object, $matches)){
             $p = strpos($object, $matches[0]);
@@ -390,8 +378,7 @@ class sell_downloads_tpleng {
             
         }
         return $object;
-
-	} // private :: parse_ifset
+    } // private :: parse_ifset
 
 
 
@@ -443,7 +430,7 @@ class sell_downloads_tpleng {
 	// reports error
 	//------------------------------------------------------------------------
 	function _error ($text, $type) {
-		if($this->sell_downloads_debug)
+		if($this->debug)
 			echo("\n<br><code><font color='#FF9000' size='2'>sell_downloads_tpleng $type :: $text</font></code><br>\n");
 		if (strtolower($type) == 'fatal') { exit(); }
 
