@@ -16,7 +16,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
  define( 'SD_CORE_IMAGES_URL',  SD_URL . '/sd-core/images' );
  define( 'SD_CORE_IMAGES_PATH', SD_FILE_PATH . '/sd-core/images' );
  define( 'SD_TEXT_DOMAIN', 'SD_TEXT_DOMAIN' );
- define( 'SD_MAIN_PAGE', false ); // The location to the music store main page
+ define( 'SD_MAIN_PAGE', false ); // The location to the sell downloads main page
  
  // PAYPAL CONSTANTS
  define( 'SD_PAYPAL_EMAIL', '' );
@@ -52,9 +52,9 @@ Description: Sell Downloads is an online store for selling downloadable files: a
  
  if ( !class_exists( 'SellDownloads' ) ) {
  	 /**
-	 * Main Music_Store Class
+	 * Main SellDownloads Class
 	 *
-	 * Contains the main functions for Music Store, stores variables, and handles error messages
+	 * Contains the main functions for Sell Downloads, stores variables, and handles error messages
 	 *
 	 * @class SellDownloads
 	 * @version	1.0.1
@@ -107,6 +107,20 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                         case 'ipn':
                             include_once('sd-core/sd-ipn.php');
                         break;
+                        case 'demo':
+                            if(isset($_REQUEST['file'])){
+                                $f_url = $_REQUEST['file'];
+                                $f_content = file_get_contents($f_url);
+                                if($f_content !== false){
+                                    $f_name = substr($f_url, strrpos($f_url, '/')+1);
+                                    header('Content-Disposition: attachment; filename="'.$f_name.'"');
+                                    print $f_content;
+                                }else{
+                                    print '<script>document.location = "'.$f_url.'";</script>';
+                                }    
+                                exit;
+                            }
+                        break;
                     }
                 }
                 
@@ -117,13 +131,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 
 				// Set custom post_types on search result
 				add_shortcode('sell_downloads', array(&$this, 'load_store'));
-				$this->load_templates(); // Load the music store template for songs and collections display
+				$this->load_templates(); // Load the sell downloads template for songs and collections display
 				
 				// Load public resources
 				add_action( 'wp_enqueue_scripts', array(&$this, 'public_resources') );
 			}
 			// Init action
-			do_action( 'musicstore_init' );
+			do_action( 'selldownloads_init' );
 		} // End init
 		
 		/**
@@ -143,14 +157,14 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			// Load admin resources
 			add_action('admin_enqueue_scripts', array(&$this, 'admin_resources'));
 			
-			// Set a new media button for music store insertion
+			// Set a new media button for sell downloads insertion
 			add_action('media_buttons', array(&$this, 'set_sell_downloads_button'), 100);
 			
 			$plugin = plugin_basename(__FILE__);
 			add_filter('plugin_action_links_'.$plugin, array(&$this, 'customizationLink'));
 			
 			// Init action
-			do_action( 'musicstore_admin_init' );
+			do_action( 'selldownloads_admin_init' );
 		} // End init
 		
 		function customizationLink($links){
@@ -186,11 +200,12 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				}
 			}
 			$this->_create_db_structure();
-		
+            // Plugin options
+            update_option('sd_social_buttons', true);
 		}  // End register
 		
 		/*
-		* Create the Music Store tables
+		* Create the Sell Downloads tables
 		*
 		* @access private
 		* @return void
@@ -199,7 +214,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $wpdb;
 			
             /* 
-                The name of columns are treated as below to make table of Sell Downloads compatible with the tables of Music Store and Sell Videos
+                The name of columns are treated as below to make table of Sell Downloads compatible with the tables of Sell Downloads and Sell Videos
                 - id is the primary key, and the same value as the ID column of wp_posts table
                 - time, may be used in video and audio files
                 - plays, number of times the file has been visited
@@ -481,7 +496,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		} // End _paypal_buttons
 		
 		/*
-		* Set the music store settings
+		* Set the sell downloads settings
 		*/
 		function settings_page(){
 			global $wpdb;
@@ -500,6 +515,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				update_option('sd_notification_to_seller_subject', $_POST['sd_notification_to_seller_subject']);
 				update_option('sd_notification_to_seller_message', $_POST['sd_notification_to_seller_message']);
 				update_option('sd_old_download_link', $_POST['sd_old_download_link']);				
+                update_option('sd_social_buttons', ((isset($_POST['sd_social_buttons'])) ? true : false));
 ?>				
 				<div class="updated" style="margin:5px 0;"><strong><?php _e("Settings Updated", SD_TEXT_DOMAIN); ?></strong></div>
 <?php				
@@ -545,6 +561,14 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 								<tr valign="top">
 									<th><?php _e('Items per page', SD_TEXT_DOMAIN); ?></th>
 									<td><input type="text" name="sd_items_page" value="<?php echo esc_attr(get_option('sd_items_page', SD_ITEMS_PAGE)); ?>" /></td>
+								</tr>
+                                <tr valign="top">
+									<th><?php _e('Share in social networks', SD_TEXT_DOMAIN); ?></th>
+									<td>
+										<input type="checkbox" name="sd_social_buttons" <?php echo ((get_option('sd_social_buttons')) ? 'CHECKED' : ''); ?> /><br />
+										<em><?php _e('The option enables the buttons for share the products in social networks', SD_TEXT_DOMAIN); ?></em>
+										
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -626,7 +650,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                         <h3 class='hndle' style="padding:5px;"><span><?php _e('Discount Settings', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside">
                             <div style="color:#FF0000;">The discounts management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a></div>
-                            <div><input type="checkbox" DISABLED /> <?php _e('Display discount promotions in the music store page', SD_TEXT_DOMAIN)?></div>
+                            <div><input type="checkbox" DISABLED /> <?php _e('Display discount promotions in the store page', SD_TEXT_DOMAIN)?></div>
                             <h4><?php _e('Scheduled Discounts', SD_TEXT_DOMAIN);?></h4>
                             <table class="form-table sd_discount_table" style="border:1px dotted #dfdfdf;">
                                 <tr>
@@ -664,7 +688,45 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                             </table>
                         </div>
                     </div>
-					
+                    
+                    <!--COUPONS BOX -->
+                    <div class="postbox">
+                        <h3 class='hndle' style="padding:5px;"><span><?php _e('Coupons Settings', SD_TEXT_DOMAIN); ?></span></h3>
+						<div class="inside">
+                            <div style="color:#FF0000;">The coupons management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a></div>
+                            <h4><?php _e('Coupons List', SD_TEXT_DOMAIN);?></h4>
+                            <table class="form-table sd_coupon_table" style="border:1px dotted #dfdfdf;">
+                                <tr>
+                                    <td style="font-weight:bold;"><?php _e('Percent of discount', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Coupon', SD_TEXT_DOMAIN);?></td>
+                                    <td style="font-weight:bold;"><?php _e('Valid from dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Valid to dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('Status', SD_TEXT_DOMAIN); ?></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table class="form-table">
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Percent of discount (*)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /> %</td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Coupon (*)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /></td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Valid from (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /></td>
+                                </tr>
+                                <tr valign="top">
+                                    <th scope="row"><?php _e('Valid to (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
+                                    <td><input type="text" DISABLED /></td>
+                                </tr>
+                                <tr><td colspan="2"><input type="button" class="button" value="<?php _e('Add/Update Coupon'); ?>"DISABLED /></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                        
                     <!-- NOTIFICATIONS BOX -->
 					<div class="postbox">
 						<h3 class='hndle' style="padding:5px;"><span><?php _e('Notification Settings', SD_TEXT_DOMAIN); ?></span></h3>
@@ -752,7 +814,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					wp_enqueue_style('sd-admin-style', plugin_dir_url(__FILE__).'sd-styles/sd-admin.css');
 					wp_localize_script('sd-admin-script', 'sell_downloads', array('post_id' => $post->ID));	
 				}else{
-					// Scripts required for music store insertion
+					// Scripts required for sell downloads insertion
 					wp_enqueue_style('wp-jquery-ui-dialog');
 					
 					// Set the variables for insertion dialog
@@ -790,7 +852,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$page_links = "";
 			$header = "";
 			
-			// Extract the music store attributes
+			// Extract the sell downloads attributes
 			extract(shortcode_atts(array(
 					'type'		=> 'all',
 					'columns'  	=> 1
@@ -812,7 +874,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				$_SESSION['sd_ordering'] = "post_title";
 			}
 			
-			// Extract info from music_store options
+			// Extract info from sell downloads options
 			$allow_filter_by_type = get_option('sd_filter_by_type', SD_FILTER_BY_TYPE);
 
  			// Items per page
@@ -823,7 +885,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			// Query clauses 
 			$_select 	= "SELECT DISTINCT posts.ID, posts.post_type";
 			$_from 		= "FROM ".$wpdb->prefix."posts as posts,".$wpdb->prefix.SDDB_POST_DATA." as posts_data"; 
-			$_where 	= "WHERE posts.post_status='publish'";
+			$_where 	= "WHERE posts.ID = posts_data.id AND posts.post_status='publish'";
 			$_order_by 	= "ORDER BY ".(($_SESSION['sd_ordering'] == "post_title") ? "posts" : "posts_data").".".$_SESSION['sd_ordering']." ".(($_SESSION['sd_ordering'] == 'plays') ? "DESC" : "ASC");
 			$_limit 	= "";
 			
@@ -946,27 +1008,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
             return $header.$sell_downloads.$page_links;
 		} // End load_store
 			
-/** MODIFY TITLE AND CONTENT OF POSTS LOADED **/
-		
-		/**
-		* Remove title from sd_product
-		*/
-		function display_title($title){
-			global $post;
-			if(in_the_loop() && $post && $post->post_type == 'sd_product'){
-				return '';
-			}else{
-				return $title;
-			}
-			
-		} // End display_title
+/** MODIFY CONTENT OF POSTS LOADED **/
 		
 		/*
 		* Load the templates for products display
 		*/
 		function load_templates(){
 			add_filter('the_content', array(&$this, 'display_content'));
-			add_filter('the_title', array(&$this, 'display_title'));
 		} // End load_templates
 		
 		/**
