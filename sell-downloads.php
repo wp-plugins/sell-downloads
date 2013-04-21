@@ -134,7 +134,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				$this->load_templates(); // Load the sell downloads template for songs and collections display
 				
 				// Load public resources
-				add_action( 'wp_enqueue_scripts', array(&$this, 'public_resources') );
+				add_action( 'wp_enqueue_scripts', array(&$this, 'public_resources'), 10 );
 			}
 			// Init action
 			do_action( 'selldownloads_init' );
@@ -155,7 +155,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			if (current_user_can('delete_posts')) add_action('delete_post', array(&$this, 'delete_post'));
 			
 			// Load admin resources
-			add_action('admin_enqueue_scripts', array(&$this, 'admin_resources'));
+			add_action('admin_enqueue_scripts', array(&$this, 'admin_resources'), 10);
 			
 			// Set a new media button for sell downloads insertion
 			add_action('media_buttons', array(&$this, 'set_sell_downloads_button'), 100);
@@ -792,7 +792,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		*/
 		function public_resources(){
 			wp_enqueue_style('sd-style', plugin_dir_url(__FILE__).'sd-styles/sd-public.css');
-			wp_enqueue_script('sd-media-script', plugin_dir_url(__FILE__).'sd-script/sd-public.js', array('jquery'), false, true);
+            wp_enqueue_script('jquery');
+			wp_enqueue_script('sd-media-script', plugin_dir_url(__FILE__).'sd-script/sd-public.js', array('jquery'), null, true);
 			wp_localize_script('sd-media-script', 'sd_global', array('url' => SD_URL));
 		} // End public_resources
 		
@@ -803,11 +804,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $post;
 
 			if(strpos($hook, "sell-downloads") !== false){
-				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery'));
+				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery'), null, true);
 			}
         
 			if ( $hook == 'post-new.php' || $hook == 'post.php' || $hook == 'index.php') {
-				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-dialog', 'media-upload'));
+                wp_enqueue_script('jquery-ui-core');
+                wp_enqueue_script('jquery-ui-dialog');
+				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-dialog', 'media-upload'), null, true);
 				
 				if($post->post_type == "sd_product"){
 					// Scripts and styles required for metaboxs
