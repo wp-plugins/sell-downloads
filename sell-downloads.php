@@ -110,7 +110,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                         case 'demo':
                             if(isset($_REQUEST['file'])){
                                 $f_url = $_REQUEST['file'];
-                                $f_content = file_get_contents($f_url);
+                                $f_content = @file_get_contents($f_url);
                                 if($f_content !== false){
                                     $f_name = substr($f_url, strrpos($f_url, '/')+1);
                                     header('Content-Disposition: attachment; filename="'.$f_name.'"');

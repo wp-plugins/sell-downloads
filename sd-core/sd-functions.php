@@ -1,4 +1,7 @@
 <?php
+if( !class_exists( 'WP_Http' ) ){
+    include_once( ABSPATH . WPINC. '/class-http.php' );
+}    
 
 function sell_downloads_extract_attr_as_str($arr, $attr, $separator){
 	$result = '';
@@ -61,25 +64,32 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
 		if(file_exists($file_path))
 			return SD_URL.'/sd-downloads/'.$new_file_name.'?param='.$rand;
 		
-		if(copy($file, $file_path)){
-			return SD_URL.'/sd-downloads/'.$new_file_name.'?param='.$rand;
-		}else{
-            return $file;
-        }
+        $request = new WP_Http;
+        $response = $request->request($file);
+        if($response['response']['code'] == 200 && file_put_contents($file_path, $response['body'])) return SD_URL.'/sd-downloads/'.$new_file_name.'?param='.$rand;
 		
+        return $file;
 	} // End sd_copy_download_links
 	
 	function sd_remove_download_links(){
+        global $htaccess_accepted;
+        
 		$now = time();
 		$dif = get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK)*86400;
 		$d = dir(SD_DOWNLOAD);
 		while (false !== ($entry = $d->read())) {
-			if($entry != '.' && $entry != '..' && $entry != '.htaccess'){
-				$file_name = SD_DOWNLOAD.'/'.$entry;
-				$date = filemtime($file_name);
-				if($now-$date >= $dif){ // Delete file
-					unlink($file_name);
-				}
+			if($entry != '.' && $entry != '..' && $entry != 'sell-downloads-icon.gif'){
+                if($entry == '.htaccess'){
+                    if(!$htaccess_accepted){ // Remove the htaccess if it is not accepted
+                        @unlink(SD_DOWNLOAD.'/'.$entry);
+                    }
+                }else{
+                    $file_name = SD_DOWNLOAD.'/'.$entry;
+                    $date = filemtime($file_name);
+                    if($now-$date >= $dif){ // Delete file
+                        @unlink($file_name);
+                    }
+                }
 			}
 		}
 		$d->close();
@@ -92,7 +102,7 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
 	
     function sd_generate_downloads_title($the_title){
         global $id;
-        if($id)
+        if(in_the_loop() && $id)
             return __('Download the purchased products', SD_TEXT_DOMAIN);
         else
             return $the_title;
@@ -101,6 +111,12 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
 	function sd_generate_downloads($the_content){
     	global $wpdb, $download_links_str, $id;
 		if($id){
+            global $htaccess_accepted;
+            
+            $request = new WP_Http;
+            $response = $request->request(SD_URL.'/sd-downloads/sell-downloads-icon.gif');
+            $htaccess_accepted = ($response['response']['code'] == 200);
+        
             sd_remove_download_links();
             
             $purchase_rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix.SDDB_PURCHASE." WHERE purchase_id=%s", $_GET['purchase_id']));	
@@ -130,9 +146,7 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
                 if(count($urls)){
                     foreach($urls as $url){
                         $download_link = sd_copy_download_links($url->link);
-                        if($download_link){
-                            $download_links_str .= '<div> <a href="'.$download_link.'">'.$url->title.'</a></div>';
-                        }
+                        $download_links_str .= '<div> <a href="'.$download_link.'">'.$url->title.'</a></div>';
                     }
                 }
                 
