@@ -14,21 +14,25 @@ Sell Downloads is an online store for selling downloadable files: audio, video, 
 
 **Sell Downloads** is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sale process easy and secure.
 
+Create an e-commerce for sell digital files never was more easy than with "Sell Downloads", the majority of e-commerce plugins are developed thinking in tangible products and does the sale's process very complex. An online store that pretends to sale only digital files must to coexist with data related to tangible products, configure shipping cost, etc, "Sell Downloads" doesn't need any of previous data. With "Sell Downloads" is required only define the PayPal data and the products to sell.
+
 **Features:**
 
-*	Allows selling your files via PayPal.
-*	Allows a custom setup of the online store, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name.
-*	Allows to associate additional information to the products. 
-*   Allows to protect the files with the inclusion of a file's demo.
+*	Allows selling your digital files via PayPal. PayPal is the payment gateway by excellence, very easy to use and very secure.
+*	Allows a custom setup of the online store, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name, making of "Sell Downloads" a very configurable plugin.
+*	Allows to associate additional information to the products. For example, if are selling a book and like to associate a link to other books of the same editorial, or a page of reviews from critics, this field would be the option for do it. 
+*   Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trilers or the monographies and its abstracts.
 
 The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a store for sell downloads on your website.
 
 
 **Premium Features:**
 
-*	Includes a module to track sales statistics.
-*   Allows to define sales discounts.
-*   Allows to define discount coupons.
+*   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
+*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied, and check the total of earnings in a period of time.
+*   Allows to define sales discounts. It is usual in the e-commerce create sales campaings, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define discounts and display the previous and new prices of products.
+*   Allows to define discount coupons. The coupons are an excellent tool to know where is the origin of sales and create (like in discounts definition) sales campaings, but directed to a specific sector or website.
+
 
 If you want more information about this plugin don't hesitate in checking the plugin's website:
 
@@ -88,7 +92,7 @@ The setup interface  includes the following fields:
 *   Notification "from" email: E-mail address that will appear as the sender of notifications.
 *   Send notification to email: Email address where a notification is sent after each sale.
 *   Subject of user confirmation email: Subject of the confirmation email sent to the customer when making the purchase.
-*   Email confirmation to user: Body of message sent to the client when making the purchase. The message should include the tag  %INFORMATION% which will be replaced by the purchase data.
+*   Email confirmation to user: Body of message sent to the customer when making the purchase. The message should include the tag  %INFORMATION% which will be replaced by the purchase data.
 *   Subject of email notification to admin: Subject of email notification sent to the administrator when a purchase is made.
 *   Email notification to admin: Body of the email message sent to the administrator when a purchase is made. The message text should include the tag  %INFORMATION%, which will be replaced by the purchase data.
 
@@ -147,6 +151,13 @@ You can delete a sales report from the list of sales. This may be useful in case
 
 A: First, go to the settings page of Sell Downloads and be sure the PayPal checkbox is checked, and has defined the seller's email. Second, be sure the product has a price defined and a file for sell associated.
 
+= Q: How the discounts are treated by the store? = 
+
+A: If the store has defined a discount and a coupon at the same time, only one is applied to the sale, the biggest of both.
+
+= Q: How to download all purchased products as only one file? =
+
+A: To download all purchased files as  only one file, is required enabling the zip option from the settings page of "Sell Downloads". The zip feature may be disabled in your website because the required extensions are not present in the PHP of the web server.
 
 == Screenshots ==
 1. Sell Downloads Item
