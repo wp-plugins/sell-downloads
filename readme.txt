@@ -1,37 +1,48 @@
 === Sell Downloads ===
 Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Tags:download,sell download,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout, configurable, downloadable, store, wordpress ecommerce 
+Tags:downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce
 Requires at least: 3.0.5
 Tested up to: 3.5.1
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
+Sell Downloads is an WordPress eCommerce for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
 
 == Description ==
 
-**Sell Downloads** is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sale process easy and secure.
+Sell Downloads features:
 
-Create an e-commerce for sell digital files never was more easy than with "Sell Downloads", the majority of e-commerce plugins are developed thinking in tangible products and does the sale's process very complex. An online store that pretends to sale only digital files must to coexist with data related to tangible products, configure shipping cost, etc, "Sell Downloads" doesn't need any of previous data. With "Sell Downloads" is required only define the PayPal data and the products to sell.
+	» Sell Downloads is a WordPress eCommerce
+	» Allows selling digital files like audio,video,documents,pictures,etc.
+	» Allows to filter products by types of files
+	» Allows paging and sorting the results by popularity, price or file name
+	» Uses PayPal as payment gateway	
+	» Allows sharing products in social networks (Facebook, Twitter, Google+)
+	» Allows to associate additional information to the products
+	» Allows to protect the files with the inclusion of a file's demo
 
-**Features:**
+**Sell Downloads** is an  WordPress eCommerce for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sale process easy and secure.
+
+Create an e-commerce for sell digital files never was more easy than with "Sell Downloads", the majority of e-commerce plugins are developed thinking in tangible products and does the sale's process very complex. An ecommerce that pretends to sale only digital files must to coexist with data related to tangible products, configure shipping cost, etc, "Sell Downloads" doesn't need any of previous data. With "Sell Downloads" is required only define the PayPal data and the products to sell.
+
+**More about the Main Features:**
 
 *	Allows selling your digital files via PayPal. PayPal is the payment gateway by excellence, very easy to use and very secure.
-*	Allows a custom setup of the online store, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name, making of "Sell Downloads" a very configurable plugin.
+*	Allows a custom setup of the ecommerce, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name, making of "Sell Downloads" a very configurable plugin.
 *	Allows to associate additional information to the products. For example, if are selling a book and like to associate a link to other books of the same editorial, or a page of reviews from critics, this field would be the option for do it. 
-*   Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trilers or the monographies and its abstracts.
+* Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trilers or the monographies and its abstracts.
 
-The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a store for sell downloads on your website.
+The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a ecommerce for sell downloads on your website.
 
 
 **Premium Features:**
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
-*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied, and check the total of earnings in a period of time.
-*   Allows to define sales discounts. It is usual in the e-commerce create sales campaings, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define discounts and display the previous and new prices of products.
-*   Allows to define discount coupons. The coupons are an excellent tool to know where is the origin of sales and create (like in discounts definition) sales campaings, but directed to a specific sector or website.
+*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
+*   Allows to define sales discounts. It is usual in the e-commerce create sales campaings, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
+*   Allows to define discount coupons. The coupons are an excellent tool to know where is the origin of sales and create (like in discounts definition) sales campaings, but directed to a specific sector or website. The coupons are applied to all sales from the ecommerce.
 
 
 If you want more information about this plugin don't hesitate in checking the plugin's website:
@@ -49,20 +60,20 @@ If you want more information about this plugin don't hesitate in checking the pl
 
 == Interface ==
 
-**Setting up Sell Downloads**
+**Setting up of shop**
 
-Sell Downloads can be set up via the menu: "Sell Downloads > Sell Downloads Settings". The setup screen offers general settings for the Sell Downloads, allows entering the PayPal data required to process sales  and texts that will be used for the email notifications.
+Sell Downloads can be set up via the menu: "Sell Downloads > Sell Downloads Settings". The setup screen offers general settings for the shop, allows entering the PayPal data required to process sales and texts that will be used for the email notifications with the download links of the purchased files.
 
 **Settings Interface**
 
-The setup interface  includes the following fields:
+The setup interface of commerce includes the following fields:
 
-*   URL of store page: Enter the URL of the webpage where the Sell Downloads was inserted. The URL of the store will be used to return from the product page to the store page.
-*   Allow to filter by type: Inserts a field into the store webpage that allows to filter products by type (jpg, mp3, doc,....)
-*   Allow multiple pages: Allows paging of Sell Downloads products.
-*   Items per page: Defines the number of products per page in Sell Downloads.
+*   URL of store page: Enter the URL of the webpage where the ecommerce was inserted. The URL of the store will be used to return from the product page to the shop page.
+*   Allow to filter by type: Inserts a field into the shopping webpage that allows to filter products by type (jpg, mp3, doc,....)
+*   Allow multiple pages: Allows paging through the shop's products.
+*   Items per page: Defines the number of products per page in the commerce's page.
 
-**Payment gateway data**
+**Payment gateway data (PayPal)**
 
 *   Enable PayPal Payments: Allows the sale of products through PayPal.
 *   PayPal email: Enter the email address associated with the PayPal account.
@@ -71,7 +82,7 @@ The setup interface  includes the following fields:
 *   PayPal button: Select the PayPal button design. 
 *   Download link valid for: Set an expire time for the download links.
 
-**Discount settings(premium version)**
+**Discount settings applied to the sales of the ecommerce. In the shopping cart the discount is applied to the total sale cost(premium version)**
 
 *   Percent to discount: Enter the percent to discount to the total sale cost.
 *   Valid for sales over than: Apply discount to sales superior to this value.
@@ -79,7 +90,7 @@ The setup interface  includes the following fields:
 *   Valid to (dd/mm/yyyy): Apply discount until the entered date.
 *   Promotional text: Text to promote the discount.
 
-**Coupon settings(premium version)**
+**Coupon settings applied to all sales of the ecommerce(premium version)**
 
 *   Percent to discount: Enter the percent to discount to the total sale cost.
 *   Coupon: Enter the coupon code.
@@ -87,59 +98,59 @@ The setup interface  includes the following fields:
 *   Valid to (dd/mm/yyyy): The coupon is valid to the entered date.
 
 
-**Notification Settings**, both for buyers to complete a payment, and the store manager
+**Notification Settings**, both for buyers to complete a payment, and the shop manager
  
 *   Notification "from" email: E-mail address that will appear as the sender of notifications.
 *   Send notification to email: Email address where a notification is sent after each sale.
 *   Subject of user confirmation email: Subject of the confirmation email sent to the customer when making the purchase.
-*   Email confirmation to user: Body of message sent to the customer when making the purchase. The message should include the tag  %INFORMATION% which will be replaced by the purchase data.
+*   Email confirmation to user: Body of message sent to the customer when making the purchase. The message should include the tag  %INFORMATION% which will be replaced by the purchase data, like the download link.
 *   Subject of email notification to admin: Subject of email notification sent to the administrator when a purchase is made.
 *   Email notification to admin: Body of the email message sent to the administrator when a purchase is made. The message text should include the tag  %INFORMATION%, which will be replaced by the purchase data.
 
-**Creating product**
+**Creating product for commerce**
 
-The Sell Downloads allows to sell possible digital files (video, audio, documents, etc). To create a product press the menu option "Sell Downloads > Products for Sale". Initially it displays the list of products entered previously and a set of data associated with the product: Product Name, File Type, Downloads, Purchases and Date (screenshot-2)
+The shop allows to sell possible digital files (video, audio, documents, etc). To create a product press the menu option "Sell Downloads > Products for Sale". Initially it displays the list of products entered previously and a set of data associated with the product: Product Name, File Type, Downloads, Purchases and Date (screenshot-2)
 
-To enter a new product/file press "Add New".
+To enter a new product/file to the shop press "Add New".
 
 The interface for entering data pertaining to a product is described below (screenshot-3):
 
 **Product's data**
 
-*   Enter Title Here: Enter the title-name of the product.
-*   Description: Description of the product. This field is optional, but offers the opportunity to provide additional information about the product.
+*   Enter Title Here: Enter the title-name of the product to display in the shop page and the product page.
+*   Description: Description of the product. This field is optional, but offers the opportunity to provide additional information about the product, this information is displayed only in the product page.
 *   Sales Price: Retail price of the product.
 *   File for sale: URL of the file to sell. The button associated with the field displays the WordPress media gallery making it easy to select the file.
-*   File for demo: URL file demo. The button associated with the field displays the WordPress media gallery making it easy to select the file.
-*   File Type: Select a file type from the list or enter a new one if it is not yet on the list.
-*   Image: URL of an image that represents the product. The button associated with the field displays the WordPress media gallery making it easy to select the file.
-*   Duration: Enter a value with time format. Useful for Audio and Video files.
+*   File for demo: URL file demo. The file for demo may be accessed from the ecommerce page.The button associated with the field displays the WordPress media gallery making it easy to select the file.
+*   File Type: Select a file type from the list or enter a new one if it is not yet on the list. The file type allow filtering the products in the shop page.
+*   Image: URL of an image that represents the product, the product image is shown in the ecommerce page and product page. The button associated with the field displays the WordPress media gallery making it easy to select the file.
+*   Duration: Enter a value with time format. Useful for Audio and Video files. With other files types the fields may be let empty.
 *   Publication Year: Enter a value with year format. Useful for files associated with a date, as the creation or publication date , for example a book or monograph.
 *   Additional Information: URL of a webpage with additional information about the product.
 
-**Programming discount(premium version)**
+**Programming a discount for the specific product(premium version)**
 
-*   New price: The new price to apply to the product.
+*   New price: The new price to apply to the product. The old and new prices will shown in pages of the ecommerce and the specific product.
 *   Valid from (dd/mm/yyyy): Apply discount from the entered date.
 *   Valid to (dd/mm/yyyy): Apply discount until the entered date.
-*   Promotional text: Text to promote the discount.
+*   Promotional text: Text to promote the discount. The promoting text will be shown in the shop page.
 
-**Publishing the Sell Downloads**
+**Publishing the "Sell Downloads" ecommerce**
 
-The Sell Download can be posted on a page or post of WordPress. To insert the "Sell Downloads" go to the relevant section (page or post) and press the Sell Downloads button above the  content editor of post/page(screenshot-4), the action displays a setup screen (screenshot-5)
+The "Sell Downloads" ecommerce can be posted on a page or post of WordPress. To insert the "Sell Downloads" shop go to the relevant section (page or post) and press the "Sell Downloads" button above the  content editor of post/page(screenshot-4), the action displays a setup screen (screenshot-5)
 
 **Interface for insertion dialog**
 
 *   Filter results by products type: by default, displays only products that belong to a specified type.
-*   Columns: Defines the number of columns for the store products.
+*   Columns: Defines the number of columns in the shop page.
 
-The insertion process generates a shortcode which will be replaced by the store when it is displayed on the website.
+The insertion process generates a shortcode which will be replaced by the shop when it is displayed on the website.
 
-Note: After inserting the store on a page of your WordPress, it is advisable to copy the URL of the relevant page, and enter in the Sell Downloads setup section, to allow the users to return to the store from the product page.
+Note: After inserting the ecommerce on a page of your WordPress, it is advisable to copy the URL of the relevant page, and enter in the "Sell Downloads" setup section, to allow the users to return to the shop from the product page.
 
-**Sale Statistics(premium version)**
+**Sales Statistics(premium version)**
 
-When a sale takes place, a notification email is sent to the Sell Downloads administrator. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-6)
+When a sale takes place, a notification email is sent to the shop manager. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-6)
 
 The Reports section allows you to filter sales reports over a specific period, by default it shows the current day's sales. It also shows sales' totals for the selected period and the currency of the sales (screenshot-7)
 
@@ -149,7 +160,7 @@ You can delete a sales report from the list of sales. This may be useful in case
 
 = Q: Why the sales button doesn't  appear? =
 
-A: First, go to the settings page of Sell Downloads and be sure the PayPal checkbox is checked, and has defined the seller's email. Second, be sure the product has a price defined and a file for sell associated.
+A: First, go to the settings page of commerce and be sure the PayPal checkbox is checked, and has defined the seller's email. Second, be sure the product has a price defined and a file for sell associated.
 
 = Q: How the discounts are treated by the store? = 
 
