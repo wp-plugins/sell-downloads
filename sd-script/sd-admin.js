@@ -77,12 +77,12 @@ jQuery(function(){
 		var file_path_field;
 		window["send_to_editor_default"] = window.send_to_editor;
 		jQuery('.product-data').bind('click', function(evt){
-            if($(evt.target).hasClass('button_for_upload')){
+            if($(evt.target).hasClass('button_for_upload_sd')){
                 file_path_field = $(evt.target).parent().find('.file_path');
 
                 formfield = jQuery(file_path_field).attr('name');
 
-                window.send_to_editor = window.send_to_download_url;
+                window.send_to_editor = window.send_to_download_url_sd;
 
                 tb_show('', 'media-upload.php?post_id=' + sell_downloads.post_id + '&amp;TB_iframe=true');
                 return false;
