@@ -6,11 +6,24 @@ Version: 1.0.1
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
+
+ if(!function_exists('sd_get_site_url')){
+    function sd_get_site_url(){
+        $url_parts = parse_url(get_site_url());
+        return rtrim( 
+                        ((!empty($url_parts["scheme"])) ? $url_parts["scheme"] : "http")."://".
+                        $_SERVER["HTTP_HOST"].
+                        ((!empty($url_parts["path"])) ? $url_parts["path"] : ""),
+                        "/"
+                    )."/";
+    }
+ }
+
  
  // CONSTANTS
  define( 'SD_FILE_PATH', dirname( __FILE__ ) );
  define( 'SD_URL', plugins_url( '', __FILE__ ) );
- define( 'SD_H_URL', str_replace('/wp-content/plugins/sell-downloads', '/', SD_URL));
+ define( 'SD_H_URL', sd_get_site_url() );
  define( 'SD_DOWNLOAD', dirname( __FILE__ ).'/sd-downloads' );
  define( 'SD_OLD_DOWNLOAD_LINK', 3); // Number of days considered old download links
  define( 'SD_CORE_IMAGES_URL',  SD_URL . '/sd-core/images' );
@@ -794,7 +807,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			wp_enqueue_style('sd-style', plugin_dir_url(__FILE__).'sd-styles/sd-public.css');
             wp_enqueue_script('jquery');
 			wp_enqueue_script('sd-media-script', plugin_dir_url(__FILE__).'sd-script/sd-public.js', array('jquery'), null, true);
-			wp_localize_script('sd-media-script', 'sd_global', array('url' => SD_URL));
+			wp_localize_script('sd-media-script', 'sd_global', array('url' => SD_URL, 'hurl' => SD_H_URL));
 		} // End public_resources
 		
 		/**

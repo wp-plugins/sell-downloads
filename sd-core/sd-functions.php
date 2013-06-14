@@ -122,9 +122,21 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
             $purchase_rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix.SDDB_PURCHASE." WHERE purchase_id=%s", $_GET['purchase_id']));	
             
             if($purchase_rows){ // Exists the purchase
+                $interval = get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK)*86400;
+                
                 $urls = array();
                 $tmp_arr = array();
+                $download_links_str = '';
+                
                 foreach($purchase_rows as $purchase){
+                    if(!current_user_can( 'manage_options' )){
+                        $diff = abs(strtotime($purchase->date)-time());
+                        if($diff > $interval){
+                            $download_links_str = __('The download link has expired, please contact to the vendor', SD_TEXT_DOMAIN);
+                            break;
+                        }
+                    }    
+                    
                     $id = $purchase->product_id;
                 
                     $_post = get_post($id);
@@ -140,8 +152,6 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
                         $tmp_arr[] = $obj->file;
                     }
                 }
-                
-                $download_links_str = '';
                 
                 if(count($urls)){
                     foreach($urls as $url){
