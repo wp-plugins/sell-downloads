@@ -123,7 +123,7 @@ if(!class_exists('SDProduct')){
 			
             if(!empty($this->file)){    
                 if(get_option('sd_paypal_enabled') && get_option('sd_paypal_email') && !empty($this->price)){
-                    $product_data['price'] = '$'.$this->price;
+                    $product_data['price'] = '$'.sprintf("%.2f", $this->price);
                     $paypal_button = SD_URL.'/paypal_buttons/'.get_option('sd_paypal_button', SD_PAYPAL_BUTTON);
                     $product_data['salesbutton'] = '<form action="'.$action.'" method="post"><input type="hidden" name="sd_product_type" value="single" /><input type="hidden" name="sd_product_id" value="'.$this->id.'" /><input type="image" src="'.$paypal_button.'" style="padding-top:5px;" /></form>';
                 }else{
@@ -181,7 +181,7 @@ if(!class_exists('SDProduct')){
 							'.__('Sales price:', SD_TEXT_DOMAIN).'
 						</td>
 						<td>
-							<input type="text" name="sd_price" id="sd_price" value="'.(($data && $data->price) ? esc_attr($data->price) : '').'" /> USD
+							<input type="text" name="sd_price" id="sd_price" value="'.(($data && $data->price) ? esc_attr(sprintf("%.2f", $data->price)) : '').'" /> USD
 						</td>
 					</tr>
 					<tr>
