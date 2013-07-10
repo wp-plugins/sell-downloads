@@ -99,7 +99,7 @@ if(!class_exists('SDProduct')){
 			$product_data = array(
 				'title' => $this->post_title,
 				'cover' => $this->cover,
-				'link'	=> $this->guid,
+				'link'	=> get_permalink($this->id),
 				'popularity' => $this->plays,
                 'social' => null
 			);
@@ -123,7 +123,8 @@ if(!class_exists('SDProduct')){
 			
             if(!empty($this->file)){    
                 if(get_option('sd_paypal_enabled') && get_option('sd_paypal_email') && !empty($this->price)){
-                    $product_data['price'] = '$'.sprintf("%.2f", $this->price);
+                    $currency_symbol = get_option('sd_paypal_currency_symbol', SD_PAYPAL_CURRENCY_SYMBOL);
+                    $product_data['price'] = ((!empty($currency_symbol)) ? $currency_symbol.sprintf("%.2f", $this->price) : sprintf("%.2f", $this->price).get_option('sd_paypal_currency', SD_PAYPAL_CURRENCY));
                     $paypal_button = SD_URL.'/paypal_buttons/'.get_option('sd_paypal_button', SD_PAYPAL_BUTTON);
                     $product_data['salesbutton'] = '<form action="'.$action.'" method="post"><input type="hidden" name="sd_product_type" value="single" /><input type="hidden" name="sd_product_id" value="'.$this->id.'" /><input type="image" src="'.$paypal_button.'" style="padding-top:5px;" /></form>';
                 }else{
@@ -181,7 +182,7 @@ if(!class_exists('SDProduct')){
 							'.__('Sales price:', SD_TEXT_DOMAIN).'
 						</td>
 						<td>
-							<input type="text" name="sd_price" id="sd_price" value="'.(($data && $data->price) ? esc_attr(sprintf("%.2f", $data->price)) : '').'" /> USD
+							<input type="text" name="sd_price" id="sd_price" value="'.(($data && $data->price) ? esc_attr(sprintf("%.2f", $data->price)) : '').'" /> '.get_option('sd_paypal_currency', SD_PAYPAL_LANGUAGE).'
 						</td>
 					</tr>
 					<tr>
@@ -288,7 +289,7 @@ if(!class_exists('SDProduct')){
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php _e('New price (*)', SD_TEXT_DOMAIN); ?></th>
-                    <td><input type="text" DISABLED /> USD</td>
+                    <td><input type="text" DISABLED /> <?php echo get_option('sd_paypal_currency', SD_PAYPAL_LANGUAGE); ?></td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Valid from (dd/mm/yyyy)', SD_TEXT_DOMAIN); ?></th>
