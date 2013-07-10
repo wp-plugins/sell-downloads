@@ -40,7 +40,8 @@ The base plugin, available for free from the WordPress Plugin Directory has all 
 **Premium Features:**
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
-*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
+*	  Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
+*	  Allows to insert a specific product in a post or page.
 *   Allows to define sales discounts. It is usual in the e-commerce create sales campaings, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
 *   Allows to define discount coupons. The coupons are an excellent tool to know where is the origin of sales and create (like in discounts definition) sales campaings, but directed to a specific sector or website. The coupons are applied to all sales from the ecommerce.
 

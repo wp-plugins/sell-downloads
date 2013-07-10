@@ -34,6 +34,9 @@ Description: Sell Downloads is an online store for selling downloadable files: a
  // PAYPAL CONSTANTS
  define( 'SD_PAYPAL_EMAIL', '' );
  define( 'SD_PAYPAL_ENABLED', true );
+ define( 'SD_PAYPAL_CURRENCY', 'USD' );
+ define( 'SD_PAYPAL_CURRENCY_SYMBOL', '$' );
+ define( 'SD_PAYPAL_LANGUAGE', 'en_US' );
  define( 'SD_PAYPAL_BUTTON', 'button_d.gif' );
  define( 'SD_PAYPAL_ADD_CART_BUTTON', 'shopping_cart/button_e.gif' );
  define( 'SD_PAYPAL_VIEW_CART_BUTTON', 'shopping_cart/button_f.gif' );
@@ -529,6 +532,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				update_option('sd_notification_to_seller_message', $_POST['sd_notification_to_seller_message']);
 				update_option('sd_old_download_link', $_POST['sd_old_download_link']);				
                 update_option('sd_social_buttons', ((isset($_POST['sd_social_buttons'])) ? true : false));
+                update_option('sd_paypal_currency', $_POST['sd_paypal_currency']);
+				update_option('sd_paypal_currency_symbol', $_POST['sd_paypal_currency_symbol']);
+				update_option('sd_paypal_language', $_POST['sd_paypal_language']);
+				
 ?>				
 				<div class="updated" style="margin:5px 0;"><strong><?php _e("Settings Updated", SD_TEXT_DOMAIN); ?></strong></div>
 <?php				
@@ -605,22 +612,47 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 							 
 							<tr valign="top">
 							<th scope="row"><?php _e('Currency', SD_TEXT_DOMAIN); ?></th>
-							<td><select DISABLED><option value="USD" selected="selected">USD</option></select>
-                            <span style="color:#FF0000;">To select a different currency for sell, it requires the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+							<td>
+                            <select name="sd_paypal_currency">
+                            <?php
+                                $currency_list = array("USD","EUR");
+                                $currency_selected = get_option('sd_paypal_currency', SD_PAYPAL_CURRENCY);
+                                foreach($currency_list as $currency_item)
+                                    echo '<option value="'.$currency_item.'" '.(($currency_item == $currency_selected) ? 'SELECTED' : '').'>'.$currency_item.'</option>';
+                            ?>
+                            </select>
+                            <span style="color:#FF0000;">Additional currencies are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
                             </td>
 							</tr>
 							
 							<tr valign="top">
 							<th scope="row"><?php _e('Currency Symbol', SD_TEXT_DOMAIN); ?></th>
-							<td><input type="text" value="$" DISABLED />
-                            <span style="color:#FF0000;">To enter a different currency's symbol, it requires the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+							<td>
+                                <input type="text" name="sd_paypal_currency_symbol" value="<?php echo esc_attr(get_option('sd_paypal_currency_symbol', SD_PAYPAL_CURRENCY_SYMBOL)); ?>" />
                             </td>
 							</tr>
 							
 							<tr valign="top">
-							<th scope="row"><?php _e('Paypal language', SD_TEXT_DOMAIN); ?></th>
-							<td><select DISABLED><option value="en_US" selected="selected">United States - U.S. English</option></select>
-                                <span style="color:#FF0000;">To select a different language, it requires the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+                            <th scope="row"><?php _e('Paypal language', SD_TEXT_DOMAIN); ?></th>
+							<td>
+                            <?php
+                            $languages_list = array(
+                                "de_DE" => "Germany - German",
+                                "fr_FR" => "France - French",
+                                "es_ES" => "Spain - Spanish",
+                                "en_US" => "United States - U.S. English"
+                            );    
+                                       
+                            ?>
+                                <select name="sd_paypal_language">
+                                    <?php
+                                        $language_selected = get_option('sd_paypal_language', SD_PAYPAL_LANGUAGE);
+                                        foreach($languages_list as $key => $value){
+                                            echo '<option value="'.$key.'" '.(($key == $language_selected) ? 'SELECTED' : '').'>'.$value.'</option>';
+                                        }
+                                    ?>
+                                </select>
+                                <span style="color:#FF0000;">Additional languages are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
                             </td>
 							</tr>  
 							

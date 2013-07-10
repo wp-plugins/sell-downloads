@@ -32,8 +32,8 @@
             '<input type="hidden" name="item_name" value="'.$title.'" />'.
             '<input type="hidden" name="item_number" value="Item Number '.$number.'" />'.
             '<input type="hidden" name="amount" value="'.$amount.'" />'.
-            '<input type="hidden" name="currency_code" value="USD" />'.
-            '<input type="hidden" name="lc" value="en_USD" />'.
+            '<input type="hidden" name="currency_code" value="'.get_option('sd_paypal_currency', SD_PAYPAL_LANGUAGE).'" />'.
+            '<input type="hidden" name="lc" value="'.get_option('sd_paypal_language', SD_PAYPAL_LANGUAGE).'" />'.
             ''.
             '<input type="hidden" name="return" value="'.$returnurl.'&purchase_id='.$purchase_id.'" />'.
             '<input type="hidden" name="cancel_return" value="'.$cancel_url.'" />'.
