@@ -1103,7 +1103,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 	} // End SellDownloads class
 	
 	// Initialize SellDownloads class
-	session_start();
+	@session_start();
 	$GLOBALS['sell_downloads'] = new SellDownloads;
 	
 	register_activation_hook(__FILE__, array(&$GLOBALS['sell_downloads'], 'register'));
