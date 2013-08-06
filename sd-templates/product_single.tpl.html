@@ -105,23 +105,25 @@
 	</div>	
 	<div class="clear"></div>
 	<div>
+    
+        <!-- PRODUCT DESCRIPTION -->
+        <tpl ifset="product.description">
 		<ul class="sell-downloads-tabs">
 			<li class="active-tab">Description</li>
 		</ul>
 		<div class="sell-downloads-tabs-container active-tab">
-			<!-- PRODUCT DESCRIPTION -->
-			<tpl ifset="product.description">
-				<div class="product-description">
-				{product.description}
-				</div>
-			</tpl ifset="product.description">
-			
-			<!-- PRODUCT MORE INFO -->
-			<tpl ifset="product.info">
-				<div class="product-info">
-				<a href="{product.info}" target="_blank">More Info[+]</a>
-				</div>
-			</tpl ifset="product.info">
+            <div class="product-description">
+            {product.description}
+            </div>
 		</div> <!-- End first tab container -->
+        </tpl ifset="product.description">
+        
+        <!-- PRODUCT MORE INFO -->
+        <tpl ifset="product.info">
+        <div class="product-info">
+        <a href="{product.info}" target="_blank">More Info[+]</a>
+        </div>
+        </tpl ifset="product.info">
+        
 	</div>
 </div>
