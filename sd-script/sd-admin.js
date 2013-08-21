@@ -1,7 +1,17 @@
 jQuery(function(){
 	(function($){
 		// Methods definition
-		window['sd_remove'] = function(e){
+		window[ 'sd_display_more_info' ] = function( e ){
+            e = $( e );
+            e.parent().hide().next( '.sd_more_info' ).show();
+        };
+        
+        window[ 'sd_hide_more_info' ] = function( e ){
+            e = $( e );
+            e.parent().hide().prev( '.sd_more_info_hndl' ).show();
+        };
+        
+        window['sd_remove'] = function(e){
 			$(e).parents('.sd-property-container').remove();
 		};
 		

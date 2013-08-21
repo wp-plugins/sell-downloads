@@ -114,6 +114,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$this->init_post_types(); // Init SellDownloads custom post types
 			
 			if ( ! is_admin()){
+                add_filter('get_pages', array( &$this, '_sd_exclude_pages') ); // for download-page
+                
 				// Check parameter
                 if(isset($_REQUEST['sd_action'])){
                     switch($_REQUEST['sd_action']){
@@ -141,13 +143,25 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 }
                 
                 if(isset($_GET['sd_download'])){
-                    add_filter('the_content', 'sd_generate_downloads');
-                    add_filter('the_title', 'sd_generate_downloads_title');
+                    $durl = $this->_sd_create_pages( 'sd-download-page', 'Download the purchased products' ); // for download-page and download-page
+                    
+                    if( isset( $_GET ) ){
+                        $symbol = ( ( strpos( $durl, '?' ) === false ) ? '?' : '&' );
+                        foreach( $_GET as $key => $value){
+                            if( $key != 'sd_download' ){
+                                $durl .= $symbol.$key.'='.urlencode( $value );
+                                $symbol = '&';
+                            }    
+                        }
+                    }
+                    header( 'location:'.$durl );
+                    exit;
                 }
                 
 				// Set custom post_types on search result
 				add_shortcode('sell_downloads', array(&$this, 'load_store'));
-				$this->load_templates(); // Load the sell downloads template for songs and collections display
+				add_filter( 'the_content', array( &$this, '_sd_the_content' ) );
+                $this->load_templates(); // Load the sell downloads template for songs and collections display
 				
 				// Load public resources
 				add_action( 'wp_enqueue_scripts', array(&$this, 'public_resources'), 10 );
@@ -155,6 +169,62 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			// Init action
 			do_action( 'selldownloads_init' );
 		} // End init
+		
+        function _sd_create_pages( $slug, $title ){
+            $page = get_page_by_path( $slug ); 
+            if( is_null( $page ) ){
+                if( wp_insert_post(
+                        array(
+                            'comment_status' => 'closed',
+                            'post_name' => $slug,
+                            'post_title' => __( $title, SD_TEXT_DOMAIN ),
+                            'post_status' => 'publish',
+                            'post_type' => 'page'
+                        )
+                    )    
+                ){
+                    $page = get_page_by_path( $slug ); 
+                }
+            }else{
+                $page->post_status = 'publish';
+                wp_update_post( $page );
+            }
+            
+            return ( !is_null( $page ) ) ? get_permalink($page->ID) : SD_H_URL;
+        }
+        
+        function _sd_exclude_pages( $pages ){
+            
+            $exclude = array();
+            $length = count( $pages );
+            
+            $p = get_page_by_path( 'sd-download-page' );
+            if( !is_null( $p ) ) $exclude[] = $p->ID;
+            
+            for ( $i=0; $i<$length; $i++ ) {
+                $page = & $pages[$i];
+                
+                if ( in_array( $page->ID, $exclude ) ) {
+                    // Finally, delete something(s)
+                    unset( $pages[$i] );
+                }
+            }
+            
+            return $pages;
+        }
+        
+        function _sd_the_content( $the_content  ){
+            global $post;    
+            
+            $slug = $post->post_name;
+
+            if( $slug == "sd-download-page" ){
+                $new_content = sd_generate_downloads( $the_content );
+                if( $new_content != $the_content ) $the_content .= $new_content;
+            }
+            
+            return $the_content;
+        }    
 		
 		/**
 		* Init SellDownloads when the WordPress is open for admin
@@ -178,7 +248,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			
 			$plugin = plugin_basename(__FILE__);
 			add_filter('plugin_action_links_'.$plugin, array(&$this, 'customizationLink'));
-			
+            $this->_sd_create_pages( 'sd-download-page', 'Download the purchased products' ); // for download-page
+            
 			// Init action
 			do_action( 'selldownloads_admin_init' );
 		} // End init
@@ -595,6 +666,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					</div>
 					
 					<!-- PAYPAL BOX -->
+					<p class="sd_more_info" style="display:block;">The Sell Downloads uses PayPal only as payment gateway, but depending of your PayPal account, it is possible to charge the purchase directly from the Credit Cards of customers.</p>
 					<div class="postbox">
 						<h3 class='hndle' style="padding:5px;"><span><?php _e('Paypal Payment Configuration', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside">
@@ -607,7 +679,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 						
 							<tr valign="top">        
 							<th scope="row"><?php _e('Paypal email', SD_TEXT_DOMAIN); ?></th>
-							<td><input type="text" name="sd_paypal_email" size="40" value="<?php echo esc_attr(get_option('sd_paypal_email', SD_PAYPAL_EMAIL)); ?>" /></td>
+							<td><input type="text" name="sd_paypal_email" size="40" value="<?php echo esc_attr(get_option('sd_paypal_email', SD_PAYPAL_EMAIL)); ?>" />
+                            <span class="sd_more_info_hndl" style="margin-left: 10px;"><a href="javascript:void(0);" onclick="sd_display_more_info( this );">[ + more information]</a></span>
+                            <div class="sd_more_info">
+                                <p>If let empty the email associated to PayPal, the Sell Downloads assumes the product will be distributed for free, and displays a download link in place of the button for purchasing</p>
+                                <a href="javascript:void(0)" onclick="sd_hide_more_info( this );">[ + less information]</a>
+                            </div>
+                            </td>
 							</tr>
 							 
 							<tr valign="top">
@@ -850,6 +928,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 
 			if(strpos($hook, "sell-downloads") !== false){
 				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery'), null, true);
+                wp_enqueue_style('sd-admin-style', plugin_dir_url(__FILE__).'sd-styles/sd-admin.css');
 			}
         
 			if ( $hook == 'post-new.php' || $hook == 'post.php' || $hook == 'index.php') {

@@ -100,15 +100,7 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
 		return pathinfo($song_obj->file, PATHINFO_FILENAME);
 	} // End sd_product_title
 	
-    function sd_generate_downloads_title($the_title){
-        global $id;
-        if(in_the_loop() && $id)
-            return __('Download the purchased products', SD_TEXT_DOMAIN);
-        else
-            return $the_title;
-    }
-    
-	function sd_generate_downloads($the_content){
+    function sd_generate_downloads($the_content){
     	global $wpdb, $download_links_str, $id;
 		if($id){
             global $htaccess_accepted;
@@ -163,12 +155,13 @@ function sell_downloads_register_purchase($product_id, $purchase_id, $email, $am
                 if(empty($download_links_str)){
                     $download_links_str = __('The list of purchased products is empty', SD_TEXT_DOMAIN);
                 }
-                include_once(dirname(__FILE__).'/../sd-templates/sd-donwload-page-template.php');
+                return $download_links_str;
             } // End purchase checking	
-            return '';
-        }else{
-            return $the_content;
-        }    
+            
+        }
+        
+        return $the_content;
+            
 	} //sd_generate_downloads
 	
 ?>

@@ -182,7 +182,12 @@ if(!class_exists('SDProduct')){
 							'.__('Sales price:', SD_TEXT_DOMAIN).'
 						</td>
 						<td>
-							<input type="text" name="sd_price" id="sd_price" value="'.(($data && $data->price) ? esc_attr(sprintf("%.2f", $data->price)) : '').'" /> '.get_option('sd_paypal_currency', SD_PAYPAL_LANGUAGE).'
+							<input type="text" name="sd_price" id="sd_price" value="'.(($data && $data->price) ? esc_attr(sprintf("%.2f", $data->price)) : '').'" /> '.get_option('sd_paypal_currency', SD_PAYPAL_CURRENCY).'
+                            <span class="sd_more_info_hndl" style="margin-left: 10px;"><a href="javascript:void(0);" onclick="sd_display_more_info( this );">[ + more information]</a></span>
+                            <div class="sd_more_info">
+                                <p>If let empty the product\'s price, the Sell Downloads assumes the product will be distributed for free, and displays a download link in place of the button for purchasing</p>
+                                <a href="javascript:void(0)" onclick="sd_hide_more_info( this );">[ + less information]</a>
+                            </div>
 						</td>
 					</tr>
 					<tr>
@@ -252,10 +257,10 @@ if(!class_exists('SDProduct')){
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td style="white-space:nowrap;">
 							'.__('Additional information:', SD_TEXT_DOMAIN).'
 						</td>
-						<td>
+						<td style="width:100%;">
 							<input type="text" name="sd_info" id="sd_info" value="'.(($data && $data->info) ? $data->info : '').'" placeholder="'.__('Page URL', SD_TEXT_DOMAIN).'" /> <span class="sd-comment">'.__('Different webpage with additional information', SD_TEXT_DOMAIN).'</span>
 						</td>
 					</tr>
