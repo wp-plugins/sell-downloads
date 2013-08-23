@@ -995,10 +995,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				$type = $_SESSION['sd_type'];
 			}
 			
-			if(isset($_REQUEST['ordering_by']) && in_array($_REQUEST['ordering_by'], array('plays', 'price'))){
+			if(isset($_REQUEST['ordering_by']) && in_array($_REQUEST['ordering_by'], array('plays', 'price', 'post_title'))){
 				$_SESSION['sd_ordering'] = $_REQUEST['ordering_by'];
 			}else{
-				$_SESSION['sd_ordering'] = "post_title";
+				$_SESSION['sd_ordering'] = "post_date";
 			}
 			
 			// Extract info from sell downloads options
@@ -1013,7 +1013,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$_select 	= "SELECT DISTINCT posts.ID, posts.post_type";
 			$_from 		= "FROM ".$wpdb->prefix."posts as posts,".$wpdb->prefix.SDDB_POST_DATA." as posts_data"; 
 			$_where 	= "WHERE posts.ID = posts_data.id AND posts.post_status='publish'";
-			$_order_by 	= "ORDER BY ".(($_SESSION['sd_ordering'] == "post_title") ? "posts" : "posts_data").".".$_SESSION['sd_ordering']." ".(($_SESSION['sd_ordering'] == 'plays') ? "DESC" : "ASC");
+			$_order_by 	= "ORDER BY ".(($_SESSION['sd_ordering'] == "post_title" || $_SESSION['sd_ordering'] == "post_date" ) ? "posts" : "posts_data").".".$_SESSION['sd_ordering']." ".(($_SESSION['sd_ordering'] == 'plays' || $_SESSION['sd_ordering'] == 'post_date') ? "DESC" : "ASC");
 			$_limit 	= "";
 			
 			if($type !== 'all'){
@@ -1121,6 +1121,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$header .= "<div class='sell-downloads-ordering'>".
 							__('Order by: ', SD_TEXT_DOMAIN).
 							"<select id='ordering_by' name='ordering_by' onchange='this.form.submit();'>
+								<option value='post_date' ".(($_SESSION['sd_ordering'] == 'post_date') ? "SELECTED" : "").">".__('Date', SD_TEXT_DOMAIN)."</option>
 								<option value='post_title' ".(($_SESSION['sd_ordering'] == 'post_title') ? "SELECTED" : "").">".__('Name', SD_TEXT_DOMAIN)."</option>
 								<option value='plays' ".(($_SESSION['sd_ordering'] == 'plays') ? "SELECTED" : "").">".__('Popularity', SD_TEXT_DOMAIN)."</option>
 								<option value='price' ".(($_SESSION['sd_ordering'] == 'price') ? "SELECTED" : "").">".__('Price', SD_TEXT_DOMAIN)."</option>
