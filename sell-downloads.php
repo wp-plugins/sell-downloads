@@ -936,7 +936,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 wp_enqueue_script('jquery-ui-dialog');
 				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-dialog', 'media-upload'), null, true);
 				
-				if($post->post_type == "sd_product"){
+				if( isset( $post ) && $post->post_type == "sd_product"){
 					// Scripts and styles required for metaboxs
 					wp_enqueue_style('sd-admin-style', plugin_dir_url(__FILE__).'sd-styles/sd-admin.css');
 					wp_localize_script('sd-admin-script', 'sell_downloads', array('post_id' => $post->ID));	
@@ -974,6 +974,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		function load_store($atts, $content, $tag){
 			global $wpdb;
 			
+			$page_id = 'sd_page_'.get_the_ID();
+            
+            if( !isset( $_SESSION[ $page_id ] ) ) $_SESSION[ $page_id ] = array();
+  			
 			// Generated sell downloads
 			$sell_downloads = "";
 			$page_links = "";
@@ -988,17 +992,17 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 
 			// Extract query_string variables correcting sell downloads attributes
 			if(isset($_REQUEST['filter_by_type'])){
-				$_SESSION['sd_type'] = $_REQUEST['filter_by_type'];
+				$_SESSION[ $page_id ]['sd_type'] = $_REQUEST['filter_by_type'];
 			}
 			
-			if(isset($_SESSION['sd_type'])){
-				$type = $_SESSION['sd_type'];
+			if(isset($_SESSION[ $page_id ]['sd_type'])){
+				$type = $_SESSION[ $page_id ]['sd_type'];
 			}
 			
-			if(isset($_REQUEST['ordering_by']) && in_array($_REQUEST['ordering_by'], array('plays', 'price', 'post_title'))){
-				$_SESSION['sd_ordering'] = $_REQUEST['ordering_by'];
-			}else{
-				$_SESSION['sd_ordering'] = "post_date";
+			if(isset($_REQUEST['ordering_by']) && in_array($_REQUEST['ordering_by'], array('plays', 'price', 'post_title', 'post_date'))){
+				$_SESSION[ $page_id ]['sd_ordering'] = $_REQUEST['ordering_by'];
+			}elseif( !isset($_SESSION[ $page_id ]['sd_ordering']) ){
+				$_SESSION[ $page_id ]['sd_ordering'] = "post_date";
 			}
 			
 			// Extract info from sell downloads options
@@ -1013,7 +1017,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$_select 	= "SELECT DISTINCT posts.ID, posts.post_type";
 			$_from 		= "FROM ".$wpdb->prefix."posts as posts,".$wpdb->prefix.SDDB_POST_DATA." as posts_data"; 
 			$_where 	= "WHERE posts.ID = posts_data.id AND posts.post_status='publish'";
-			$_order_by 	= "ORDER BY ".(($_SESSION['sd_ordering'] == "post_title" || $_SESSION['sd_ordering'] == "post_date" ) ? "posts" : "posts_data").".".$_SESSION['sd_ordering']." ".(($_SESSION['sd_ordering'] == 'plays' || $_SESSION['sd_ordering'] == 'post_date') ? "DESC" : "ASC");
+			$_order_by 	= "ORDER BY ".(($_SESSION[ $page_id ]['sd_ordering'] == "post_title" || $_SESSION[ $page_id ]['sd_ordering'] == "post_date" ) ? "posts" : "posts_data").".".$_SESSION[ $page_id ]['sd_ordering']." ".(($_SESSION[ $page_id ]['sd_ordering'] == 'plays' || $_SESSION[ $page_id ]['sd_ordering'] == 'post_date') ? "DESC" : "ASC");
 			$_limit 	= "";
 			
 			if($type !== 'all'){
@@ -1047,14 +1051,14 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				// Checking for page parameter or get page from session variables
 				// Clear the page number if filtering option change
 				if(isset($_POST['filter_by_type'])){
-					$_SESSION['sd_page_number'] = 0;
+					$_SESSION[ $page_id ]['sd_page_number'] = 0;
 				}elseif(isset($_GET['page_number'])){
-					$_SESSION['sd_page_number'] = $_GET['page_number'];
-				}elseif(!isset($_SESSION['sd_page_number'])){
-					$_SESSION['sd_page_number'] = 0;
+					$_SESSION[ $page_id ]['sd_page_number'] = $_GET['page_number'];
+				}elseif(!isset($_SESSION[ $page_id ]['sd_page_number'])){
+					$_SESSION[ $page_id ]['sd_page_number'] = 0;
 				}
 
-				$_limit = "LIMIT ".($_SESSION['sd_page_number']*$items_page).", $items_page";
+				$_limit = "LIMIT ".($_SESSION[ $page_id ]['sd_page_number']*$items_page).", $items_page";
 				
 				// Get total records for pagination
 				$query = "SELECT COUNT(DISTINCT posts.ID) ".$_from." ".$_where;
@@ -1069,7 +1073,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					
 				
 					for($i=0, $h = $total_pages; $i < $h; $i++){
-						if($_SESSION['sd_page_number'] == $i)
+						if($_SESSION[ $page_id ]['sd_page_number'] == $i)
 							$page_links .= "<span class='page-selected'>".($i+1)."</span>";
 						else	
 							$page_links .= "<a class='page-link' href='".$page_href."page_number=".$i."'>".($i+1)."</a>";
@@ -1121,10 +1125,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$header .= "<div class='sell-downloads-ordering'>".
 							__('Order by: ', SD_TEXT_DOMAIN).
 							"<select id='ordering_by' name='ordering_by' onchange='this.form.submit();'>
-								<option value='post_date' ".(($_SESSION['sd_ordering'] == 'post_date') ? "SELECTED" : "").">".__('Date', SD_TEXT_DOMAIN)."</option>
-								<option value='post_title' ".(($_SESSION['sd_ordering'] == 'post_title') ? "SELECTED" : "").">".__('Name', SD_TEXT_DOMAIN)."</option>
-								<option value='plays' ".(($_SESSION['sd_ordering'] == 'plays') ? "SELECTED" : "").">".__('Popularity', SD_TEXT_DOMAIN)."</option>
-								<option value='price' ".(($_SESSION['sd_ordering'] == 'price') ? "SELECTED" : "").">".__('Price', SD_TEXT_DOMAIN)."</option>
+								<option value='post_date' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'post_date') ? "SELECTED" : "").">".__('Date', SD_TEXT_DOMAIN)."</option>
+								<option value='post_title' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'post_title') ? "SELECTED" : "").">".__('Name', SD_TEXT_DOMAIN)."</option>
+								<option value='plays' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'plays') ? "SELECTED" : "").">".__('Popularity', SD_TEXT_DOMAIN)."</option>
+								<option value='price' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'price') ? "SELECTED" : "").">".__('Price', SD_TEXT_DOMAIN)."</option>
 							</select>
 						</div>";
 						
@@ -1167,7 +1171,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		function set_sell_downloads_button(){
 			global $post;
 			
-			if($post->post_type != 'sd_product')
+			if( isset( $post ) && $post->post_type != 'sd_product')
 			print '<a href="javascript:open_insertion_sell_downloads_window();" title="'.__('Insert Sell Downloads').'"><img src="'.SD_CORE_IMAGES_URL.'/sell-downloads-icon.gif'.'" alt="'.__('Insert Sell Downloads').'" /></a>';
 		} // End set_sell_downloads_button
 		
