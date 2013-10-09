@@ -40,8 +40,9 @@ The base plugin, available for free from the WordPress Plugin Directory has all 
 **Premium Features:**
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
-*	  Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
-*	  Allows to insert a specific product in a post or page.
+*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
+*	Allows to insert a specific product in a post or page. The product is available as widget to be inserted in the website's sidebars.
+*	Allows to insert a product list in a post or page. The products can be selected between the most rated, the newest, or top selling. The product list is available as widget to be inserted in the website's sidebars.
 *   Allows to define sales discounts. It is usual in the e-commerce create sales campaings, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
 *   Allows to define discount coupons. The coupons are an excellent tool to know where is the origin of sales and create (like in discounts definition) sales campaings, but directed to a specific sector or website. The coupons are applied to all sales from the ecommerce.
 
@@ -149,6 +150,20 @@ The insertion process generates a shortcode which will be replaced by the shop w
 
 Note: After inserting the ecommerce on a page of your WordPress, it is advisable to copy the URL of the relevant page, and enter in the "Sell Downloads" setup section, to allow the users to return to the shop from the product page.
 
+**Interface for insertion dialog of product (the products list is available as widget to be inserted in the website's sidebars)(the option is available only in the premium version of "Sell Downloads" plugin)**
+
+*   Enter the product's ID
+
+The insertion process generates a shortcode which will be replaced by the product when it is displayed on the website.
+
+**Interface for insertion dialog of product list (the products list is available as widget to be inserted in the website's sidebars)(the option is available only in the premium version of "Sell Downloads" plugin)**
+
+*   Select the type of list: it is possible insert the list of top rated products, the newest or top selling.
+*   Number of products to show: enter the number of products to display in the list.
+*   Number of columns: enter the number of columns.
+
+The insertion process generates a shortcode which will be replaced by the list of products when it is displayed on the website.
+
 **Sales Statistics(premium version)**
 
 When a sale takes place, a notification email is sent to the shop manager. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-6)
@@ -177,5 +192,8 @@ A: To download all purchased files as  only one file, is required enabling the z
 3. Product Edition Interface
 4. Sell Downloads Insertion Button
 5. Sell Downloads Insertion Interface
-6. Sales Reports
-7. Filtering Sales Report
+6. Insertion Interface for Product
+7. Insertion Interface for Products List
+8. Available Widgets for Products and Products List Insertion
+9. Sales Reports
+10. Filtering Sales Report

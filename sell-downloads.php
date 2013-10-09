@@ -1173,7 +1173,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $post;
 			
 			if( isset( $post ) && $post->post_type != 'sd_product')
-			print '<a href="javascript:open_insertion_sell_downloads_window();" title="'.__('Insert Sell Downloads').'"><img src="'.SD_CORE_IMAGES_URL.'/sell-downloads-icon.gif'.'" alt="'.__('Insert Sell Downloads').'" /></a>';
+			print '<a href="javascript:open_insertion_sell_downloads_window();" title="'.__('Insert Sell Downloads').'"><img src="'.SD_CORE_IMAGES_URL.'/sell-downloads-icon.png'.'" alt="'.__('Insert Sell Downloads').'" /></a>';
 		} // End set_sell_downloads_button
 		
 		
