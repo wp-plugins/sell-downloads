@@ -32,10 +32,13 @@ Create an e-commerce for sell digital files never was more easy than with "Sell 
 *	Allows selling your digital files via PayPal. PayPal is the payment gateway by excellence, very easy to use and very secure.
 *	Allows a custom setup of the ecommerce, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name, making of "Sell Downloads" a very configurable plugin.
 *	Allows to associate additional information to the products. For example, if are selling a book and like to associate a link to other books of the same editorial, or a page of reviews from critics, this field would be the option for do it. 
-* Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trilers or the monographies and its abstracts.
+* Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trailers or the monographies and its abstracts.
 
 The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a ecommerce for sell downloads on your website.
 
+[youtube http://www.youtube.com/watch?v=Quosrug9pgo]
+
+Inserting and using the basic "Sell Downloads" plugin.
 
 **Premium Features:**
 
@@ -43,13 +46,20 @@ The base plugin, available for free from the WordPress Plugin Directory has all 
 *	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
 *	Allows to insert a specific product in a post or page. The product is available as widget to be inserted in the website's sidebars.
 *	Allows to insert a product list in a post or page. The products can be selected between the most rated, the newest, or top selling. The product list is available as widget to be inserted in the website's sidebars.
-*   Allows to define sales discounts. It is usual in the e-commerce create sales campaings, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
+*   Allows to define sales discounts. It is usual in the e-commerce create sales campaigns, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
 *   Allows to define discount coupons. The coupons are an excellent tool to know where is the origin of sales and create (like in discounts definition) sales campaings, but directed to a specific sector or website. The coupons are applied to all sales from the ecommerce.
 
+[youtube http://www.youtube.com/watch?v=BG1Y2TSlvms]
+
+Inserting and using the premium "Sell Downloads" plugin.
 
 If you want more information about this plugin don't hesitate in checking the plugin's website:
 
 [http://wordpress.dwbooster.com/content-tools/sell-downloads](http://wordpress.dwbooster.com/content-tools/sell-downloads "Sell Downloads")
+
+[youtube http://www.youtube.com/watch?v=fkkA1-bs430]
+
+Inserting a products list, and products, in pages or sidebars of website (only available in the premium version of plugin).
 
 == Installation ==
 
@@ -152,7 +162,7 @@ Note: After inserting the ecommerce on a page of your WordPress, it is advisable
 
 **Interface for insertion dialog of product (the products list is available as widget to be inserted in the website's sidebars)(the option is available only in the premium version of "Sell Downloads" plugin)**
 
-*   Enter the product's ID
+*   Enter the product's ID (screenshot-6)
 
 The insertion process generates a shortcode which will be replaced by the product when it is displayed on the website.
 
@@ -161,14 +171,17 @@ The insertion process generates a shortcode which will be replaced by the produc
 *   Select the type of list: it is possible insert the list of top rated products, the newest or top selling.
 *   Number of products to show: enter the number of products to display in the list.
 *   Number of columns: enter the number of columns.
+(screenshot-7)
 
 The insertion process generates a shortcode which will be replaced by the list of products when it is displayed on the website.
 
+The products list, and specific products, can be inserted as widgets on sidebars (screenshot-8)
+
 **Sales Statistics(premium version)**
 
-When a sale takes place, a notification email is sent to the shop manager. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-6)
+When a sale takes place, a notification email is sent to the shop manager. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-9)
 
-The Reports section allows you to filter sales reports over a specific period, by default it shows the current day's sales. It also shows sales' totals for the selected period and the currency of the sales (screenshot-7)
+The Reports section allows you to filter sales reports over a specific period, by default it shows the current day's sales. It also shows sales' totals for the selected period and the currency of the sales (screenshot-10)
 
 You can delete a sales report from the list of sales. This may be useful in case of a refund granted to a buyer, and allows to keep your sales statistics updated with the actual purchases.
 
@@ -186,14 +199,50 @@ A: If the store has defined a discount and a coupon at the same time, only one i
 
 A: To download all purchased files as  only one file, is required enabling the zip option from the settings page of "Sell Downloads". The zip feature may be disabled in your website because the required extensions are not present in the PHP of the web server.
 
+= Q: Why the sell downloads is not loading on page? =
+
+A: Verify that the theme used in your website, includes the function wp_footer(); in the template file "footer.php" or the template file "index.php"
+
+= Q: What can I do if the sell downloads directory exists and the premium version of plugin cannot be installed? =
+
+A: Go to the plugins section in WordPress, deactivate the free version of Sell Downloads, and delete it ( Don't worry, this process don't modify the products created with the free version of plugin), and finally install and activate the premium version of plugin.
+
+= Q: Does allow the sell downloads a different payment gateway than PayPal? =
+
+A: I'm sorry, but the current version of plugin allows PayPal only.
+
+= Q: Can the customers pay directly with its credit cards? =
+
+A: The restriction is imposed by PayPal. Please, check that your PayPal account allow to charge directly from the credit cards of customers.
+
+= Q: Is possible modify the appearance of sell downloads products? =
+
+A: The design of each section of Sell Downloads, is determined from templates located in "/wp-content/plugins/sell-downloads/sd-templates".
+
+The "sd-templates" directory contains multiple files.
+
+The template files: 
+
+- product.tpl.html is used in the store page.
+- product_single.tpl.html is used in particular pages of products.
+- product_multiple.tpl.html is used in pages of multiple entries like: archives and search result page.
+
+= Q: Is possible promote a product, or products list? =
+
+A: It is possible promote a product or products list, from the website's sidebars, or directly from the content of pages or posts. 
+
+To promote the products on sidebars, go to the widgets section, and inserts the corresponding widget on sidebar. 
+
+To promote the products from the content of pages and posts, go to the page and press the corresponding icon over the contents editor.
+
 == Screenshots ==
-1. Sell Downloads Item
-2. Sell Downloads Product Section
-3. Product Edition Interface
-4. Sell Downloads Insertion Button
-5. Sell Downloads Insertion Interface
-6. Insertion Interface for Product
-7. Insertion Interface for Products List
-8. Available Widgets for Products and Products List Insertion
-9. Sales Reports
+01. Sell Downloads Item
+02. Sell Downloads Product Section
+03. Product Edition Interface
+04. Sell Downloads Insertion Button
+05. Sell Downloads Insertion Interface
+06. Insertion Interface for Product
+07. Insertion Interface for Products List
+08. Available Widgets for Products and Products List Insertion
+09. Sales Reports
 10. Filtering Sales Report

@@ -161,6 +161,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				// Set custom post_types on search result
 				add_shortcode('sell_downloads', array(&$this, 'load_store'));
 				add_filter( 'the_content', array( &$this, '_sd_the_content' ) );
+				add_filter( 'the_excerpt', array( &$this, '_sd_the_excerpt' ) ); // For search results
                 $this->load_templates(); // Load the sell downloads template for songs and collections display
 				
 				// Load public resources
@@ -214,6 +215,18 @@ Description: Sell Downloads is an online store for selling downloadable files: a
             return $pages;
         }
         
+		function _sd_the_excerpt( $the_excerpt ){
+			global $post;    
+			if( is_search() && isset( $post) && $post->post_type == 'sd_product' ){
+				$tpl = new sell_downloads_tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
+				$obj = new SDProduct( $post->ID );
+				return $obj->display_content( 'multiple', $tpl, 'return');
+			}
+				
+			return $the_excerpt;
+		}
+		
+		
         function _sd_the_content( $the_content  ){
             global $post;    
             
