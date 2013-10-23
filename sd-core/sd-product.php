@@ -102,7 +102,8 @@ if(!class_exists('SDProduct')){
 				'link'	=> get_permalink($this->id),
 				'popularity' => $this->plays,
                 'social' => null,
-                'price' => null
+                'price' => null,
+				'has_types' => null
 			);
 			
             if(get_option('sd_social_buttons')){
