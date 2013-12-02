@@ -55,6 +55,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
  define('SD_FILTER_BY_TYPE', true);
  define('SD_ORDER_BY_POPULARITY', true);
  define('SD_ORDER_BY_PRICE', true);			
+
+ define('SD_SAFE_DOWNLOAD', false);
  
  // TABLE NAMES
  define( 'SDDB_POST_DATA', 'msdb_post_data');
@@ -139,23 +141,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                                 exit;
                             }
                         break;
+						case 'f-download':
+							sd_download_file();
+							exit;
+						break;
                     }
-                }
-                
-                if(isset($_GET['sd_download'])){
-                    $durl = $this->_sd_create_pages( 'sd-download-page', 'Download the purchased products' ); // for download-page and download-page
-                    
-                    if( isset( $_GET ) ){
-                        $symbol = ( ( strpos( $durl, '?' ) === false ) ? '?' : '&' );
-                        foreach( $_GET as $key => $value){
-                            if( $key != 'sd_download' ){
-                                $durl .= $symbol.$key.'='.urlencode( $value );
-                                $symbol = '&';
-                            }    
-                        }
-                    }
-                    header( 'location:'.$durl );
-                    exit;
                 }
                 
 				// Set custom post_types on search result
@@ -172,7 +162,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		} // End init
 		
         function _sd_create_pages( $slug, $title ){
-            if( session_id() == "" ) session_start();
+            //if( session_id() == "" || !isset( $_SESSION ) ) session_start();
 			if( isset( $_SESSION[ $slug ] ) ) return $_SESSION[ $slug ];
             
             $page = get_page_by_path( $slug ); 
@@ -625,6 +615,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 update_option('sd_paypal_currency', $_POST['sd_paypal_currency']);
 				update_option('sd_paypal_currency_symbol', $_POST['sd_paypal_currency_symbol']);
 				update_option('sd_paypal_language', $_POST['sd_paypal_language']);
+				update_option('sd_safe_download', ((isset($_POST['sd_safe_download'])) ? true : false));
 				
 ?>				
 				<div class="updated" style="margin:5px 0;"><strong><?php _e("Settings Updated", SD_TEXT_DOMAIN); ?></strong></div>
@@ -771,6 +762,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 							<tr valign="top">
 							<th scope="row"><?php _e('Download link valid for', SD_TEXT_DOMAIN); ?></th>
 							<td><input type="text" name="sd_old_download_link" value="<?php echo esc_attr(get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK)); ?>" /> <?php _e('day(s)', SD_TEXT_DOMAIN)?></td>
+							</tr>  
+							
+							<tr valign="top">
+							<th scope="row"><?php _e('Increase the download page security', SD_TEXT_DOMAIN); ?></th>
+							<td><input type="checkbox" name="sd_safe_download" <?php echo ( ( get_option('sd_safe_download', SD_SAFE_DOWNLOAD)) ? 'CHECKED' : '' ); ?> /> <?php _e('The customers must enter the email address used in the product\'s purchasing to access to the download link. The Store verifies the customer\'s data, from the file link too.', SD_TEXT_DOMAIN)?></td>
 							</tr>  
 							
 							<tr valign="top">
@@ -1206,7 +1202,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 	} // End SellDownloads class
 	
 	// Initialize SellDownloads class
-	@session_start();
+	if( session_id() == "" || !isset( $_SESSION ) ) session_start(); 
+	
 	$GLOBALS['sell_downloads'] = new SellDownloads;
 	
 	register_activation_hook(__FILE__, array(&$GLOBALS['sell_downloads'], 'register'));

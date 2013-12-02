@@ -41,15 +41,18 @@
 	
 	$sd_notification_to_seller_subject  = get_option('sd_notification_to_seller_subject', SD_NOTIFICATION_TO_SELLER_SUBJECT);
 	$sd_notification_to_seller_message  = get_option('sd_notification_to_seller_message', SD_NOTIFICATION_TO_SELLER_MESSAGE);
-	
+		
+	$dlurl = $GLOBALS['sell_downloads']->_sd_create_pages( 'sd-download-page', 'Download the purchased products' );
+    $dlurl .= ( ( strpos( $dlurl, '?' ) === false ) ? '?' : '&' );
+    
 	$information_payer = "Product: {$item_name}\n".
 						 "Amount: {$payment_amount} {$payment_currency}\n".
-						 "Download Link: ".SD_H_URL."?sd_download=download&purchase_id={$_GET['purchase_id']}\n";
+						 "Download Link: ".$dlurl."purchase_id={$_GET['purchase_id']}\n";
 						 
 	$information_seller = "Product: {$item_name}\n".
 						  "Amount: {$payment_amount} {$payment_currency}\n".
 						  "Buyer Email: {$payer_email}\n".
-						  "Download Link: ".SD_H_URL."?sd_download=download&purchase_id={$_GET['purchase_id']}\n";
+						  "Download Link: ".$dlurl."purchase_id={$_GET['purchase_id']}\n";
 						 
 	$sd_notification_to_payer_message  = str_replace("%INFORMATION%", $information_payer, $sd_notification_to_payer_message);
 	$sd_notification_to_seller_message = str_replace("%INFORMATION%", $information_seller, $sd_notification_to_seller_message);

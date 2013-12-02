@@ -69,5 +69,5 @@
 
 .clear {clear: both;}
 
-.sd-shopping-cart{width:128px; height:51px; cursor:pointer;background:url(../paypal_buttons/shopping_cart/button_g.png) no-repeat 0 0; text-align:right;line-height:50px;font-weight:bold;float:right;margin-bottom:10px;}
-.sd-shopping-cart-text{margin-right:10px;}
+.sd-error-mssg{ border: 1px solid #FF0000; color: #FF0000; text-align:center; width:100%; }
+.sd-error-mssg ul{ list-style:none; }

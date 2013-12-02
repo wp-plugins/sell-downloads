@@ -2,8 +2,9 @@
     $ms_paypal_email = get_option('sd_paypal_email');
 
 	$baseurl = SD_H_URL.'?sd_action=ipn';
-	$returnurl = SD_H_URL.'?sd_download=download';
-    $cancel_url = $_SERVER['HTTP_REFERER'];
+	$returnurl = $GLOBALS['sell_downloads']->_sd_create_pages( 'sd-download-page', 'Download the purchased products' );
+    $returnurl .= ( strpos( $returnurl, '?' ) === false ) ? '?' : '&';
+	$cancel_url = $_SERVER['HTTP_REFERER'];
     
     if(empty($cancel_url)) $cancel_url = home_url();
             

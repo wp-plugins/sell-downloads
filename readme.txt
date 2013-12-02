@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags:downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video
 Requires at least: 3.0.5
-Tested up to: 3.7
+Tested up to: 3.7.1
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -53,6 +53,15 @@ Inserting and using the basic "Sell Downloads" plugin.
 
 Inserting and using the premium "Sell Downloads" plugin.
 
+**Are safe the downloads links?**
+
+The security in the access to products files is determined in different ways. 
+
+*	The products files can't be accessed directly. The purchased files are stored in a special directory called sd-downloads, the sd-downloads directory includes a .htaccess file that forbid the access from browser. The files can be accessed only through a server side script that validates the purchase.  
+*	The Store determines the validity of  download links based in two options, available in the settings page of plugin.
+It is possible define a time period, in days, where a download link is considered valid. If a user tries to download a purchased product, the Store checks the date of purchasing.
+The  Store may be configured to request the email address used in the purchasing to check the validity of download link.
+
 If you want more information about this plugin don't hesitate in checking the plugin's website:
 
 [http://wordpress.dwbooster.com/content-tools/sell-downloads](http://wordpress.dwbooster.com/content-tools/sell-downloads "Sell Downloads")
@@ -92,6 +101,7 @@ The setup interface of commerce includes the following fields:
 *   Currency: Symbol of the currency in which payments are accepted.
 *   PayPal language: Preferred language of the PayPal interface. 
 *   PayPal button: Select the PayPal button design. 
+*   Increase the download page security: Requests the email used in product's purchase from the download page.
 *   Download link valid for: Set an expire time for the download links.
 
 **Discount settings applied to the sales of the ecommerce. In the shopping cart the discount is applied to the total sale cost(premium version)**
@@ -234,6 +244,15 @@ A: It is possible promote a product or products list, from the website's sidebar
 To promote the products on sidebars, go to the widgets section, and inserts the corresponding widget on sidebar. 
 
 To promote the products from the content of pages and posts, go to the page and press the corresponding icon over the contents editor.
+
+= Q: Are safe the products' downloads? =
+
+A: The security in the access to products files is determined in different ways. 
+
+- The products files can't be accessed directly. The purchased files are stored in a special directory called sd-downloads, the sd-downloads directory includes a .htaccess file that forbid the access from browser. The files can be accessed only through a server side script that validates the purchase.  
+- The Store determines the validity of  download links based in two options, available in the settings page of plugin.
+-- It is possible define a time period, in days, where a download link is considered valid. If a user tries to download a purchased product, the Store checks the date of purchasing.
+-- The Store may be configured to request the email address used in the purchasing to check the validity of download link.
 
 == Screenshots ==
 01. Sell Downloads Item
