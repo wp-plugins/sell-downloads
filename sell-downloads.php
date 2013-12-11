@@ -55,7 +55,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
  define('SD_FILTER_BY_TYPE', true);
  define('SD_ORDER_BY_POPULARITY', true);
  define('SD_ORDER_BY_PRICE', true);			
-
+ define('SD_ONLINE_DEMO', false);
  define('SD_SAFE_DOWNLOAD', false);
  
  // TABLE NAMES
@@ -110,7 +110,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		function init(){
             global $wpdb;
 			// I18n
-			load_plugin_textdomain(SD_TEXT_DOMAIN, false, dirname(plugin_basename(__FILE__)) . '/../languages/');
+			load_plugin_textdomain(SD_TEXT_DOMAIN, false, dirname(plugin_basename(__FILE__)) . '/languages/');
 			
 			$this->init_taxonomies(); // Init SellDownloads taxonomies
 			$this->init_post_types(); // Init SellDownloads custom post types
@@ -598,6 +598,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $wpdb;
 			if ( isset($_POST['sd_settings']) && wp_verify_nonce( $_POST['sd_settings'], plugin_basename( __FILE__ ) ) ){
                 update_option('sd_main_page', $_POST['sd_main_page']);
+				update_option('sd_online_demo', ((isset($_POST['sd_online_demo'])) ? 1 : 0));
 				update_option('sd_filter_by_type', ((isset($_POST['sd_filter_by_type'])) ? 1 : 0));
 				update_option('sd_items_page_selector', ((isset($_POST['sd_items_page_selector'])) ? 1 : 0));
 				update_option('sd_items_page', $_POST['sd_items_page']);
@@ -648,6 +649,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 										<input type="text" name="sd_main_page" size="40" value="<?php echo esc_attr(get_option('sd_main_page', SD_MAIN_PAGE)); ?>" />
 										<br />
 										<em><?php _e('Set the URL of page where the Sell Downloads was inserted', SD_TEXT_DOMAIN); ?></em>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th><?php _e('Allow display online demos', SD_TEXT_DOMAIN); ?></th>
+                                    
+									<td><input type="checkbox" name="sd_online_demo" value="1" <?php if (get_option('sd_online_demo', SD_ONLINE_DEMO)) echo 'checked'; ?> /><br />
+									<?php _e( 'The demo files will be displayed with plugins on browser, if they are enabled', SD_TEXT_DOMAIN); ?>
 									</td>
 								</tr>
 								<tr valign="top">
@@ -929,10 +937,29 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* Load public scripts and styles
 		*/
 		function public_resources(){
+			wp_enqueue_script('jquery');
+			if( wp_style_is( 'wp-mediaelement', 'registered' ) ){
+				wp_enqueue_style( 'wp-mediaelement' );
+				wp_enqueue_script( 'wp-mediaelement' );
+			}else{
+				wp_enqueue_style( 'wp-mediaelement',  plugin_dir_url(__FILE__).'mediaelement/wp-mediaelement.css' );
+				wp_enqueue_script( 'wp-mediaelement', plugin_dir_url(__FILE__).'mediaelement/mediaelement-and-player.min.js', array( 'jquery' ) );
+			}
+			
 			wp_enqueue_style('sd-style', plugin_dir_url(__FILE__).'sd-styles/sd-public.css');
-            wp_enqueue_script('jquery');
-			wp_enqueue_script('sd-media-script', plugin_dir_url(__FILE__).'sd-script/sd-public.js', array('jquery'), null, true);
-			wp_localize_script('sd-media-script', 'sd_global', array('url' => SD_URL, 'hurl' => SD_H_URL));
+            wp_enqueue_script('sd-media-script', plugin_dir_url(__FILE__).'sd-script/sd-public.js', array('wp-mediaelement'), null, true);
+			wp_localize_script( 'sd-media-script', 
+								'sd_global', 
+								array(
+									'url' => SD_URL, 
+									'hurl' => SD_H_URL,
+									'texts' => array(
+									  'close_demo' => 'close',
+									  'download_demo' => 'download file',
+									  'plugin_fault' => 'The Object to display the demo file is not enabled in your browser. CLICK HERE to download the demo file',
+									)
+								)
+							);
 		} // End public_resources
 		
 		/**

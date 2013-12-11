@@ -22,6 +22,8 @@ Sell Downloads features:
 	» Allows sharing products in social networks (Facebook, Twitter, Google+)
 	» Allows to associate additional information to the products
 	» Allows to protect the files with the inclusion of a file's demo
+	» The demo files will be displayed directly on browser, whether are enabled 
+	  the corresponding plugins in browser
 
 **Sell Downloads** is an  WordPress eCommerce for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sale process easy and secure.
 
@@ -32,7 +34,7 @@ Create an e-commerce for sell digital files never was more easy than with "Sell 
 *	Allows selling your digital files via PayPal. PayPal is the payment gateway by excellence, very easy to use and very secure.
 *	Allows a custom setup of the ecommerce, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name, making of "Sell Downloads" a very configurable plugin.
 *	Allows to associate additional information to the products. For example, if are selling a book and like to associate a link to other books of the same editorial, or a page of reviews from critics, this field would be the option for do it. 
-* Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trailers or the monographies and its abstracts.
+*	Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trailers or the monographies and its abstracts.
 
 The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a ecommerce for sell downloads on your website.
 
@@ -43,7 +45,7 @@ Inserting and using the basic "Sell Downloads" plugin.
 **Premium Features:**
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
-*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time.
+*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time. The statistics module allows to display animated charts with specific reports like: sales by currency, country or products.
 *	Allows to insert a specific product in a post or page. The product is available as widget to be inserted in the website's sidebars.
 *	Allows to insert a product list in a post or page. The products can be selected between the most rated, the newest, or top selling. The product list is available as widget to be inserted in the website's sidebars.
 *   Allows to define sales discounts. It is usual in the e-commerce create sales campaigns, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
@@ -52,6 +54,12 @@ Inserting and using the basic "Sell Downloads" plugin.
 [youtube http://www.youtube.com/watch?v=BG1Y2TSlvms]
 
 Inserting and using the premium "Sell Downloads" plugin.
+
+**Demo of Premium Version of Plugin**
+
+[http://www.dreamweaverdownloads.com/demos/sell-downloads/wp-login.php](http://www.dreamweaverdownloads.com/demos/sell-downloads/wp-login.php "Click to access the administration area demo")
+
+[http://www.dreamweaverdownloads.com/demos/sell-downloads/](http://www.dreamweaverdownloads.com/demos/sell-downloads/ "Click to access the Sell Downloads")
 
 **Are safe the downloads links?**
 
@@ -192,6 +200,8 @@ The products list, and specific products, can be inserted as widgets on sidebars
 When a sale takes place, a notification email is sent to the shop manager. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-9)
 
 The Reports section allows you to filter sales reports over a specific period, by default it shows the current day's sales. It also shows sales' totals for the selected period and the currency of the sales (screenshot-10)
+
+The statistics module allows to display animated charts for specific reports like: sales by currency, sales by country, or by products.
 
 You can delete a sales report from the list of sales. This may be useful in case of a refund granted to a buyer, and allows to keep your sales statistics updated with the actual purchases.
 

@@ -150,7 +150,93 @@ if(!class_exists('SDProduct')){
 				}
 				
 				$demo = $this->demo;
-                $product_data['demo'] = ($demo) ? '<a href="/?sd_action=demo&file='.urlencode($demo).'" target="_blank">'.__('Download File Demo', SD_TEXT_DOMAIN).'</a>' : '';
+				
+				if( !empty( $demo ) ){
+					$ext = pathinfo( $demo, PATHINFO_EXTENSION );
+					$type = '';
+					$class = '';
+				
+					if( !empty( $ext ) && get_option( 'sd_online_demo', SD_ONLINE_DEMO) ){
+						switch( strtolower( $ext ) ){
+							case 'pdf':
+								$type = 'application/pdf';
+							break;
+							case 'ps':
+								$type = 'application/postscript';
+							break;
+							case 'odt':
+								$type = 'application/vnd.oasis.opendocument.text';
+							break;
+							case 'ods':
+								$type = 'application/vnd.oasis.opendocument.spreadsheet';
+							break;
+							case 'odp':
+								$type = 'application/vnd.oasis.opendocument.presentation';
+							break;
+							case 'sxw':
+								$type = 'application/vnd.sun.xml.writer';
+							break;
+							case 'sxc':
+								$type = 'application/vnd.sun.xml.calc';
+							break;
+							case 'sxi':
+								$type = 'application/vnd.sun.xml.impress';
+							break;
+							case 'doc':
+							case 'docx':
+								$type = 'application/msword';
+							break;
+							case 'xls':
+								$type = 'application/vnd.ms-excel';
+							break;
+							case 'ppt':
+								$type = 'application/vnd.ms-powerpoint';
+							break;
+							case 'rtf':
+								$type = 'text/rtf';
+							break;
+							case 'txt':
+								$type = 'text/plain';
+							break;
+							case 'wav':
+							case 'mp3':
+							case 'ogg':
+							case 'mid':
+								$type = 'audio';
+							break;
+							case 'mpg':
+							case 'avi':
+							case 'wmv':
+							case 'mov':
+							case 'mp4':
+							case 'm4v':
+							case 'flv':
+								$type = 'video';
+							break;
+							
+						}
+					}
+
+					if( !empty( $type ) ){
+						
+						switch( $type ){
+							case 'audio':
+								$product_data['demo'] = '<br /><audio class="sd-demo-media" src="'.$demo.'"></audio><br />';
+							break;
+							case 'video':
+								$product_data['demo'] = '<br /><video class="sd-demo-media" src="'.$demo.'"></video><br />';
+							break;
+							default:
+								$type = 'mtype="'.$type.'"';
+								$class = 'class="sd-demo-link"';
+								$product_data['demo'] = '<a href="/?sd_action=demo&file='.urlencode($demo).'" target="_blank" '.$type.' '.$class.' >'.__('View File Demo', SD_TEXT_DOMAIN).'</a>';
+						}
+					} else {
+						$product_data['demo'] = '<a href="/?sd_action=demo&file='.urlencode($demo).'" target="_blank" '.$type.' '.$class.' >'.__('Download File Demo', SD_TEXT_DOMAIN).'</a>';
+					}
+				} else {
+					$product_data['demo'] = '';
+				}
 				
 				if(strlen($this->post_content)){
 					$product_data['description'] 	= $this->post_content;

@@ -71,3 +71,22 @@
 
 .sd-error-mssg{ border: 1px solid #FF0000; color: #FF0000; text-align:center; width:100%; }
 .sd-error-mssg ul{ list-style:none; }
+
+.sd-demo-container{ background: #FFFFFF; text-align:center; }
+.sd-demo{
+	height:100%;
+	overflow:hidden;
+}
+
+.sd-demo-head{
+	top:0;
+	height: 30px;
+	background: #333333;
+	text-align:right;
+}
+
+.sd-demo-head a{
+	color: #FFFFFF;
+	text-decoration: none;
+	margin-right: 20px;
+}
