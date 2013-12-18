@@ -146,11 +146,10 @@
 		if(file_exists($file_path))
 			return $new_file_name;
 		
-		if( !sell_downloads_check_memory( array( $file ) ) ) return $file;
-		
 		if( ( $path = sd_is_local( $file ) ) !== false ){
 			if( copy( $path, $file_path) ) return $new_file_name;
 		}else{
+			if( !sell_downloads_check_memory( array( $file ) ) ) return $file;
 			$response = wp_remote_get($file);
 			if( !is_wp_error( $response ) && $response['response']['code'] == 200 && file_put_contents($file_path, $response['body'])) return $new_file_name;
 		}
