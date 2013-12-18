@@ -479,11 +479,12 @@ if(!class_exists('SDProduct')){
 		public static function columns($columns){
 			return array(
 				'cb'	 => '<input type="checkbox" />',
-				'title'	 => __('Product Name', SD_TEXT_DOMAIN),
-				'type'  =>__( 'File Type', SD_TEXT_DOMAIN),
-				'plays'  =>__('Downloads', SD_TEXT_DOMAIN),
+				'id'	 => __( 'Product Id', SD_TEXT_DOMAIN),
+				'title'	 => __( 'Product Name', SD_TEXT_DOMAIN),
+				'type'  =>  __( 'File Type', SD_TEXT_DOMAIN),
+				'plays'  => __( 'Access to Product Page', SD_TEXT_DOMAIN),
 				'purchases' => __('Purchases', SD_TEXT_DOMAIN),
-				'date'	 => __('Date', SD_TEXT_DOMAIN)
+				'date'	 => __( 'Date', SD_TEXT_DOMAIN)
 		   );
 		} // End columns
 		
@@ -497,6 +498,9 @@ if(!class_exists('SDProduct')){
 			switch ($column){
 				case "type":
 					echo sell_downloads_extract_attr_as_str($obj->type, 'name', ', ');
+				break;
+				case "id":
+					echo $post->ID;
 				break;
 				case "plays":
 					echo $obj->plays;
