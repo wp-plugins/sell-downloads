@@ -1149,10 +1149,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 						";
 			// Create filter section
 			if($allow_filter_by_type ){
-				$header .= "<div class='sell-downloads-filters'>".__('Filter by', SD_TEXT_DOMAIN);
+				$header .= "<div class='sell-downloads-filters'><span>".__('Filter by', SD_TEXT_DOMAIN)."</span>";
                 // List all file types
 				if($allow_filter_by_type){
-					$header .= __(' file type: ', SD_TEXT_DOMAIN).
+					$header .= "<span>".__(' file type: ', SD_TEXT_DOMAIN).
 							"<select id='filter_by_type' name='filter_by_type' onchange='this.form.submit();'>
 							<option value='all'>".__('All file types', SD_TEXT_DOMAIN)."</option>
 							";
@@ -1160,7 +1160,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					foreach($types as $type_item){
                     	$header .= "<option value='".$type_item->slug."' ".(($type == $type_item->slug || $type == $type_item->term_id) ? "SELECTED" : "").">".$type_item->name."</option>";
 					}
-					$header .= "</select>";
+					$header .= "</select></span>";
 				}
 				$header .="</div>";
 			}
