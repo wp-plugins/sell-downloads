@@ -9,12 +9,6 @@
 .sell-downloads-filters{float:left;}
 .sell-downloads-ordering{float:right;}
 
-@media screen and (max-width:600px) {
-	.sell-downloads-item{clear:both;}
-	.sell-downloads-header span{display: inline-block;clear:both;float:left;}
-	.sell-downloads-ordering{float:left;}
-}
-
 .sell-downloads-product .product-cover{width:150px;}
 
 .sell-downloads-product .product-cover.single{width:250px;}
@@ -95,4 +89,12 @@
 	color: #FFFFFF;
 	text-decoration: none;
 	margin-right: 20px;
+}
+
+@media screen and (max-width:600px) {
+	.sell-downloads-item{clear:both;}
+	.sell-downloads-header span{display: inline-block;clear:both;float:left;}
+	.sell-downloads-ordering{float:left;}
+	.sell-downloads-product .left-column{width: 100%; clear: both;}
+	.sell-downloads-product .right-column{padding-left:0; width:100%;}
 }
