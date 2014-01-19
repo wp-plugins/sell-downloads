@@ -57,9 +57,9 @@ Inserting and using the premium "Sell Downloads" plugin.
 
 **Demo of Premium Version of Plugin**
 
-[http://www.dreamweaverdownloads.com/demos/sell-downloads/wp-login.php](http://www.dreamweaverdownloads.com/demos/sell-downloads/wp-login.php "Click to access the administration area demo")
+[http://demos.net-factor.com/sell-downloads/wp-login.php](http://demos.net-factor.com/sell-downloads/wp-login.php "Click to access the administration area demo")
 
-[http://www.dreamweaverdownloads.com/demos/sell-downloads/](http://www.dreamweaverdownloads.com/demos/sell-downloads/ "Click to access the Sell Downloads")
+[http://demos.net-factor.com/sell-downloads/](http://demos.net-factor.com/sell-downloads/ "Click to access the Sell Downloads")
 
 **Are safe the downloads links?**
 
