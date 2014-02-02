@@ -239,7 +239,7 @@ if(!class_exists('SDProduct')){
 				}
 				
 				if(strlen($this->post_content)){
-					$product_data['description'] 	= $this->post_content;
+					$product_data['description'] 	= '<p>'.preg_replace('/[\n\r]+/', '</p><p>', $this->post_content).'</p>';
 				}	
 				
 				$tpl_engine->set_var('product', $product_data);
