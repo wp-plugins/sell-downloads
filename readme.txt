@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags:downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video
 Requires at least: 3.0.5
-Tested up to: 3.8
+Tested up to: 3.8.1
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -45,6 +45,7 @@ Inserting and using the basic "Sell Downloads" plugin.
 **Premium Features:**
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
+*   Allows request to the users the acceptance to save cookies
 *	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time. The statistics module allows to display animated charts with specific reports like: sales by currency, country or products.
 *	Allows to insert a specific product in a post or page. The product is available as widget to be inserted in the website's sidebars.
 *	Allows to insert a product list in a post or page. The products can be selected between the most rated, the newest, or top selling. The product list is available as widget to be inserted in the website's sidebars.
@@ -110,6 +111,8 @@ The setup interface of commerce includes the following fields:
 *   PayPal language: Preferred language of the PayPal interface. 
 *   PayPal button: Select the PayPal button design. 
 *   Increase the download page security: Requests the email used in product's purchase from the download page.
+*   Allows request to the users the acceptance to save cookies. If check the box the customers should accept store cookies to use of shopping cart (advanced version of plugin).
+*   Text for requesting the acceptance of cookies.
 *   Download link valid for: Set an expire time for the download links.
 
 **Discount settings applied to the sales of the ecommerce. In the shopping cart the discount is applied to the total sale cost(premium version)**

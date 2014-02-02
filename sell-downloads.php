@@ -719,7 +719,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                                     echo '<option value="'.$currency_item.'" '.(($currency_item == $currency_selected) ? 'SELECTED' : '').'>'.$currency_item.'</option>';
                             ?>
                             </select>
-                            <span style="color:#FF0000;">Additional currencies are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+                            <span style="color:#FF0000;">Additional currencies are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank" >Press Here</a>
                             </td>
 							</tr>
 							
@@ -750,7 +750,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                                         }
                                     ?>
                                 </select>
-                                <span style="color:#FF0000;">Additional languages are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+                                <span style="color:#FF0000;">Additional languages are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
                             </td>
 							</tr>  
 							
@@ -765,7 +765,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 								<input type='radio' DISABLED /> 
 								<img src="<?php echo SD_URL.'/paypal_buttons/'.SD_PAYPAL_ADD_CART_BUTTON;?>" />  
 								<img src="<?php echo SD_URL.'/paypal_buttons/'.SD_PAYPAL_VIEW_CART_BUTTON;?>" />
-                                <span style="color:#FF0000;">The shopping cart is available only in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+                                <span style="color:#FF0000;">The shopping cart is available only in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
 							</td>
 							</tr> 
 							
@@ -780,9 +780,21 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 							</tr>  
 							
 							<tr valign="top">
+							<th scope="row"><?php _e('Request for the acceptance of cookies', SD_TEXT_DOMAIN); ?></th>
+							<td><input type="checkbox" DISABLED /> <?php _e('The users should accept store cookies to use of shopping cart.', SD_TEXT_DOMAIN)?>
+							<span style="color:#FF0000;">The option is available only in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
+							</td>
+							</tr>  
+							
+							<tr valign="top">
+							<th scope="row"><?php _e('Text to request the acceptance of cookies', SD_TEXT_DOMAIN); ?></th>
+							<td><input type="text" DISABLED size="40" /> <span style="color:#FF0000;">The option is available only in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a></td>
+							</tr>  
+							
+							<tr valign="top">
 							<th scope="row"><?php _e('Pack all purchased files as a single ZIP file', SD_TEXT_DOMAIN); ?></th>
 							<td><input type="checkbox" DISABLED >
-                            <span style="color:#FF0000;">To distribute the file as a zipped file is required the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+                            <span style="color:#FF0000;">To distribute the file as a zipped file is required the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
 							<?php
 								if(!class_exists('ZipArchive'))
 									echo '<br /><span class="explain-text">'.__("Your server can't create Zipped files dynamically. Please, contact to your hosting provider for enable ZipArchive in the PHP script", SD_TEXT_DOMAIN).'</span>';
@@ -797,7 +809,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                     <div class="postbox">
                         <h3 class='hndle' style="padding:5px;"><span><?php _e('Discount Settings', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside">
-                            <div style="color:#FF0000;">The discounts management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a></div>
+                            <div style="color:#FF0000;">The discounts management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a></div>
                             <div><input type="checkbox" DISABLED /> <?php _e('Display discount promotions in the store page', SD_TEXT_DOMAIN)?></div>
                             <h4><?php _e('Scheduled Discounts', SD_TEXT_DOMAIN);?></h4>
                             <table class="form-table sd_discount_table" style="border:1px dotted #dfdfdf;">
@@ -841,7 +853,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                     <div class="postbox">
                         <h3 class='hndle' style="padding:5px;"><span><?php _e('Coupons Settings', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside">
-                            <div style="color:#FF0000;">The coupons management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a></div>
+                            <div style="color:#FF0000;">The coupons management is available only in the commercial version of plugin. <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a></div>
                             <h4><?php _e('Coupons List', SD_TEXT_DOMAIN);?></h4>
                             <table class="form-table sd_coupon_table" style="border:1px dotted #dfdfdf;">
                                 <tr>
@@ -925,7 +937,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 						<h3 class='hndle' style="padding:5px;"><span><?php _e('Sell Downloads sales report', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside" style="padding-bottom:10px;">
 							<span style="color:#FF0000;">The sales report is available only in the commercial version of "Sell Downloads"
-                            </span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads">Press Here</a>
+                            </span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
                         </div>
 					</div>
 <?php					
