@@ -183,6 +183,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					}
 				}    
 			}else{
+				if( is_admin() && $page->post_status != 'publish' )
+				{
+					$page->post_status = 'publish';
+					wp_update_post( $page );
+				}
 				$_SESSION[ $slug ] =  get_permalink($page->ID);
 			}	
 			
