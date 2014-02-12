@@ -35,6 +35,8 @@ Create an e-commerce for sell digital files never was more easy than with "Sell 
 *	Allows a custom setup of the ecommerce, with ability to filter products by types of files, paging and sorting the results by popularity, price or file name, making of "Sell Downloads" a very configurable plugin.
 *	Allows to associate additional information to the products. For example, if are selling a book and like to associate a link to other books of the same editorial, or a page of reviews from critics, this field would be the option for do it. 
 *	Allows to protect the files with the inclusion of a file's demo. Monographies, videos, songs and many other digital files, allow the creation of a version for demo. It is very hard to sell a song if the possible customers never hear at least a part of it, similar happen with videos and its trailers or the monographies and its abstracts.
+*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time. The statistics module allows to display animated charts with specific reports like: sales by currency, country or products.
+
 
 The base plugin, available for free from the WordPress Plugin Directory has all the features you need to create a ecommerce for sell downloads on your website.
 
@@ -46,7 +48,6 @@ Inserting and using the basic "Sell Downloads" plugin.
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
 *   Allows request to the users the acceptance to save cookies
-*	Includes a module to track sales statistics. With the statistics module is possible to know the amount of sales, the discounts applied or coupon used, and check the total of earnings by the ecommerce in a period of time. The statistics module allows to display animated charts with specific reports like: sales by currency, country or products.
 *	Allows to insert a specific product in a post or page. The product is available as widget to be inserted in the website's sidebars.
 *	Allows to insert a product list in a post or page. The products can be selected between the most rated, the newest, or top selling. The product list is available as widget to be inserted in the website's sidebars.
 *   Allows to define sales discounts. It is usual in the e-commerce create sales campaigns, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
@@ -198,7 +199,7 @@ The insertion process generates a shortcode which will be replaced by the list o
 
 The products list, and specific products, can be inserted as widgets on sidebars (screenshot-8)
 
-**Sales Statistics(premium version)**
+**Sales Statistics**
 
 When a sale takes place, a notification email is sent to the shop manager. However, sales can also be reviewed in Sales Reports. To do this, go to option "Sell Downloads > Sales Reports"(screenshot-9)
 

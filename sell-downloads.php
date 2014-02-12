@@ -235,8 +235,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
             if( $slug == "sd-download-page" ){
                 $new_content = sd_generate_downloads( $the_content );
                 if( $new_content != $the_content ) $the_content .= $new_content;
-            }
-            
+			}
             return $the_content;
         }    
 		
@@ -264,6 +263,30 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			add_filter('plugin_action_links_'.$plugin, array(&$this, 'customizationLink'));
             $this->_sd_create_pages( 'sd-download-page', 'Download the purchased products' ); // for download-page
             
+			if( isset( $_REQUEST[ 'sd_action' ] ) && $_REQUEST[ 'sd_action' ] == 'paypal-data' ){
+				if( isset( $_REQUEST[ 'data' ] ) && isset( $_REQUEST[ 'from' ] ) && isset( $_REQUEST[ 'to' ] ) ){
+					global $wpdb;
+					$where = 'DATEDIFF(date, "'.$_REQUEST[ 'from' ].'")>=0 AND DATEDIFF(date, "'.$_REQUEST[ 'to' ].'")<=0';
+					switch( $_REQUEST[ 'data' ] ){
+						case 'residence_country':
+							print sd_getFromPayPalData( array( 'residence_country' => 'residence_country'), 'COUNT(*) AS count', '', $where, array( 'residence_country' ), array( 'count' => 'DESC' ) );
+						break;	
+						case 'mc_currency':
+							print sd_getFromPayPalData( array( 'mc_currency' => 'mc_currency'), 'SUM(amount) AS sum', '', $where, array( 'mc_currency' ), array( 'sum' => 'DESC' ) );
+						break;	
+						case 'product_name':
+							$json =  sd_getFromPayPalData( array( 'mc_currency' => 'mc_currency'), 'SUM(amount) AS sum, post_title', $wpdb->posts.' AS posts', $where.' AND product_id = posts.ID', array( 'product_id', 'mc_currency' ) );
+							$obj = json_decode( $json );
+							foreach( $obj as $key => $value){
+								$obj[ $key ]->post_title .= ' ['.$value->mc_currency.']';
+							}
+							print json_encode( $obj );
+						break;
+					}
+				}
+				exit;
+			}
+			
 			// Init action
 			do_action( 'selldownloads_admin_init' );
 		} // End init
@@ -937,14 +960,164 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 <?php				
 				break;
 				case 'reports':
+					if ( isset($_POST['sd_purchase_stats']) && wp_verify_nonce( $_POST['sd_purchase_stats'], plugin_basename( __FILE__ ) ) ){
+						if(isset($_POST['purchase_id'])){ // Delete the purchase
+							$wpdb->query($wpdb->prepare(
+								"DELETE FROM ".$wpdb->prefix.SDDB_PURCHASE." WHERE id=%d",
+								$_POST['purchase_id']
+							));
+						}
+					}
+					
+					$from_day = (isset($_POST['from_day'])) ? $_POST['from_day'] : date('j');
+					$from_month = (isset($_POST['from_month'])) ? $_POST['from_month'] : date('m');
+					$from_year = (isset($_POST['from_year'])) ? $_POST['from_year'] : date('Y');
+					
+					$to_day = (isset($_POST['to_day'])) ? $_POST['to_day'] : date('j');
+					$to_month = (isset($_POST['to_month'])) ? $_POST['to_month'] : date('m');
+					$to_year = (isset($_POST['to_year'])) ? $_POST['to_year'] : date('Y');
+					
+					$purchase_list = $wpdb->get_results("SELECT purchase.*, posts.* FROM ".$wpdb->prefix.SDDB_PURCHASE." AS purchase, ".$wpdb->prefix."posts AS posts WHERE posts.ID = purchase.product_id AND DATEDIFF(purchase.date, '{$from_year}-{$from_month}-{$from_day}')>=0 AND DATEDIFF(purchase.date, '{$to_year}-{$to_month}-{$to_day}')<=0;");
+					
 ?>
+					<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>" id="purchase_form">
+					<?php wp_nonce_field( plugin_basename( __FILE__ ), 'sd_purchase_stats' ); ?>
+					<input type="hidden" name="tab" value="reports" />
+					<!-- FILTER REPORT -->
+					<div class="postbox">
+						<h3 class='hndle' style="padding:5px;"><span><?php _e('Filter from date', SD_TEXT_DOMAIN); ?></span></h3>
+						<div class="inside">
+							<?php
+								$months_list = array(
+									'01' => __('January', SD_TEXT_DOMAIN),
+									'02' => __('February', SD_TEXT_DOMAIN),
+									'03' => __('March', SD_TEXT_DOMAIN),
+									'04' => __('April', SD_TEXT_DOMAIN),
+									'05' => __('May', SD_TEXT_DOMAIN),
+									'06' => __('June', SD_TEXT_DOMAIN),
+									'07' => __('July', SD_TEXT_DOMAIN),
+									'08' => __('August', SD_TEXT_DOMAIN),
+									'09' => __('September', SD_TEXT_DOMAIN),
+									'10' => __('October', SD_TEXT_DOMAIN),
+									'11' => __('November', SD_TEXT_DOMAIN),
+									'12' => __('December', SD_TEXT_DOMAIN),
+								);
+							?>
+							<label><?php _e('From: ', SD_TEXT_DOMAIN); ?></label>
+							<select name="from_day">
+							<?php
+								for($i=1; $i <=31; $i++) print '<option value="'.$i.'"'.(($from_day == $i) ? ' SELECTED' : '').'>'.$i.'</option>';
+							?>
+							</select>
+							<select name="from_month">
+							<?php
+								foreach($months_list as $month => $name) print '<option value="'.$month.'"'.(($from_month == $month) ? ' SELECTED' : '').'>'.$name.'</option>';
+							?>
+							</select>
+							<input type="text" name="from_year" value="<?php print $from_year; ?>" />
+							
+							<label><?php _e('To: ', SD_TEXT_DOMAIN); ?></label>
+							<select name="to_day">
+							<?php
+								for($i=1; $i <=31; $i++) print '<option value="'.$i.'"'.(($to_day == $i) ? ' SELECTED' : '').'>'.$i.'</option>';
+							?>
+							</select>
+							<select name="to_month">
+							<?php
+								foreach($months_list as $month => $name) print '<option value="'.$month.'"'.(($to_month == $month) ? ' SELECTED' : '').'>'.$name.'</option>';
+							?>
+							</select>
+							<input type="text" name="to_year" value="<?php print $to_year; ?>" />
+							
+							<input type="submit" value="<?php _e('Search', SD_TEXT_DOMAIN); ?>" class="button-primary" />
+						</div>
+					</div>	
+					<!-- PURCHASE LIST -->
 					<div class="postbox">
 						<h3 class='hndle' style="padding:5px;"><span><?php _e('Sell Downloads sales report', SD_TEXT_DOMAIN); ?></span></h3>
-						<div class="inside" style="padding-bottom:10px;">
-							<span style="color:#FF0000;">The sales report is available only in the commercial version of "Sell Downloads"
-                            </span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
-                        </div>
+						<div class="inside">
+							<?php 
+								if(count($purchase_list)){	
+									print '
+										<div>
+											<label style="margin-right: 20px;" ><input type="checkbox" onclick="sd_load_report(this, \'sales_by_country\', \''.__( 'Sales by country', SD_TEXT_DOMAIN ).'\', \'residence_country\', \'Pie\', \'residence_country\', \'count\');" /> '.__( 'Sales by country', SD_TEXT_DOMAIN ).'</label>
+											<label style="margin-right: 20px;" ><input type="checkbox" onclick="sd_load_report(this, \'sales_by_currency\', \''.__( 'Sales by currency', SD_TEXT_DOMAIN ).'\', \'mc_currency\', \'Bar\', \'mc_currency\', \'sum\');" /> '.__( 'Sales by currency', SD_TEXT_DOMAIN ).'</label>
+											<label><input type="checkbox" onclick="sd_load_report(this, \'sales_by_product\', \''.__( 'Sales by product', SD_TEXT_DOMAIN ).'\', \'product_name\', \'Bar\', \'post_title\', \'sum\');" /> '.__( 'Sales by product', SD_TEXT_DOMAIN ).'</label>
+										</div>';
+								}
+							?>
+						    <div id="charts_content" >
+								<div id="sales_by_country"></div>
+								<div id="sales_by_currency"></div>
+								<div id="sales_by_product"></div>
+							</div>
+							<div class="sd-section-title"><?php _e( 'Products List', SD_TEXT_DOMAIN ); ?></div>
+							<table class="form-table" style="border-bottom:1px solid #CCC;margin-bottom:10px;">
+								<THEAD>
+									<TR style="border-bottom:1px solid #CCC;">
+										<TH>Product</TH><TH>Buyer</TH><TH>Amount</TH><TH>Currency</TH><TH>Download link</TH><TH>Notes</TH><TH></TH>
+									</TR>
+								</THEAD>
+								<TBODY>
+								<?php
+								$totals = array('UNDEFINED'=>0);
+                                if(count($purchase_list)){	
+									$dlurl = $GLOBALS['sell_downloads']->_sd_create_pages( 'sd-download-page', 'Download the purchased products' );
+									$dlurl .= ( ( strpos( $dlurl, '?' ) === false ) ? '?' : '&' );
+
+									foreach($purchase_list as $purchase){
+										
+										if(preg_match('/mc_currency=([^\s]*)/', $purchase->paypal_data, $matches)){
+											$currency = strtoupper($matches[1]);
+											if(!isset($totals[$currency])) $totals[$currency] = $purchase->amount;
+											else $totals[$currency] += $purchase->amount;
+										}else{
+											$currency = '';
+											$totals['UNDEFINED'] += $purchase->amount;
+										}
+										echo '
+											<TR>
+												<TD><a href="'.get_permalink($purchase->ID).'" target="_blank">'.$purchase->post_title.'</a></TD>
+												<TD>'.$purchase->email.'</TD>
+												<TD>'.$purchase->amount.'</TD>
+												<TD>'.$currency.'</TD>
+												<TD><a href="'.$dlurl.'purchase_id='.$purchase->purchase_id.'" target="_blank">Download Link</a></TD>
+												<TD>'.$purchase->note.'</TD>
+                                                <TD><input type="button" class="button-primary" onclick="delete_purchase_sd('.$purchase->id.');" value="Delete"></TD>
+											</TR>
+										';
+									}
+								}else{
+									echo '
+										<TR>
+											<TD COLSPAN="7">
+												'.__('No sales yet', SD_TEXT_DOMAIN).'
+											</TD>
+										</TR>
+									';
+								}	
+								?>
+								</TBODY>
+							</table>
+							
+							<?php
+								if(count($totals) > 1 || $totals['UNDEFINED']){
+							?>
+									<table style="border: 1px solid #CCC;">
+										<TR><TD COLSPAN="2" style="border-bottom:1px solid #CCC;">TOTALS</TD></TR>
+										<TR><TD style="border-bottom:1px solid #CCC;">CURRENCY</TD><TD style="border-bottom:1px solid #CCC;">AMOUNT</TD></TR>
+									<?php
+										foreach($totals as $currency=>$amount)
+											if($amount)
+												print "<TR><TD><b>{$currency}</b></TD><TD>{$amount}</TD></TR>";
+									?>	
+									</table>
+							<?php	
+								}
+							?>
+						</div>
 					</div>
+					</form>
 <?php					
 				break;
 			}	
@@ -988,8 +1161,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $post;
 
 			if(strpos($hook, "sell-downloads") !== false){
-				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery'), null, true);
+				wp_enqueue_script('sd-chart-script', plugin_dir_url(__FILE__).'sd-script/Chart.min.js', array( 'jquery' ) );
+				wp_enqueue_script('sd-admin-script', plugin_dir_url(__FILE__).'sd-script/sd-admin.js', array('jquery','sd-chart-script'), null, true);
                 wp_enqueue_style('sd-admin-style', plugin_dir_url(__FILE__).'sd-styles/sd-admin.css');
+				wp_localize_script('sd-admin-script', 'sd_global', array( 'aurl' => admin_url() ));
 			}
         
 			if ( $hook == 'post-new.php' || $hook == 'post.php' || $hook == 'index.php') {
