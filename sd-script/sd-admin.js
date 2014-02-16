@@ -166,12 +166,24 @@ jQuery(function(){
 			});
 		};
 		
-		window['delete_purchase_sd'] = function(id){
+		window['sd_delete_purchase'] = function(id){
 			if(confirm('Are you sure to delete the purchase record?')){
 				var f = $('#purchase_form');
-				f.append('<input type="hidden" name="purchase_id" value="'+id+'" />');
+				f.append('<input type="hidden" name="delete_purchase_id" value="'+id+'" />');
 				f[0].submit();
 			}	
+		};
+		
+		window['sd_reset_purchase'] = function(id){
+			var f = $('#purchase_form');
+			f.append('<input type="hidden" name="reset_purchase_id" value="'+id+'" />');
+			f[0].submit();
+		};
+		
+        window['sd_show_purchase'] = function(id){
+			var f = $('#purchase_form');
+			f.append('<input type="hidden" name="show_purchase_id" value="'+id+'" />');
+			f[0].submit();
 		};
 		
 		// Main application

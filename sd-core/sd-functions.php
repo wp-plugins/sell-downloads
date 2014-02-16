@@ -218,9 +218,9 @@
 				sell_downloads_setError( "Please, enter the email address used in products purchasing" );
 				return false;
 			}	
-			$days = $wpdb->get_var( $wpdb->prepare( 'SELECT DATEDIFF(NOW(), date) FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s AND email=%s ORDER BY date DESC', array( $_REQUEST[ 'purchase_id' ], $_SESSION[ 'sd_user_email' ] ) ) );
+			$days = $wpdb->get_var( $wpdb->prepare( 'SELECT CASE WHEN checking_date IS NULL THEN DATEDIFF(NOW(), date) ELSE DATEDIFF(NOW(), checking_date) END FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s AND email=%s ORDER BY checking_date DESC, date DESC', array( $_REQUEST[ 'purchase_id' ], $_SESSION[ 'sd_user_email' ] ) ) );
 		}else{
-			$days = $wpdb->get_var( $wpdb->prepare( 'SELECT DATEDIFF(NOW(), date) FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s ORDER BY date DESC', array( $_REQUEST[ 'purchase_id' ] ) ) );
+			$days = $wpdb->get_var( $wpdb->prepare( 'SELECT CASE WHEN checking_date IS NULL THEN DATEDIFF(NOW(), date) ELSE DATEDIFF(NOW(), checking_date) END FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s ORDER BY checking_date DESC, date DESC', array( $_REQUEST[ 'purchase_id' ] ) ) );
 		}
 
 		if( is_null( $days ) ){
@@ -369,14 +369,6 @@
 					$download_links_str = '';
 					
 					foreach($purchase_rows as $purchase){
-						if(!current_user_can( 'manage_options' )){
-							$diff = abs(strtotime($purchase->date)-time());
-							if($diff > $interval){
-								$download_links_str = __('The download link has expired, please contact to the vendor', SD_TEXT_DOMAIN);
-								break;
-							}
-						}    
-						
 						$id = $purchase->product_id;
 					
 						$_post = get_post($id);
@@ -411,7 +403,7 @@
 		}else{
 			global $sd_errors;
 			$error = ( !empty( $_REQUEST[ 'error_mssg' ] ) ) ? $_REQUEST[ 'error_mssg' ] : '';
-			if( !empty( $_SESSION[ 'sd_user_email' ] ) ){
+			if( (!get_option( 'sd_safe_download', SD_SAFE_DOWNLOAD ) && !empty($sd_errors)) || !empty( $_SESSION[ 'sd_user_email' ] ) ){
 				$error .= '<li>'.implode( '</li><li>', $sd_errors ).'</li>';
 			}
 			$the_content .= ( !empty( $error ) )  ? '<div class="sd-error-mssg"><ul>'.$error.'</ul></div>' : '';				

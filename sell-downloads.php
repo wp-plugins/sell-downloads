@@ -374,6 +374,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				product_id mediumint(9) NOT NULL,
 				purchase_id varchar(50) NOT NULL,
 				date DATETIME NOT NULL,
+				checking_date DATETIME,
 				email VARCHAR(255) NOT NULL,
 				amount FLOAT NOT NULL DEFAULT 0,
 				paypal_data TEXT,
@@ -383,6 +384,12 @@ Description: Sell Downloads is an online store for selling downloadable files: a
             
             $sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." DROP INDEX purchase_id";
 			$wpdb->query($sql);
+			
+			$result = $wpdb->get_results("SHOW COLUMNS FROM ".$wpdb->prefix.SDDB_PURCHASE." LIKE 'checking_date'");
+            if(empty($result)){
+                $sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." ADD checking_date DATETIME";
+                $wpdb->query($sql);
+            }
             
 			$sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix.SDDB_SHOPPING_CART." (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -1377,11 +1384,26 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				break;
 				case 'reports':
 					if ( isset($_POST['sd_purchase_stats']) && wp_verify_nonce( $_POST['sd_purchase_stats'], plugin_basename( __FILE__ ) ) ){
-						if(isset($_POST['purchase_id'])){ // Delete the purchase
+						if(isset($_POST['delete_purchase_id'])){ // Delete the purchase
 							$wpdb->query($wpdb->prepare(
 								"DELETE FROM ".$wpdb->prefix.SDDB_PURCHASE." WHERE id=%d",
-								$_POST['purchase_id']
+								$_POST['delete_purchase_id']
 							));
+						}
+						
+						if(isset($_POST['reset_purchase_id'])){ // Delete the purchase
+							$wpdb->query($wpdb->prepare(
+								"UPDATE ".$wpdb->prefix.SDDB_PURCHASE." SET checking_date = NOW() WHERE id=%d",
+								$_POST['reset_purchase_id']
+							));
+						}
+						
+						if(isset($_POST['show_purchase_id'])){ // Delete the purchase
+							$paypal_data = '<div class="sd-paypal-data"><h3>' . __( 'PayPal data', SD_TEXT_DOMAIN ) . '</h3>' . $wpdb->get_var($wpdb->prepare(
+								"SELECT paypal_data FROM ".$wpdb->prefix.SDDB_PURCHASE." WHERE id=%d",
+								$_POST['show_purchase_id']
+							)) . '</div>';
+							$paypal_data = preg_replace( '/\n+/', '<br />', $paypal_data );
 						}
 					}
 					
@@ -1549,6 +1571,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 						<h3 class='hndle' style="padding:5px;"><span><?php _e('Sell Downloads sales report', SD_TEXT_DOMAIN); ?></span></h3>
 						<div class="inside">
 							<?php 
+								if( !empty( $paypal_data ) ) print $paypal_data;
 								if(count($purchase_list)){	
 									print '
 										<div>
@@ -1604,7 +1627,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 														<TD>'.$purchase->amount.'</TD>
 														<TD>'.$currency.'</TD>
 														<TD><a href="'.$dlurl.'purchase_id='.$purchase->purchase_id.'" target="_blank">Download Link</a></TD>
-														<TD><input type="button" class="button-primary" onclick="delete_purchase_sd('.$purchase->id.');" value="Delete"></TD>
+														<TD style="white-space:nowrap;">
+															<input type="button" class="button-primary" onclick="sd_delete_purchase('.$purchase->id.');" value="Delete"> 
+															<input type="button" class="button-primary" onclick="sd_reset_purchase('.$purchase->id.');" value="Reset Time"> 
+															<input type="button" class="button-primary" onclick="sd_show_purchase('.$purchase->id.');" value="PayPal Info">
+														</TD>
 													</TR>
 												';
 											}elseif( $to_display == 'amount' ){
