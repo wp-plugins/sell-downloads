@@ -1231,18 +1231,6 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 							</tr>  
 							
 							<tr valign="top">
-							<th scope="row"><?php _e('Request for the acceptance of cookies', SD_TEXT_DOMAIN); ?></th>
-							<td><input type="checkbox" DISABLED /> <?php _e('The users should accept store cookies to use of shopping cart.', SD_TEXT_DOMAIN)?>
-							<span style="color:#FF0000;">The option is available only in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
-							</td>
-							</tr>  
-							
-							<tr valign="top">
-							<th scope="row"><?php _e('Text to request the acceptance of cookies', SD_TEXT_DOMAIN); ?></th>
-							<td><input type="text" DISABLED size="40" /> <span style="color:#FF0000;">The option is available only in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a></td>
-							</tr>  
-							
-							<tr valign="top">
 							<th scope="row"><?php _e('Pack all purchased files as a single ZIP file', SD_TEXT_DOMAIN); ?></th>
 							<td><input type="checkbox" DISABLED >
                             <span style="color:#FF0000;">To distribute the file as a zipped file is required the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>

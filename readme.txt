@@ -47,7 +47,6 @@ Inserting and using the basic "Sell Downloads" plugin.
 **Premium Features:**
 
 *   Allows to enable a shopping cart. With a shopping cart is possible to sell multiple products in the same purchase action, the customers will appreciate this feature.
-*   Allows request to the users the acceptance to save cookies
 *	Allows to insert a specific product in a post or page. The product is available as widget to be inserted in the website's sidebars.
 *	Allows to insert a product list in a post or page. The products can be selected between the most rated, the newest, or top selling. The product list is available as widget to be inserted in the website's sidebars.
 *   Allows to define sales discounts. It is usual in the e-commerce create sales campaigns, define discounts for products or events (like mothers day, the Christmas,etc.), to promote the sales. The "Sell Downloads" allows to define shop's discounts, and display the previous and new prices of products.
@@ -112,8 +111,6 @@ The setup interface of commerce includes the following fields:
 *   PayPal language: Preferred language of the PayPal interface. 
 *   PayPal button: Select the PayPal button design. 
 *   Increase the download page security: Requests the email used in product's purchase from the download page.
-*   Allows request to the users the acceptance to save cookies. If check the box the customers should accept store cookies to use of shopping cart (advanced version of plugin).
-*   Text for requesting the acceptance of cookies.
 *   Download link valid for: Set an expire time for the download links.
 
 **Discount settings applied to the sales of the ecommerce. In the shopping cart the discount is applied to the total sale cost(premium version)**
