@@ -26,6 +26,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
  define( 'SD_H_URL', sd_get_site_url() );
  define( 'SD_DOWNLOAD', dirname( __FILE__ ).'/sd-downloads' );
  define( 'SD_OLD_DOWNLOAD_LINK', 3); // Number of days considered old download links
+ define( 'SD_DOWNLOADS_NUMBER', 3);  // Number of downloads by purchase
  define( 'SD_CORE_IMAGES_URL',  SD_URL . '/sd-core/images' );
  define( 'SD_CORE_IMAGES_PATH', SD_FILE_PATH . '/sd-core/images' );
  define( 'SD_TEXT_DOMAIN', 'SD_TEXT_DOMAIN' );
@@ -246,6 +247,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* @return void
 		*/
 		function admin_init(){
+			$this->_create_db_structure();
+			
 			// Init the metaboxs for song and collection
 			add_meta_box('sd_product_metabox', __("Product's data", SD_TEXT_DOMAIN), array(&$this, 'metabox_form'), 'sd_product', 'normal', 'high');
             add_meta_box('sd_product_metabox_discount', __("Programming Discounts", SD_TEXT_DOMAIN), array(&$this, 'metabox_discount'), 'sd_product', 'normal', 'high');
@@ -337,6 +340,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		private function _create_db_structure(){
 			global $wpdb;
 			
+			if( !empty( $_SESSION[ 'sddb_created_db' ] ) )
+			{
+				return;
+			}	
+			
+			$_SESSION[ 'sddb_created_db' ] = true;
+			
             /* 
                 The name of columns are treated as below to make table of Sell Downloads compatible with the tables of Sell Downloads and Sell Videos
                 - id is the primary key, and the same value as the ID column of wp_posts table
@@ -377,6 +387,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				checking_date DATETIME,
 				email VARCHAR(255) NOT NULL,
 				amount FLOAT NOT NULL DEFAULT 0,
+				downloads INT NOT NULL DEFAULT 0,
 				paypal_data TEXT,
 				UNIQUE KEY id (id)
 			 );";             
@@ -390,6 +401,12 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 $sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." ADD checking_date DATETIME";
                 $wpdb->query($sql);
             }
+            
+			$result = $wpdb->get_results("SHOW COLUMNS FROM ".$wpdb->prefix.SDDB_PURCHASE." LIKE 'downloads'");
+            if(empty($result)){
+                $sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." ADD downloads INT NOT NULL DEFAULT 0";
+                $wpdb->query($sql);
+            }    
             
 			$sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix.SDDB_SHOPPING_CART." (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -647,6 +664,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				update_option('sd_notification_to_seller_subject', $_POST['sd_notification_to_seller_subject']);
 				update_option('sd_notification_to_seller_message', $_POST['sd_notification_to_seller_message']);
 				update_option('sd_old_download_link', $_POST['sd_old_download_link']);				
+                update_option('sd_downloads_number', $_POST['sd_downloads_number']);				
                 update_option('sd_social_buttons', ((isset($_POST['sd_social_buttons'])) ? true : false));
                 update_option('sd_paypal_currency', $_POST['sd_paypal_currency']);
 				update_option('sd_paypal_currency_symbol', $_POST['sd_paypal_currency_symbol']);
@@ -1226,6 +1244,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 							</tr>  
 							
 							<tr valign="top">
+							<th scope="row"><?php _e('Number of downloads allowed by purchase', SD_TEXT_DOMAIN); ?></th>
+							<td><input type="text" name="sd_downloads_number" value="<?php echo esc_attr(get_option('sd_downloads_number', SD_DOWNLOADS_NUMBER)); ?>" /></td>
+							</tr>  
+							
+							<tr valign="top">
 							<th scope="row"><?php _e('Increase the download page security', SD_TEXT_DOMAIN); ?></th>
 							<td><input type="checkbox" name="sd_safe_download" <?php echo ( ( get_option('sd_safe_download', SD_SAFE_DOWNLOAD)) ? 'CHECKED' : '' ); ?> /> <?php _e('The customers must enter the email address used in the product\'s purchasing to access to the download link. The Store verifies the customer\'s data, from the file link too.', SD_TEXT_DOMAIN)?></td>
 							</tr>  
@@ -1381,7 +1404,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 						
 						if(isset($_POST['reset_purchase_id'])){ // Delete the purchase
 							$wpdb->query($wpdb->prepare(
-								"UPDATE ".$wpdb->prefix.SDDB_PURCHASE." SET checking_date = NOW() WHERE id=%d",
+								"UPDATE ".$wpdb->prefix.SDDB_PURCHASE." SET checking_date = NOW(), downloads = 0 WHERE id=%d",
 								$_POST['reset_purchase_id']
 							));
 						}
@@ -1617,7 +1640,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 														<TD><a href="'.$dlurl.'purchase_id='.$purchase->purchase_id.'" target="_blank">Download Link</a></TD>
 														<TD style="white-space:nowrap;">
 															<input type="button" class="button-primary" onclick="sd_delete_purchase('.$purchase->id.');" value="Delete"> 
-															<input type="button" class="button-primary" onclick="sd_reset_purchase('.$purchase->id.');" value="Reset Time"> 
+															<input type="button" class="button-primary" onclick="sd_reset_purchase('.$purchase->id.');" value="Reset Time and Downloads"> 
 															<input type="button" class="button-primary" onclick="sd_show_purchase('.$purchase->id.');" value="PayPal Info">
 														</TD>
 													</TR>

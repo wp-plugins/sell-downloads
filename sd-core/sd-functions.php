@@ -218,19 +218,27 @@
 				sell_downloads_setError( "Please, enter the email address used in products purchasing" );
 				return false;
 			}	
-			$days = $wpdb->get_var( $wpdb->prepare( 'SELECT CASE WHEN checking_date IS NULL THEN DATEDIFF(NOW(), date) ELSE DATEDIFF(NOW(), checking_date) END FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s AND email=%s ORDER BY checking_date DESC, date DESC', array( $_REQUEST[ 'purchase_id' ], $_SESSION[ 'sd_user_email' ] ) ) );
+			$data = $wpdb->get_row( $wpdb->prepare( 'SELECT CASE WHEN checking_date IS NULL THEN DATEDIFF(NOW(), date) ELSE DATEDIFF(NOW(), checking_date) END AS days, downloads, id FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s AND email=%s ORDER BY checking_date DESC, date DESC', array( $_REQUEST[ 'purchase_id' ], $_SESSION[ 'sd_user_email' ] ) ) );
 		}else{
-			$days = $wpdb->get_var( $wpdb->prepare( 'SELECT CASE WHEN checking_date IS NULL THEN DATEDIFF(NOW(), date) ELSE DATEDIFF(NOW(), checking_date) END FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s ORDER BY checking_date DESC, date DESC', array( $_REQUEST[ 'purchase_id' ] ) ) );
+			$data = $wpdb->get_row( $wpdb->prepare( 'SELECT CASE WHEN checking_date IS NULL THEN DATEDIFF(NOW(), date) ELSE DATEDIFF(NOW(), checking_date) END AS days, downloads, id FROM '.$wpdb->prefix.SDDB_PURCHASE.' WHERE purchase_id=%s ORDER BY checking_date DESC, date DESC', array( $_REQUEST[ 'purchase_id' ] ) ) );
 		}
 
-		if( is_null( $days ) ){
+		if( is_null( $data ) ){
 			sell_downloads_setError( 'There is no product associated with the entered data' );
 			return false;
-		}elseif( get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK) < $days ){ 
+		}elseif( get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK) < $data->days ){ 
 			sell_downloads_setError( 'The download link has expired, please contact to the vendor' );
 			return false;	
+		}elseif( get_option('sd_downloads_number', SD_DOWNLOADS_NUMBER) > 0 &&  get_option('sd_downloads_number', SD_DOWNLOADS_NUMBER) <= $data->downloads ){
+			sell_downloads_setError( 'The number of downloads has reached its limit, please contact to the vendor' );
+			return false;
 		}
-
+		
+		if( isset( $_REQUEST[ 'f' ] ) )
+		{
+			$wpdb->query( $wpdb->prepare( 'UPDATE '.$wpdb->prefix.SDDB_PURCHASE.' SET downloads=downloads+1 WHERE id=%d', $data->id ) );
+		}
+		
 		return true;
 	} // End sd_check_download_permissions
 
@@ -446,7 +454,7 @@
 			
 		}else{
 			$dlurl = $GLOBALS['sell_downloads']->_sd_create_pages( 'sd-download-page', 'Download the purchased products' ); 
-			$dlurl .= ( ( strpos( $dlurl, '?' ) === false ) ? '?' : '&' ).'error_mssg='.urlencode( '<li>'.implode( '</li><li>', $sd_errors ).'</li>' ).( ( !empty( $_REQUEST[ 'purchase_id' ] ) ) ? '&purchase_id='.$_REQUEST[ 'purchase_id' ] : '' );
+			$dlurl .= ( ( strpos( $dlurl, '?' ) === false ) ? '?' : '&' ).( ( !empty( $_REQUEST[ 'purchase_id' ] ) ) ? 'purchase_id='.$_REQUEST[ 'purchase_id' ] : '' );
 			header( 'location: '.$dlurl );
 		}
 	} // End ms_download_file
