@@ -67,12 +67,12 @@ Inserting and using the premium "Sell Downloads" plugin.
 The security in the access to products files is determined in different ways. 
 
 *	The products files can't be accessed directly. The purchased files are stored in a special directory called sd-downloads, the sd-downloads directory includes a .htaccess file that forbid the access from browser. The files can be accessed only through a server side script that validates the purchase.  
-*	The Store determines the validity of  download links based in two options, available in the settings page of plugin.
+*	The Store determines the validity of  download links based in three options, available in the settings page of plugin.
 
 It is possible define a time period, in days, where a download link is considered valid. If a user tries to download a purchased product, the Store checks the date of purchasing.
 The  Store may be configured to request the email address used in the purchasing to check the validity of download link.
 
-It is possible define a limit of downloads by purchase. If a user tries to download a product, the Music Store checks how many downloads have been made.
+It is possible define a limit of downloads by purchase. If a user tries to download a product, the Sell Downloads checks how many downloads have been made.
 
 If you want more information about this plugin don't hesitate in checking the plugin's website:
 
@@ -264,9 +264,9 @@ To promote the products from the content of pages and posts, go to the page and 
 A: The security in the access to products files is determined in different ways. 
 
 - The products files can't be accessed directly. The purchased files are stored in a special directory called sd-downloads, the sd-downloads directory includes a .htaccess file that forbid the access from browser. The files can be accessed only through a server side script that validates the purchase.  
-- The Store determines the validity of  download links based in two options, available in the settings page of plugin.
+- The Store determines the validity of  download links based in three options, available in the settings page of plugin.
 -- It is possible define a time period, in days, where a download link is considered valid. If a user tries to download a purchased product, the Store checks the date of purchasing.
--- It is possible define a limit of downloads by purchase. If a user tries to download a product, the Music Store checks how many downloads have been made.
+-- It is possible define a limit of downloads by purchase. If a user tries to download a product, the Sell Downloads checks how many downloads have been made.
 -- The Store may be configured to request the email address used in the purchasing to check the validity of download link.
 
 == Screenshots ==
