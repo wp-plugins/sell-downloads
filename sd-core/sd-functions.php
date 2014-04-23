@@ -264,7 +264,7 @@
 			if( $forceLocal || ( $relative_path = sd_is_local( $file ) ) !== false ){
 				if( $forceLocal )
 				{
-					$relative_path = $file;
+					$relative_path = dirname( __FILE__ ).'/../sd-downloads/'.$file;
 				}
 				
 				$required += filesize( $relative_path );
