@@ -127,17 +127,6 @@ jQuery(function(){
 			}	
 		};
 		
-		window["send_to_download_url_sd"] = function(html) {
-
-			file_url = jQuery(html).attr('href');
-			if (file_url) {
-				jQuery(file_path_field).val(file_url);
-			}
-			tb_remove();
-			window.send_to_editor = window.send_to_editor_default;
-
-		}
-		
 		window ['open_insertion_sell_downloads_window'] = function(){
 			var tags = sell_downloads.tags,
 				cont = $(tags.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"'));
@@ -187,18 +176,32 @@ jQuery(function(){
 		};
 		
 		// Main application
-		var file_path_field;
-		window["send_to_editor_default"] = window.send_to_editor;
 		jQuery('.product-data').bind('click', function(evt){
             if($(evt.target).hasClass('button_for_upload_sd')){
-                file_path_field = $(evt.target).parent().find('.file_path');
-
-                formfield = jQuery(file_path_field).attr('name');
-
-                window.send_to_editor = window.send_to_download_url_sd;
-
-                tb_show('', 'media-upload.php?post_id=' + sell_downloads.post_id + '&amp;TB_iframe=true');
-                return false;
+                var file_path_field = $(evt.target).parent().find('.file_path');
+				var cfg = {
+						title: 'Select Media File',
+						button: {
+						text: 'Select Item'
+						},
+						multiple: false
+				};
+				
+				if( file_path_field.attr( 'id' ) == "sd_cover" )
+				{
+					cfg[ 'library' ] = { type: 'image' };
+				}
+				
+				var media = wp.media( cfg ).on('select', 
+					(function( field ){
+						return function() {
+							var attachment = media.state().get('selection').first().toJSON();
+							var url = attachment.url;
+							field.val( url );
+						};
+					})( file_path_field )	
+				).open();
+				return false;
             }    
         });
 	})(jQuery)

@@ -1781,6 +1781,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					// Scripts and styles required for metaboxs
 					wp_enqueue_style('sd-admin-style', plugin_dir_url(__FILE__).'sd-styles/sd-admin.css');
 					wp_localize_script('sd-admin-script', 'sell_downloads', array('post_id' => $post->ID));	
+					wp_enqueue_media();
 				}else{
 					// Scripts required for sell downloads insertion
 					wp_enqueue_style('wp-jquery-ui-dialog');
