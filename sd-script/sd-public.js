@@ -1,4 +1,4 @@
-(function($){
+jQuery(function($){
 	
 	$('.sell-downloads-tabs').click(function(evt){
 		var m = $(this),
@@ -70,4 +70,4 @@
 	
 	$( '.sd-demo-media' ).mediaelementplayer();
 	
-})(jQuery);
+});
