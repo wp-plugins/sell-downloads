@@ -151,8 +151,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 
 				// Set custom post_types on search result
 				add_shortcode('sell_downloads', array(&$this, 'load_store'));
-				add_filter( 'the_content', array( &$this, '_sd_the_content' ) );
-				add_filter( 'the_excerpt', array( &$this, '_sd_the_excerpt' ) ); // For search results
+				add_filter( 'the_content', array( &$this, '_sd_the_content' ), 1 );
+				add_filter( 'the_excerpt', array( &$this, '_sd_the_excerpt' ), 1 ); // For search results
                 $this->load_templates(); // Load the sell downloads template for songs and collections display
 				
 				// Load public resources
@@ -1988,7 +1988,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* Load the templates for products display
 		*/
 		function load_templates(){
-			add_filter('the_content', array(&$this, 'display_content'));
+			add_filter('the_content', array(&$this, 'display_content'), 1 );
 		} // End load_templates
 		
 		/**
