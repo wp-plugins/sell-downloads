@@ -17,6 +17,7 @@ Sell Downloads features:
 	» Sell Downloads is a WordPress eCommerce
 	» Allows selling digital files like audio,video,documents,pictures,etc.
 	» Allows to filter products by types of files
+	» Includes multiple layouts for the store
 	» Allows paging and sorting the results by popularity, price or file name
 	» Uses PayPal as payment gateway	
 	» Allows sharing products in social networks (Facebook, Twitter, Google+)
@@ -103,6 +104,7 @@ The setup interface of commerce includes the following fields:
 
 *   URL of store page: Enter the URL of the webpage where the ecommerce was inserted. The URL of the store will be used to return from the product page to the shop page.
 *   Allow to filter by type: Inserts a field into the shopping webpage that allows to filter products by type (jpg, mp3, doc,....)
+*   Store layout: Allows select one of the multiple layouts available for the store.
 *   Allow multiple pages: Allows paging through the shop's products.
 *   Items per page: Defines the number of products per page in the commerce's page.
 
@@ -269,6 +271,10 @@ A: The security in the access to products files is determined in different ways.
 -- It is possible define a limit of downloads by purchase. If a user tries to download a product, the Sell Downloads checks how many downloads have been made.
 -- The Store may be configured to request the email address used in the purchasing to check the validity of download link.
 
+= Q: Can I customize the store's design? = 
+
+A: The plugin includes some different designs that can be selected through the settings option "Store Layout", but you can create a new once, duplicating an of available store's layouts, and edit its style.css file
+
 == Screenshots ==
 01. Sell Downloads Item
 02. Sell Downloads Product Section
@@ -280,3 +286,4 @@ A: The security in the access to products files is determined in different ways.
 08. Available Widgets for Products and Products List Insertion
 09. Sales Reports
 10. Filtering Sales Report
+11. Available layouts

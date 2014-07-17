@@ -85,7 +85,9 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 	class SellDownloads{
 		
 		var $sell_downloads_slug = 'sell-downloads-menu';
-		
+        var $layouts = array();
+		var $layout = array();
+    
 		/**
 		* SellDownloads constructor
 		*
@@ -98,6 +100,12 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			
 			// Set the menu link
 			add_action('admin_menu', array(&$this, 'menu_links'), 10);
+            
+            // Load selected layout
+			if ( false !== get_option( 'sd_layout' ) )
+			{
+				$this->layout = get_option( 'sd_layout' );
+			}
 		} // End __constructor
 
 /** INITIALIZE PLUGIN FOR PUBLIC WORDPRESS AND ADMIN SECTION **/
@@ -627,6 +635,26 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			echo '</h2>';
 		} // End settings_tabs 	
 		
+       /**
+		* Get the list of available layouts
+		*/
+		function _layouts(){	
+			$tpls_dir = dir( SD_FILE_PATH.'/sd-layouts' );
+			while( false !== ( $entry = $tpls_dir->read() ) ) 
+			{    
+				if ( $entry != '.' && $entry != '..' && is_dir( $tpls_dir->path.'/'.$entry ) && file_exists( $tpls_dir->path.'/'.$entry.'/config.ini' ) )
+				{
+					if( ( $ini_array = parse_ini_file( $tpls_dir->path.'/'.$entry.'/config.ini' ) ) !== false )
+					{
+						if( !empty( $ini_array[ 'style_file' ] ) ) $ini_array[ 'style_file' ] = SD_URL.'/sd-layouts/'.$entry.'/'.$ini_array[ 'style_file' ];
+						if( !empty( $ini_array[ 'script_file' ] ) ) $ini_array[ 'script_file' ] = SD_URL.'/sd-layouts/'.$entry.'/'.$ini_array[ 'script_file' ];
+						if( !empty( $ini_array[ 'thumbnail' ] ) ) $ini_array[ 'thumbnail' ] = SD_URL.'/sd-layouts/'.$entry.'/'.$ini_array[ 'thumbnail' ];
+						$this->layouts[ $ini_array[ 'id' ] ] = $ini_array;
+					}
+				}			
+			}
+		} // End _layouts
+
 		/**
 		* Get the list of possible paypal butt
 		*/
@@ -648,12 +676,24 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		*/
 		function settings_page(){
 			global $wpdb;
+            $this->_layouts(); // Load the available layouts
+
 			if ( isset($_POST['sd_settings']) && wp_verify_nonce( $_POST['sd_settings'], plugin_basename( __FILE__ ) ) ){
                 update_option('sd_main_page', $_POST['sd_main_page']);
 				update_option('sd_online_demo', ((isset($_POST['sd_online_demo'])) ? 1 : 0));
 				update_option('sd_filter_by_type', ((isset($_POST['sd_filter_by_type'])) ? 1 : 0));
 				update_option('sd_items_page_selector', ((isset($_POST['sd_items_page_selector'])) ? 1 : 0));
 				update_option('sd_items_page', $_POST['sd_items_page']);
+                if( !empty( $_POST[ 'sd_layout' ] ) )
+				{
+					$this->layout = $this->layouts[ $_POST[ 'sd_layout' ] ];
+					update_option( 'sd_layout', $this->layout );
+				}
+				else
+				{
+					delete_option( 'sd_layout' );
+					$this->layout = array();
+				}
 				update_option('sd_paypal_email', $_POST['sd_paypal_email']);
 				update_option('sd_paypal_button', $_POST['sd_paypal_button']);
 				update_option('sd_paypal_enabled', ((isset($_POST['sd_paypal_enabled'])) ? 1 : 0));
@@ -721,6 +761,28 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 								<tr valign="top">
 									<th><?php _e('Allow multiple pages', SD_TEXT_DOMAIN); ?></th>
 									<td><input type="checkbox" name="sd_items_page_selector" size="40" value="1" <?php if (get_option('sd_items_page_selector', SD_ITEMS_PAGE_SELECTOR)) echo 'checked'; ?> /></td>
+								</tr>
+                                <tr valign="top">
+									<th><?php _e('Store layout', SD_TEXT_DOMAIN); ?></th>
+									<td>
+										<select name="sd_layout" id="sd_layout">
+											<option value=""><?php _e( 'Default layout', SD_TEXT_DOMAIN ); ?></option>
+										<?php
+											foreach( $this->layouts as $id => $layout )
+											{
+												print '<option value="'.$id.'" '.( ( !empty( $this->layout ) && $id == $this->layout[ 'id' ] ) ? 'SELECTED' : '' ).' thumbnail="'.$layout[ 'thumbnail' ].'">'.$layout[ 'title' ].'</option>';
+											}
+										?>
+										</select>
+										<div id="sd_layout_thumbnail">
+										<?php
+											if( !empty( $this->layout ) )
+											{
+												print '<img src="'.$this->layout[ 'thumbnail' ].'" title="'.$this->layout[ 'title' ].'" />';
+											}
+										?>
+										</div>
+									</td>
 								</tr>
 								<tr valign="top">
 									<th><?php _e('Items per page', SD_TEXT_DOMAIN); ?></th>
@@ -1745,6 +1807,13 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			
 			wp_enqueue_style('sd-style', plugin_dir_url(__FILE__).'sd-styles/sd-public.css');
             wp_enqueue_script('sd-media-script', plugin_dir_url(__FILE__).'sd-script/sd-public.js', array('wp-mediaelement'), null, true);
+            // Load resources of layout
+			if( !empty( $this->layout) )
+			{
+				if( !empty( $this->layout[ 'style_file' ] ) ) wp_enqueue_style('sd-css-layout', $this->layout[ 'style_file' ] , array( 'sd-style' ) );
+				if( !empty( $this->layout[ 'script_file' ] ) ) wp_enqueue_script('sd-js-layout', $this->layout[ 'script_file' ] , array( 'sd-media-script' ), false, true );
+			}
+
 			wp_localize_script( 'sd-media-script', 
 								'sd_global', 
 								array(
@@ -1929,7 +1998,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			$results = $wpdb->get_results($query);
 			$tpl = new sell_downloads_tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
 			
-			$width = floor(100/min($columns, max(count($results),1)));
+			$width = 100/min($columns, max(count($results),1));
 			$sell_downloads .= "<div class='sell-downloads-items'>";
 			$item_counter = 0;
 			foreach($results as $result){
@@ -1973,8 +2042,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 								<option value='price' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'price') ? "SELECTED" : "").">".__('Price', SD_TEXT_DOMAIN)."</option>
 							</select>
 						</div>";
-						
-			$header .= "
+			
+            $header .= "<div style='clear:both;'></div>
 						</div>
 						</form>
 						";
@@ -1988,6 +2057,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* Load the templates for products display
 		*/
 		function load_templates(){
+            remove_filter ('the_content', 'wpautop');
 			add_filter('the_content', array(&$this, 'display_content'), 1 );
 		} // End load_templates
 		

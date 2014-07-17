@@ -2,8 +2,8 @@
 .sell-downloads-pagination .page-link{margin:0 5px;display:inline;}
 .sell-downloads-pagination .page-selected{font-weight:bold;}
 
-.sell-downloads-item {float:left;}
-.sell-downloads-items{position:relative;clear:both;}
+.sell-downloads-item {display:inline-block;}
+.sell-downloads-items{display:inline-block;}
 
 .sell-downloads-header{width:100%;position:relative;clear:both;}
 .sell-downloads-filters{float:left;}

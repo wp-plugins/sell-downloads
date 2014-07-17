@@ -22,12 +22,13 @@
 				{product.title}
 				
 				<!-- PRODUCT PRICE -->
+                <div style="display:inline-block">
 				<tpl ifset="product.price">
 					<span class="product-price single">
 						{product.price}
 					</span>
 				</tpl ifset="product.price">
-		
+                </div>
 				</div>
 			</tpl ifset="product.title">
 			
@@ -104,8 +105,7 @@
 		</div>
 	</div>	
 	<div class="clear"></div>
-	<div>
-    
+	<div class="bottom-content">
         <!-- PRODUCT DESCRIPTION -->
         <tpl ifset="product.description">
 		<ul class="sell-downloads-tabs">
