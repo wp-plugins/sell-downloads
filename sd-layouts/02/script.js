@@ -115,7 +115,7 @@ jQuery( function( $ )
 			}	
 		};
 		
-		correct_heights();
+		$( window ).load( correct_heights );
 		
 		// Modify the price box
 		$( '.product-price' ).each(
