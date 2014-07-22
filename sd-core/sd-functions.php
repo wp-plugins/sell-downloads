@@ -380,9 +380,9 @@
 						$id = $purchase->product_id;
 					
 						$_post = get_post($id);
-						if(is_null($_post)) return;
+						if(is_null($_post)) return '';
 						if($_post->post_type == 'sd_product') $obj = new SDProduct($id);
-						else return;
+						else return '';
 						
 						$productObj = new stdClass();
 						if(isset($obj->file) && !in_array($obj->file, $tmp_arr)){ 
