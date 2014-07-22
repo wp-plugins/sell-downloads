@@ -242,9 +242,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
             $slug = $post->post_name;
 
             if( $slug == "sd-download-page" ){
-                $new_content = sd_generate_downloads( $the_content );
-                if( $new_content != $the_content ) $the_content .= $new_content;
-			}
+                $the_content .= sd_generate_downloads();
+            }
             return $the_content;
         }    
 		

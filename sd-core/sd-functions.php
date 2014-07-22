@@ -361,9 +361,9 @@
 		return pathinfo($song_obj->file, PATHINFO_FILENAME);
 	} // End sd_product_title
 	
-	function sd_generate_downloads($the_content){
+	function sd_generate_downloads(){
 		global $wpdb, $download_links_str, $id;
-		
+		$str = '';
 		if( sd_check_download_permissions() ){
 			if($id){
 				sd_remove_download_links();
@@ -404,7 +404,8 @@
 					if(empty($download_links_str)){
 						$download_links_str = __('The list of purchased products is empty', SD_TEXT_DOMAIN);
 					}
-					return $download_links_str;
+                    
+                    $str .= $download_links_str;
 				} // End purchase checking	
 				
 			}
@@ -414,11 +415,11 @@
 			if( (!get_option( 'sd_safe_download', SD_SAFE_DOWNLOAD ) && !empty($sd_errors)) || !empty( $_SESSION[ 'sd_user_email' ] ) ){
 				$error .= '<li>'.implode( '</li><li>', $sd_errors ).'</li>';
 			}
-			$the_content .= ( !empty( $error ) )  ? '<div class="sd-error-mssg"><ul>'.$error.'</ul></div>' : '';				
+			$str .= ( !empty( $error ) )  ? '<div class="sd-error-mssg"><ul>'.$error.'</ul></div>' : '';				
 			if( get_option( 'sd_safe_download', SD_SAFE_DOWNLOAD ) ){
 				$dlurl = $GLOBALS['sell_downloads']->_sd_create_pages( 'sd-download-page', 'Download the purchased products' ); 
 				$dlurl .= ( ( strpos( $dlurl, '?' ) === false ) ? '?' : '&' ).( ( isset( $_REQUEST[ 'purchase_id' ] ) ) ? 'purchase_id='.$_REQUEST[ 'purchase_id' ] : '' );	
-				$the_content .= '
+				$str .= '
 					<form action="'.$dlurl.'" method="POST" >
 						<div style="text-align:center;">
 							<div>
@@ -432,7 +433,7 @@
 				';
 			}
 		}	
-		return $the_content;
+		return $str;
 			
 	} //sd_generate_downloads
 	
