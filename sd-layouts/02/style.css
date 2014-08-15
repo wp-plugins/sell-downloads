@@ -42,7 +42,7 @@ margin:0 10px;
 
 .sell-downloads-items{padding-top:2px;}
 
-.sell-downloads-item .sell-downloads-product{
+.sell-downloads-product{
 padding:30px 0;
 background:#2A2A2A;
 margin: 1px;
@@ -50,7 +50,7 @@ width:99%;
 }
 
 .widget .sell-downloads-item{margin-bottom:10px;}
-
+.sell-downloads-product .product-description{ padding: 20px; }
 .sell-downloads-product a,
 .sell-downloads-product a:hover{
 color:#FFF !important;
