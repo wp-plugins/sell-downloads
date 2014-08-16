@@ -2064,11 +2064,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		*/
 		function display_content($content){
 			global $post;
-			remove_filter( 'the_content', 'wpautop' );
-            remove_filter( 'the_excerpt', 'wpautop' );
-            remove_filter( 'comment_text', 'wpautop', 30 );
 			if(in_the_loop() && $post && $post->post_type == 'sd_product'){
-				$tpl = new sell_downloads_tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
+				remove_filter( 'the_content', 'wpautop' );
+                remove_filter( 'the_excerpt', 'wpautop' );
+                remove_filter( 'comment_text', 'wpautop', 30 );
+                $tpl = new sell_downloads_tpleng(dirname(__FILE__).'/sd-templates/', 'comment');
 				$product = new SDProduct($post->ID);
 				return $product->display_content(((is_singular()) ? 'single' : 'multiple'), $tpl, 'return');
 			}else{
