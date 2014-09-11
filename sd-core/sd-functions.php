@@ -187,7 +187,7 @@
 			for( $i = 0; $i < count( $parts ); $i++ ){
 				$path .= '../';
 			}
-			$file = dirname( __FILE__ ).'/'.$path.$file;
+			$file = urldecode( dirname( __FILE__ ).'/'.$path.$file );
 			return file_exists( $file ) ? $file : false;
 		}
 		return false;
