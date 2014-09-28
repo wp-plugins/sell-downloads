@@ -69,5 +69,24 @@ jQuery(function($){
 	});
 	
 	$( '.sd-demo-media' ).mediaelementplayer();
-	
+	timeout_counter = 10;
+    window['sell_downloads_counting'] = function()
+    {
+        var loc = document.location.href;
+        document.getElementById( "sell_downloads_error_mssg" ).innerHTML = timeout_text+' '+timeout_counter;
+        if( timeout_counter == 0 )
+        {
+            document.location = loc+( ( loc.indexOf( '?' ) == -1 ) ? '?' : '&' )+'timeout=1';    
+        }
+        else
+        {
+            timeout_counter--;
+            setTimeout( sell_downloads_counting, 1000 );
+        }    
+    };
+    
+    if( $( '[id="sell_downloads_error_mssg"]' ).length ) 
+    {
+        sell_downloads_counting();
+    }
 });

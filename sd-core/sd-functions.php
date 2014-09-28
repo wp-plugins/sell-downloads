@@ -224,7 +224,19 @@
 		}
 
 		if( is_null( $data ) ){
-			sell_downloads_setError( 'There is no product associated with the entered data' );
+			if( !isset( $_REQUEST[ 'timeout' ] ) )
+            {
+                sell_downloads_setError(
+                    '<div id="sell_downloads_error_mssg"></div>
+                    <script>
+                        var timeout_text = "'.__( 'The store is processing the purchase. You will be redirected in', SD_TEXT_DOMAIN ).'";
+                    </script>'
+                );
+            }
+            else
+            {
+                sell_downloads_setError( 'There is no product associated with the entered data' );
+            }    
 			return false;
 		}elseif( get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK) < $data->days ){ 
 			sell_downloads_setError( 'The download link has expired, please contact to the vendor' );
