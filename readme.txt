@@ -1,7 +1,7 @@
 === Sell Downloads ===
 Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security
+Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments
 Requires at least: 3.0.5
 Tested up to: 4.0
 Stable tag: 1.0.1
@@ -287,3 +287,34 @@ A: The plugin includes some different designs that can be selected through the s
 09. Sales Reports
 10. Filtering Sales Report
 11. Available layouts
+
+== Changelog ==
+
+= 1.0 =
+
+* First version released.
+
+= 1.0.1 =
+
+* Improves the plugin documentation.
+* Fixes a compatibility issue with the "Music Store" plugin.
+* Corrects the decimal digits in the products prices.
+* Increases the security of purchased files.
+* Removes the "Description" tab from the product's page, if the product has not a description defined.
+* Allows ordering the products by date.
+* Allows inserting separated stores in different pages of website.
+* Corrects an issue displaying free products.
+* Optimizes the queries to database.
+* Modifies the design of the attribute: product's type, in the store's page.
+* Includes the products ID as a column in the list of products.
+* Makes a memory checking to avoid errors downloading the purchased files.
+* Fixes an issue checking the downloads permissions.
+* Allows download large files.
+* Improves the store's design in themes with responsive designs.
+* Throws the correct content-type header in the download process.
+* Includes new filtering options in the sales reports.
+* Includes charts in the sales reports to detect the sales trends easily.
+* Includes in the currency list, all currencies allowed by PayPal.
+* Allows define a limit in the download of purchased products, and the possibility to reset the counter.
+* Includes multiple store's layouts.
+* Displays a timeout in the download page, if the IPN has not been called, when it is visited.
