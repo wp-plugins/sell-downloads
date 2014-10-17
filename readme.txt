@@ -184,6 +184,22 @@ The insertion process generates a shortcode which will be replaced by the shop w
 
 Note: After inserting the ecommerce on a page of your WordPress, it is advisable to copy the URL of the relevant page, and enter in the "Sell Downloads" setup section, to allow the users to return to the shop from the product page.
 
+**Shortcode attributes**
+
+Through the shortcode it is possible define some attribute for change the store's settings:
+
+columns: Enter the number of columns to display the products in the store with a grid format. By default the value of "columns" attribute is 1.
+
+        [sell_downloads columns="3"]       
+
+filter_by_type: The values allowed are 1 or 0, and shows or hide the filtering by product's type in the header section of the store's page.
+
+        [sell_downloads columns="3" filter_by_type="1"]        
+        
+order_by: The values allowed are 1 or 0, and shows or hide the "Order by" options in the header section of the store's page.
+
+        [sell_downloads columns="3" order_by="1"]        
+        
 **Interface for insertion dialog of product (the products list is available as widget to be inserted in the website's sidebars)(the option is available only in the premium version of "Sell Downloads" plugin)**
 
 *   Enter the product's ID (screenshot-6)

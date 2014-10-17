@@ -1921,7 +1921,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			}
 			
 			// Extract info from sell downloads options
-			$allow_filter_by_type = get_option('sd_filter_by_type', SD_FILTER_BY_TYPE);
+            $allow_filter_by_type = ( isset( $atts[ 'filter_by_type' ] ) ) ? $atts[ 'filter_by_type' ] * 1 : get_option('sd_filter_by_type', SD_FILTER_BY_TYPE);
 
  			// Items per page
 			$items_page 			= max(get_option('sd_items_page', SD_ITEMS_PAGE), 1);
@@ -2037,16 +2037,19 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			}
 			
 			// Create order filter
-			$header .= "<div class='sell-downloads-ordering'>".
-							__('Order by: ', SD_TEXT_DOMAIN).
-							"<select id='ordering_by' name='ordering_by' onchange='this.form.submit();'>
-								<option value='post_date' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'post_date') ? "SELECTED" : "").">".__('Date', SD_TEXT_DOMAIN)."</option>
-								<option value='post_title' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'post_title') ? "SELECTED" : "").">".__('Name', SD_TEXT_DOMAIN)."</option>
-								<option value='plays' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'plays') ? "SELECTED" : "").">".__('Popularity', SD_TEXT_DOMAIN)."</option>
-								<option value='price' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'price') ? "SELECTED" : "").">".__('Price', SD_TEXT_DOMAIN)."</option>
-							</select>
-						</div>";
-			
+            if( !isset( $atts[ 'order_by' ] ) || $atts[ 'order_by' ] * 1 )
+            {
+                $header .= "<div class='sell-downloads-ordering'>".
+                                __('Order by: ', SD_TEXT_DOMAIN).
+                                "<select id='ordering_by' name='ordering_by' onchange='this.form.submit();'>
+                                    <option value='post_date' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'post_date') ? "SELECTED" : "").">".__('Date', SD_TEXT_DOMAIN)."</option>
+                                    <option value='post_title' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'post_title') ? "SELECTED" : "").">".__('Name', SD_TEXT_DOMAIN)."</option>
+                                    <option value='plays' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'plays') ? "SELECTED" : "").">".__('Popularity', SD_TEXT_DOMAIN)."</option>
+                                    <option value='price' ".(($_SESSION[ $page_id ]['sd_ordering'] == 'price') ? "SELECTED" : "").">".__('Price', SD_TEXT_DOMAIN)."</option>
+                                </select>
+                            </div>";
+            }
+            
             $header .= "<div style='clear:both;'></div>
 						</div>
 						</form>
