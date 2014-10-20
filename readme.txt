@@ -196,9 +196,13 @@ filter_by_type: The values allowed are 1 or 0, and shows or hide the filtering b
 
         [sell_downloads columns="3" filter_by_type="1"]        
         
-order_by: The values allowed are 1 or 0, and shows or hide the "Order by" options in the header section of the store's page.
+show_order_by: The values allowed are 1 or 0, and shows or hide the "Order by" options in the header section of the store's page.
 
-        [sell_downloads columns="3" order_by="1"]        
+        [sell_downloads columns="3" show_order_by="1"]        
+
+order_by: The values allowed are: plays, price, post_title, post_date. Allows ordering the products in the store's page by the criteria defined in the attribute.
+
+        [sell_downloads columns="3" order_by="post_title"]        
         
 **Interface for insertion dialog of product (the products list is available as widget to be inserted in the website's sidebars)(the option is available only in the premium version of "Sell Downloads" plugin)**
 

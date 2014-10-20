@@ -1917,7 +1917,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			if(isset($_REQUEST['ordering_by']) && in_array($_REQUEST['ordering_by'], array('plays', 'price', 'post_title', 'post_date'))){
 				$_SESSION[ $page_id ]['sd_ordering'] = $_REQUEST['ordering_by'];
 			}elseif( !isset($_SESSION[ $page_id ]['sd_ordering']) ){
-				$_SESSION[ $page_id ]['sd_ordering'] = "post_date";
+				$_SESSION[ $page_id ]['sd_ordering'] = ( isset( $atts[ 'order_by' ] ) ) ? $atts[ 'order_by' ] : "post_date";
 			}
 			
 			// Extract info from sell downloads options
@@ -2037,7 +2037,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			}
 			
 			// Create order filter
-            if( !isset( $atts[ 'order_by' ] ) || $atts[ 'order_by' ] * 1 )
+            if( !isset( $atts[ 'show_order_by' ] ) || $atts[ 'show_order_by' ] * 1 )
             {
                 $header .= "<div class='sell-downloads-ordering'>".
                                 __('Order by: ', SD_TEXT_DOMAIN).
