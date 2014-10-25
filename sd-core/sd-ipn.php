@@ -1,7 +1,14 @@
 <?php
 	echo 'Start IPN';
 
-	$item_name = $_POST['item_name'];
+	function sell_downloads_envelope_from( $phpmailer )
+    {
+        $sd_notification_from_email = get_option('sd_notification_from_email', SD_NOTIFICATION_FROM_EMAIL);
+        $phpmailer->Sender = $sd_notification_from_email;
+        $phpmailer->From = $sd_notification_from_email; 
+    }
+    
+    $item_name = $_POST['item_name'];
 	$item_number = $_POST['item_number'];
 	$payment_status = $_POST['payment_status'];
 	$payment_amount = $_POST['mc_gross'];
@@ -57,6 +64,8 @@
 	$sd_notification_to_payer_message  = str_replace("%INFORMATION%", $information_payer, $sd_notification_to_payer_message);
 	$sd_notification_to_seller_message = str_replace("%INFORMATION%", $information_seller, $sd_notification_to_seller_message);
 	
+    add_filter('phpmailer_init','sell_downloads_envelope_from');
+    
 	// Send email to payer
 	wp_mail($payer_email, $sd_notification_to_payer_subject, $sd_notification_to_payer_message,
             "From: \"$sd_notification_from_email\" <$sd_notification_from_email>\r\n".
