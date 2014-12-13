@@ -246,8 +246,9 @@
 			return false;
 		}
 		
-		if( isset( $_REQUEST[ 'f' ] ) )
+		if( isset( $_REQUEST[ 'f' ] ) && !isset( $_SESSION[ 'cpsd_donwloads' ] ) )
 		{
+            $_SESSION[ 'cpsd_donwloads' ] = 1;
 			$wpdb->query( $wpdb->prepare( 'UPDATE '.$wpdb->prefix.SDDB_PURCHASE.' SET downloads=downloads+1 WHERE id=%d', $data->id ) );
 		}
 		
