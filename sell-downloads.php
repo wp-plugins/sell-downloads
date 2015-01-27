@@ -330,16 +330,31 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					$blogids = $wpdb->get_col($wpdb->prepare("SELECT blog_id FROM $wpdb->blogs"));
 					foreach ($blogids as $blog_id) {
 						switch_to_blog($blog_id);
-						$this->_create_db_structure();
+						$this->_create_db_structure( true );
+						update_option('sd_social_buttons', true);
 					}
 					switch_to_blog($old_blog);
 					return;
 				}
 			}
-			$this->_create_db_structure();
-            // Plugin options
+			$this->_create_db_structure( true );
             update_option('sd_social_buttons', true);
 		}  // End register
+		
+		/* 
+		* A new blog has been created in a multisite WordPress
+		*/
+		function install_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ){
+			global $wpdb;
+			if ( is_plugin_active_for_network() ) 
+			{
+				$current_blog = $wpdb->blogid;
+				switch_to_blog( $blog_id );
+				$this->_create_db_structure( true );
+				update_option('sd_social_buttons', true);
+				switch_to_blog( $current_blog );
+			}
+		}
 		
 		/*
 		* Create the Sell Downloads tables
@@ -347,11 +362,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 		* @access private
 		* @return void
 		*/
-		private function _create_db_structure(){
+		private function _create_db_structure(  $installing = false  ){
             try{
                 global $wpdb;
                 
-                if( !empty( $_SESSION[ 'sddb_created_db' ] ) )
+                if( !$installing && !empty( $_SESSION[ 'sddb_created_db' ] ) )
                 {
                     return;
                 }	
@@ -2122,7 +2137,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 	
 	$GLOBALS['sell_downloads'] = new SellDownloads;
 	
-	register_activation_hook(__FILE__, array(&$GLOBALS['sell_downloads'], 'register'));
-	
+	register_activation_hook( __FILE__, array( &$GLOBALS[ 'sell_downloads' ], 'register' ) );
+	add_action( 'wpmu_new_blog', array( &$GLOBALS[ 'sell_downloads' ], 'install_new_blog' ), 10, 6 );
 } // Class exists check
 ?>
