@@ -2,9 +2,9 @@
 Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments
-Requires at least: 3.0.5
+Requires at least: 3.5.0
 Tested up to: 4.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -338,3 +338,23 @@ A: The plugin includes some different designs that can be selected through the s
 * Allows define a limit in the download of purchased products, and the possibility to reset the counter.
 * Includes multiple store's layouts.
 * Displays a timeout in the download page, if the IPN has not been called, when it is visited.
+
+= 1.0.2 =
+
+* Optimize the plugins code.
+
+= 1.0.3 =
+
+* Includes the Featured Image as part of products, because some plugins and themes use the featured Images on post types.
+* Uses functions included since WordPress 3.5.0, that modifies the requirements.
+
+* Optimize the plugins code.
+
+== Upgrade Notice ==
+
+= 1.0.3 =
+
+* Includes the Featured Image as part of products because some plugins and themes use the featured Images on post types.
+* Uses functions included since WordPress 3.5.0, that modifies the requirements.
+
+Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
