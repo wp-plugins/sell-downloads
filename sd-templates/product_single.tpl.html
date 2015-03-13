@@ -1,0 +1,129 @@
+﻿<!-- SHOPPING CART -->
+<tpl ifset="product.shopping_cart">
+    {product.shopping_cart}	
+</tpl ifset="product.shopping_cart">
+			
+<div class="sell-downloads-product">
+	<div>
+		<div class="left-column single">
+			<!-- PRODUCT COVER -->
+			<tpl ifset="product.cover">
+			<div class="product-cover single">
+				<img src="{product.cover}">
+			</div>
+			</tpl ifset="product.cover">
+		</div>		
+		
+		<div class="right-column single">
+			
+			<!-- PRODUCT TITLE -->
+			<tpl ifset="product.title">
+				<div class="product-title single">
+				{product.title}
+				
+				<!-- PRODUCT PRICE -->
+                <div style="display:inline-block">
+				<tpl ifset="product.price">
+					<span class="product-price single">
+						{product.price}
+					</span>
+				</tpl ifset="product.price">
+                </div>
+				</div>
+			</tpl ifset="product.title">
+			
+			<!-- PRODUCT TYPE -->
+			<tpl ifset="product.has_types">
+				<div class="product-type">
+					<ul>
+					<tpl loop="types">
+						<li><span class="arrow">›</span>{types.data}</li>
+					</tpl loop="types">	
+					</ul>
+				</div>
+			</tpl ifset="product.has_types">
+			
+			<!-- PRODUCT TIME -->
+			<tpl ifset="product.time">
+			<span class="label">Time: </span>
+			<b>{product.time}</b>
+			</tpl ifset="product.time">
+			
+			<!-- PRODUCT YEAR -->
+			<tpl ifset="product.year">
+			<span class="label">Year: </span>
+			<b>{product.year}</b>
+			</tpl ifset="product.year">
+			
+			<!-- PRODUCT SALES BUTTONS -->
+			<tpl ifset="product.salesbutton">
+				<div class="product-payment-buttons">
+				{product.salesbutton}
+				</div>
+			</tpl ifset="product.salesbutton">
+			
+            <!-- PRODUCT DEMO -->
+			<tpl ifset="product.demo">
+				<div class="single">
+				{product.demo}	
+				</div>
+			</tpl ifset="product.demo">
+            
+			<!-- SELL DOWNLOADS LINK -->
+			<tpl ifset="product.store_page">
+				<div class="sell-downloads-link">
+					<a href="{product.store_page}"> Go to the store page </a>
+				</div>
+			</tpl ifset="product.store_page">
+            
+            <!-- SOCIAL BUTTONS -->
+            <tpl ifset="product.social">
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=55224759839";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+                <div><div class="fb-like" data-href="{product.social}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" style="overflow:hidden;"></div></div>
+                
+                <div><div class="g-plus" data-action="share" data-annotation="bubble"></div></div>
+                <script type="text/javascript">
+                  (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/plusone.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                  })();
+                </script>
+                
+                <div><a href="https://twitter.com/share" class="twitter-share-button" data-url="{product.social}">Tweet</a></div>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <div class="clear"></div>
+            </tpl ifset="product.social">
+            
+		</div>
+	</div>	
+	<div class="clear"></div>
+	<div class="bottom-content">
+        <!-- PRODUCT DESCRIPTION -->
+        <tpl ifset="product.description">
+		<ul class="sell-downloads-tabs">
+			<li class="active-tab">Description</li>
+		</ul>
+		<div class="sell-downloads-tabs-container active-tab">
+            <div class="product-description">
+            {product.description}
+            </div>
+		</div> <!-- End first tab container -->
+        </tpl ifset="product.description">
+        
+        <!-- PRODUCT MORE INFO -->
+        <tpl ifset="product.info">
+        <div class="product-info">
+        <a href="{product.info}" target="_blank">More Info[+]</a>
+        </div>
+        </tpl ifset="product.info">
+        
+	</div>
+</div>
