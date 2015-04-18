@@ -69,7 +69,6 @@ padding: 15px 10px;
 }
 
 .product-title{
-font-size: 1.7em;
 font-weight: normal !important;
 line-height: 30px;
 }
@@ -128,7 +127,7 @@ border-right: 0;
 
 .product-price,
 .sell-downloads-product .product-price.single{ 
-font-size:1.5em !important; 
+font-size:1em !important; 
 color:#D0379B !important; 
 background: transparent !important;
 text-shadow: 0px 1px 1px rgba(0, 0, 0, 1) !important;
@@ -202,5 +201,5 @@ display:block;
 #sd-shopping-cart-thumbnail {margin:0;}
 
 .sd-shopping-cart-list td{ vertical-align:middle; }
-.sd-shopping-cart-list td:nth-child(3){color: #D0379B; font-size:1.5em;}
+.sd-shopping-cart-list td:nth-child(3){color: #D0379B; font-size:1.2em;}
 .sd-shopping-cart-list td:last-child{text-align:right;}
