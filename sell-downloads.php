@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.4
+Version: 1.0.5
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
@@ -1523,8 +1523,9 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					$_select = "";
 					$_from 	 = " FROM ".$wpdb->prefix.SDDB_PURCHASE." AS purchase, ".$wpdb->prefix."posts AS posts ";
 					$_where  = " WHERE posts.ID = purchase.product_id 
-									  AND DATEDIFF(purchase.date, '{$from_year}-{$from_month}-{$from_day}')>=0 
-									  AND DATEDIFF(purchase.date, '{$to_year}-{$to_month}-{$to_day}')<=0 ";
+									AND posts.post_type = 'sd_product'
+									AND DATEDIFF(purchase.date, '{$from_year}-{$from_month}-{$from_day}')>=0 
+									AND DATEDIFF(purchase.date, '{$to_year}-{$to_month}-{$to_day}')<=0 ";
 					if( !empty( $buyer ) )
                     {
                         $_where .= "AND purchase.email LIKE '%".mysql_real_escape_string( $buyer )."%'";
