@@ -2,28 +2,15 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.5
+Version: 1.0.6
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
 
- if(!function_exists('sd_get_site_url')){
-    function sd_get_site_url(){
-        $url_parts = parse_url(get_site_url());
-        return rtrim( 
-                        ((!empty($url_parts["scheme"])) ? $url_parts["scheme"] : "http")."://".
-                        $_SERVER["HTTP_HOST"].
-                        ((!empty($url_parts["path"])) ? $url_parts["path"] : ""),
-                        "/"
-                    )."/";
-    }
- }
-
- 
  // CONSTANTS
  define( 'SD_FILE_PATH', dirname( __FILE__ ) );
  define( 'SD_URL', plugins_url( '', __FILE__ ) );
- define( 'SD_H_URL', sd_get_site_url() );
+ define( 'SD_H_URL', rtrim( get_home_url( get_current_blog_id() ), "/" ).( ( strpos( get_current_blog_id(), '?' ) === false ) ? "/" : "" ) );
  define( 'SD_DOWNLOAD', dirname( __FILE__ ).'/sd-downloads' );
  define( 'SD_OLD_DOWNLOAD_LINK', 3); // Number of days considered old download links
  define( 'SD_DOWNLOADS_NUMBER', 3);  // Number of downloads by purchase
@@ -490,7 +477,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					'query_var'            => true,
 					'has_archive'		   => true,	
 					//'register_meta_box_cb' => 'wpsc_meta_boxes',
-					'rewrite'              => false
+					'rewrite'              => get_option( 'sd_friendly_url', false )
 				)
 			);			
 			
@@ -705,6 +692,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				update_option('sd_filter_by_type', ((isset($_POST['sd_filter_by_type'])) ? 1 : 0));
 				update_option('sd_items_page_selector', ((isset($_POST['sd_items_page_selector'])) ? 1 : 0));
 				update_option('sd_items_page', $_POST['sd_items_page']);
+				update_option('sd_friendly_url', ((isset($_POST['sd_friendly_url'])) ? 1 : 0));
+				
                 if( !empty( $_POST[ 'sd_layout' ] ) )
 				{
 					$this->layout = $this->layouts[ $_POST[ 'sd_layout' ] ];
@@ -782,6 +771,10 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 								<tr valign="top">
 									<th><?php _e('Allow multiple pages', SD_TEXT_DOMAIN); ?></th>
 									<td><input type="checkbox" name="sd_items_page_selector" size="40" value="1" <?php if (get_option('sd_items_page_selector', SD_ITEMS_PAGE_SELECTOR)) echo 'checked'; ?> /></td>
+								</tr>
+								<tr valign="top">
+									<th><?php _e('Uses friendly URLs on products', SD_TEXT_DOMAIN); ?></th>
+									<td><input type="checkbox" name="sd_friendly_url" value="1" <?php if (get_option('sd_friendly_url', false)) echo 'checked'; ?> /></td>
 								</tr>
                                 <tr valign="top">
 									<th><?php _e('Store layout', SD_TEXT_DOMAIN); ?></th>
@@ -1722,11 +1715,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 													$currency = '';
 													$totals['UNDEFINED'] += $purchase->amount;
 												}
-												
+												$post_title_tmp = trim( $purchase->post_title );
 												echo '
 													<TR>
 														<TD>'.$purchase->date.'</TD>
-														<TD><a href="'.get_permalink($purchase->ID).'" target="_blank">'.$purchase->post_title.'</a></TD>
+														<TD><a href="'.get_permalink($purchase->ID).'" target="_blank">'.( ( empty( $post_title_tmp ) ) ? 'Id_'.$purchase->ID : $purchase->post_title ).'</a></TD>
 														<TD>'.$purchase->email.'</TD>
 														<TD>'.$purchase->amount.'</TD>
 														<TD>'.$currency.'</TD>
@@ -2016,9 +2009,9 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				
 					for($i=0, $h = $total_pages; $i < $h; $i++){
 						if($_SESSION[ $page_id ]['sd_page_number'] == $i)
-							$page_links .= "<span class='page-selected'>".($i+1)."</span>";
+							$page_links .= "<span class='page-selected'>".($i+1)."</span>&nbsp;";
 						else	
-							$page_links .= "<a class='page-link' href='".$page_href."page_number=".$i."'>".($i+1)."</a>";
+							$page_links .= "<a class='page-link' href='".$page_href."page_number=".$i."'>".($i+1)."</a>&nbsp;";
 					}
 					$page_links .= "</DIV>";
 				}	

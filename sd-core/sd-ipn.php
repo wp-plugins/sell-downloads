@@ -1,4 +1,7 @@
 <?php
+
+if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
+
 	echo 'Start IPN';
 
 	function sell_downloads_envelope_from( $phpmailer )

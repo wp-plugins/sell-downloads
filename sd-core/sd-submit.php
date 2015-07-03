@@ -1,12 +1,15 @@
 <?php
+
+if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
+
     $ms_paypal_email = get_option('sd_paypal_email');
 
 	$baseurl = SD_H_URL.'?sd_action=ipn';
 	$returnurl = $GLOBALS['sell_downloads']->_sd_create_pages( 'sd-download-page', 'Download the purchased products' );
     $returnurl .= ( strpos( $returnurl, '?' ) === false ) ? '?' : '&';
-	$cancel_url = $_SERVER['HTTP_REFERER'];
-    
-    if(empty($cancel_url)) $cancel_url = home_url();
+	
+	if( preg_match( '/^(http(s)?:\/\/[^\/\n]*)/i', SD_H_URL, $matches ) && strpos( $_SERVER['HTTP_REFERER'], $matches[ 0 ] ) ) $cancel_url = $_SERVER['HTTP_REFERER'];
+    if(empty($cancel_url)) $cancel_url = SD_H_URL;
             
     if($ms_paypal_email){ // Check for sealer email
         mt_srand(sell_downloads_make_seed());

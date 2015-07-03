@@ -1,5 +1,7 @@
 <?php
 
+if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
+
 //------------------------------------------------------------------------
 //
 // TEMPLATE ENGINE

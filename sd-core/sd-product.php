@@ -1,4 +1,7 @@
 <?php
+
+if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
+
 function sell_downloads_debug($mssg){
 	$h = fopen(dirname(__FILE__).'/test.txt', 'a');			
 	fwrite($h, $mssg.'|');
@@ -54,6 +57,9 @@ if(!class_exists('SDProduct')){
 						return null;
 					}
 				break;
+				case 'post_title':
+					$post_title_tmp = trim( $this->post_data[ 'post_title' ] );
+					if( !is_admin() && empty( $post_title_tmp ) ) return 'Id_'.$this->id;
 				default:
 					if(isset($this->product_data[$name])){
 						return $this->product_data[$name];
@@ -96,9 +102,10 @@ if(!class_exists('SDProduct')){
 		
 		function display_content($mode, $tpl_engine, $output='echo'){
             $action  = SD_H_URL.'?sd_action=buynow';
+			$cover_tmp = trim( $this->cover );
 			$product_data = array(
 				'title' => $this->post_title,
-				'cover' => $this->cover,
+				'cover' => ( empty( $cover_tmp ) ) ? null : $this->cover,
 				'link'	=> get_permalink($this->id),
 				'popularity' => $this->plays,
                 'social' => null,

@@ -185,20 +185,32 @@ jQuery(function($){
                     },
                     multiple: false
             };
+            var flag = { 'medium' : false };
             
             if( file_path_field.attr( 'id' ) == "sd_cover" )
             {
                 cfg[ 'library' ] = { type: 'image' };
+				flag[ 'medium' ] = true;
             }
             
             var media = wp.media( cfg ).on('select', 
-                (function( field ){
+                (function( field, flag ){
                     return function() {
                         var attachment = media.state().get('selection').first().toJSON();
-                        var url = attachment.url;
+						if( 
+							flag.medium && 
+							typeof attachment[ 'sizes' ] != 'undefined' && typeof attachment[ 'sizes' ][ 'medium' ] != 'undefined' 
+						)
+						{
+							var url = attachment[ 'sizes' ][ 'medium' ].url;
+						}	
+						else
+						{
+							var url = attachment.url;
+						}
                         field.val( url );
                     };
-                })( file_path_field )	
+                })( file_path_field, flag )	
             ).open();
             return false;
         }    
