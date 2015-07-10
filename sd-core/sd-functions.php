@@ -209,8 +209,31 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 		return file_exists( $file ) ? $file : false;		
 	}
 	
+	if( !function_exists( 'sd_getIP' ) )
+	{
+		function sd_getIP()
+		{
+			$ip = $_SERVER[ 'REMOTE_ADDR' ];
+			if( !empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) 
+			{
+				$ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+			}
+			elseif( !empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) 
+			{
+				$ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+			}
+	 
+			return str_replace( array( ':', '.' ), array( '_', '_' ), $ip );
+		}
+	}	
 	// Check downloads permissions
 	function sd_check_download_permissions(){
+		if( get_transient( 'sd_penalized_ip_'.sd_getIP() ) !== false )
+		{
+			_e( 'Please, try again in 30 minutes.', SD_TEXT_DOMAIN );
+			exit;
+		}	
+		delete_transient( 'sd_penalized_ip_'.sd_getIP() );
 		global $wpdb;
 		// If not session, create it
 		if( session_id() == "" || !isset( $_SESSION ) ) session_start();
@@ -240,6 +263,15 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 		}
 
 		if( is_null( $data ) ){
+			if( get_transient( 'sd_suspect_ip_'.sd_getIP() ) !== false )
+			{
+				delete_transient( 'sd_suspect_ip_'.sd_getIP() );
+				set_transient( 'sd_penalized_ip_'.sd_getIP(), true,  1800 );
+				_e( 'The purchase ID is incorrect, please, try again in 30 minutes.', SD_TEXT_DOMAIN );
+				exit;
+			}
+			set_transient( 'sd_suspect_ip_'.sd_getIP(), true,  1800 );
+			
 			if( !isset( $_REQUEST[ 'timeout' ] ) )
             {
                 sell_downloads_setError(
@@ -255,13 +287,15 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
             }    
 			return false;
 		}elseif( get_option('sd_old_download_link', SD_OLD_DOWNLOAD_LINK) < $data->days ){ 
+			delete_transient( 'sd_suspect_ip_'.sd_getIP() );
 			sell_downloads_setError( 'The download link has expired, please contact to the vendor' );
 			return false;	
 		}elseif( get_option('sd_downloads_number', SD_DOWNLOADS_NUMBER) > 0 &&  get_option('sd_downloads_number', SD_DOWNLOADS_NUMBER) <= $data->downloads ){
+			delete_transient( 'sd_suspect_ip_'.sd_getIP() );
 			sell_downloads_setError( 'The number of downloads has reached its limit, please contact to the vendor' );
 			return false;
 		}
-		
+		delete_transient( 'sd_suspect_ip_'.sd_getIP() );
 		if( isset( $_REQUEST[ 'f' ] ) && !isset( $_SESSION[ 'cpsd_donwloads' ] ) )
 		{
             $_SESSION[ 'cpsd_donwloads' ] = 1;
