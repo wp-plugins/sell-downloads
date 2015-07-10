@@ -182,17 +182,31 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 	
 	// Check if URL is for a local file, and return the relative URL or false
 	function sd_is_local( $file ){
-		if( strpos( $file, SD_H_URL ) !== false ){
-			$parts = explode( '/', str_replace('\\', '/', str_replace( SD_H_URL, '', SD_URL.'/sd-core' ) ) );
-			$file = str_replace( SD_H_URL, '', $file );
-			$path = '';
-			for( $i = 0; $i < count( $parts ); $i++ ){
-				$path .= '../';
-			}
-			$file = urldecode( dirname( __FILE__ ).'/'.$path.$file );
-			return file_exists( $file ) ? $file : false;
+		$url_parts = parse_url( SD_H_URL );
+		if( strpos( $file, SD_H_URL ) !== false )
+		{
+			$site_url = SD_H_URL;
 		}
-		return false;
+		elseif( 
+			!empty( $url_parts ) && 
+			strpos( $file, $url_parts[ 'scheme' ].'://'.$url_parts[ 'host' ] ) !== false 
+		)
+		{
+			$site_url = $url_parts[ 'scheme' ].'://'.$url_parts[ 'host' ].'/';
+		}
+		else
+		{
+			return false;
+		}
+		
+		$parts = explode( '/', str_replace('\\', '/', str_replace( $site_url, '', SD_URL.'/sd-core' ) ) );
+		$file = str_replace( $site_url, '', $file );
+		$path = '';
+		for( $i = 0; $i < count( $parts ); $i++ ){
+			$path .= '../';
+		}
+		$file = urldecode( dirname( __FILE__ ).'/'.$path.$file );
+		return file_exists( $file ) ? $file : false;		
 	}
 	
 	// Check downloads permissions
@@ -455,17 +469,28 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 	function sd_download_file(){
 		global $wpdb, $sd_errors;
 		if( isset( $_REQUEST[ 'f' ] ) && sd_check_download_permissions() ){
-			header( 'Content-Type: '.sd_mime_content_type( basename( $_REQUEST[ 'f' ] ) ) );
-			header( 'Content-Disposition: attachment; filename="'.$_REQUEST[ 'f' ].'"' );
+			$file_name = basename( $_REQUEST[ 'f' ] );
+			header( 'Content-Type: '.sd_mime_content_type( $file_name ) );
+			header( 'Content-Disposition: attachment; filename="'.$file_name.'"' );
 			
-			if( sell_downloads_check_memory( array( $_REQUEST[ 'f' ] ), true ) )
+			$file = SD_URL.'/ms-downloads/'.$file_name;
+
+			if( file_exists( SD_DOWNLOAD.'/'.$file_name ) )
 			{
-				readfile( SD_DOWNLOAD.'/'.$_REQUEST[ 'f' ] );
-			}
-			else			
+				if( sell_downloads_check_memory( array( $file_name ), true ) )
+				{
+					readfile( SD_DOWNLOAD.'/'.$file_name );
+				}
+				else			
+				{
+					@unlink( SD_DOWNLOAD.'/.htaccess');
+					header( 'location:'.$file );
+				}
+			}	
+			else
 			{
-				@unlink( SD_DOWNLOAD.'/.htaccess');
-				header( 'location:'.SD_URL.'/sd-downloads/'.basename( $_REQUEST[ 'f' ] ) );
+				_e( 'Wrong File Location', SD_TEXT_DOMAIN );
+				exit;
 			}
 			
 		}else{
