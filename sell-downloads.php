@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.8
+Version: 1.0.9
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
@@ -405,10 +405,15 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                     UNIQUE KEY id (id)
                  );";             
                 $wpdb->query($sql); 
-                
-                $sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." DROP INDEX purchase_id";
-                $wpdb->query($sql);
-                
+				
+				try{
+					$result = $wpdb->get_results("SHOW INDEX FROM ".$wpdb->prefix.SDDB_PURCHASE." WHERE KEY_NAME = 'purchase_id'");
+					if(!empty($result)){
+						$sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." DROP INDEX purchase_id";
+						$wpdb->query($sql);
+					}
+				}catch( Exception $err ){}
+				
                 $result = $wpdb->get_results("SHOW COLUMNS FROM ".$wpdb->prefix.SDDB_PURCHASE." LIKE 'checking_date'");
                 if(empty($result)){
                     $sql = "ALTER TABLE ".$wpdb->prefix.SDDB_PURCHASE." ADD checking_date DATETIME";

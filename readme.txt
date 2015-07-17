@@ -4,7 +4,7 @@ Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments
 Requires at least: 3.5.0
 Tested up to: 4.2
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -310,6 +310,10 @@ A: The plugin includes some different designs that can be selected through the s
 
 == Changelog ==
 
+= 1.0.9 =
+
+* Prevents an error in the installation process, when the user's privileges are not sufficient.
+
 = 1.0.8 =
 
 * Security update to prevent the use of brute force to identify the purchase IDs
@@ -374,32 +378,8 @@ A: The plugin includes some different designs that can be selected through the s
 
 == Upgrade Notice ==
 
-= 1.0.8 =
+= 1.0.9 =
 
-* Security update to prevent the use of brute force to identify the purchase IDs
+* Prevents an error in the installation process, when the user's privileges are not sufficient.
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
-
-= 1.0.7 =
-
-* Corrects a possible vulnerability in the download of purchased files.
-* Corrects an issue with files for selling with spaces in their names.
-
-= 1.0.6 =
-
-* Corrects an issue in the store's pagination.
-* Selects smaller images as covers of the products to improve the loading speed of the store's page.
-* Allows to use friendly URLs, or not, in the products pages.
-
-= 1.0.5 =
-
-* Corrects a conflict in the sales reports with the Music Store plugin.
-
-= 1.0.4 =
-
-* Modifies the styles of Dark layout.
-
-= 1.0.3 =
-
-* Includes the Featured Image as part of products because some plugins and themes use the featured Images on post types.
-* Uses functions included since WordPress 3.5.0, that modifies the requirements.
