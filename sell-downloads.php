@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.9
+Version: 1.0.10
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
@@ -2014,9 +2014,9 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				
 					for($i=0, $h = $total_pages; $i < $h; $i++){
 						if($_SESSION[ $page_id ]['sd_page_number'] == $i)
-							$page_links .= "<span class='page-selected'>".($i+1)."</span>&nbsp;";
+							$page_links .= "<span class='page-selected'>".($i+1)."</span> ";
 						else	
-							$page_links .= "<a class='page-link' href='".$page_href."page_number=".$i."'>".($i+1)."</a>&nbsp;";
+							$page_links .= "<a class='page-link' href='".$page_href."page_number=".$i."'>".($i+1)."</a> ";
 					}
 					$page_links .= "</DIV>";
 				}	

@@ -4,7 +4,7 @@ Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments,pdf
 Requires at least: 3.5.0
 Tested up to: 4.2
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -310,6 +310,10 @@ A: The plugin includes some different designs that can be selected through the s
 
 == Changelog ==
 
+= 1.0.10 =
+
+* Corrects an issue with the pagination in the store's pages.
+
 = 1.0.9 =
 
 * Prevents an error in the installation process, when the user's privileges are not sufficient.
@@ -378,8 +382,8 @@ A: The plugin includes some different designs that can be selected through the s
 
 == Upgrade Notice ==
 
-= 1.0.9 =
+= 1.0.10 =
 
-* Prevents an error in the installation process, when the user's privileges are not sufficient.
+* Corrects an issue with the pagination in the store's pages.
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
