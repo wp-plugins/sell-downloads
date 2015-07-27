@@ -3,7 +3,7 @@
 .sell-downloads-pagination .page-selected{font-weight:bold;}
 
 .sell-downloads-item {display:inline-block;}
-.sell-downloads-items{display:inline-block;}
+.sell-downloads-items{display:inline-block;width:100%;padding-top:10px;}
 
 .sell-downloads-header{width:100%;position:relative;clear:both;}
 .sell-downloads-filters{float:left;}

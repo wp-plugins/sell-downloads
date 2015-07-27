@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.10
+Version: 1.0.11
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
@@ -659,8 +659,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				{
 					if( ( $ini_array = parse_ini_file( $tpls_dir->path.'/'.$entry.'/config.ini' ) ) !== false )
 					{
-						if( !empty( $ini_array[ 'style_file' ] ) ) $ini_array[ 'style_file' ] = SD_URL.'/sd-layouts/'.$entry.'/'.$ini_array[ 'style_file' ];
-						if( !empty( $ini_array[ 'script_file' ] ) ) $ini_array[ 'script_file' ] = SD_URL.'/sd-layouts/'.$entry.'/'.$ini_array[ 'script_file' ];
+						if( !empty( $ini_array[ 'style_file' ] ) ) $ini_array[ 'style_file' ] = 'sd-layouts/'.$entry.'/'.$ini_array[ 'style_file' ];
+						if( !empty( $ini_array[ 'script_file' ] ) ) $ini_array[ 'script_file' ] = 'sd-layouts/'.$entry.'/'.$ini_array[ 'script_file' ];
 						if( !empty( $ini_array[ 'thumbnail' ] ) ) $ini_array[ 'thumbnail' ] = SD_URL.'/sd-layouts/'.$entry.'/'.$ini_array[ 'thumbnail' ];
 						$this->layouts[ $ini_array[ 'id' ] ] = $ini_array;
 					}
@@ -710,7 +710,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 					$this->layout = array();
 				}
 				update_option('sd_paypal_email', $_POST['sd_paypal_email']);
-				update_option('sd_paypal_button', $_POST['sd_paypal_button']);
+				update_option('sd_paypal_button', ( !empty( $_POST['sd_paypal_button'] ) ) ? $_POST['sd_paypal_button'] : 'button_d.gif' );
 				update_option('sd_paypal_enabled', ((isset($_POST['sd_paypal_enabled'])) ? 1 : 0));
 				update_option('sd_notification_from_email', $_POST['sd_notification_from_email']);
 				update_option('sd_notification_to_email', $_POST['sd_notification_to_email']);
@@ -853,7 +853,6 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                                     echo '<option value="'.$currency_item.'" '.(($currency_item == $currency_selected) ? 'SELECTED' : '').'>'.$currency_item.'</option>';
                             ?>
                             </select>
-                            <span style="color:#FF0000;">Additional currencies are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank" >Press Here</a>
                             </td>
 							</tr>
 							
@@ -1300,7 +1299,6 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                                         }
                                     ?>
                                 </select>
-                                <span style="color:#FF0000;">Additional languages are available in the commercial version of plugin.</span> <a href="http://wordpress.dwbooster.com/content-tools/sell-downloads#download" target="_blank">Press Here</a>
                             </td>
 							</tr>  
 							
@@ -1358,7 +1356,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                             <table class="form-table sd_discount_table" style="border:1px dotted #dfdfdf;">
                                 <tr>
                                     <td style="font-weight:bold;"><?php _e('Percent of discount', SD_TEXT_DOMAIN); ?></td>
-                                    <td style="font-weight:bold;"><?php _e('In Sales over than ... ', SD_TEXT_DOMAIN); echo($currency); ?></td>
+                                    <td style="font-weight:bold;"><?php _e('In Sales over than ... ', SD_TEXT_DOMAIN); echo( ( !empty( $currency_selected ) ) ? $currency_selected : '' ); ?></td>
                                     <td style="font-weight:bold;"><?php _e('Valid from dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
                                     <td style="font-weight:bold;"><?php _e('Valid to dd/mm/yyyy', SD_TEXT_DOMAIN); ?></td>
                                     <td style="font-weight:bold;"><?php _e('Promotional text', SD_TEXT_DOMAIN); ?></td>
@@ -1839,8 +1837,8 @@ Description: Sell Downloads is an online store for selling downloadable files: a
             // Load resources of layout
 			if( !empty( $this->layout) )
 			{
-				if( !empty( $this->layout[ 'style_file' ] ) ) wp_enqueue_style('sd-css-layout', $this->layout[ 'style_file' ] , array( 'sd-style' ) );
-				if( !empty( $this->layout[ 'script_file' ] ) ) wp_enqueue_script('sd-js-layout', $this->layout[ 'script_file' ] , array( 'sd-media-script' ), false, true );
+				if( !empty( $this->layout[ 'style_file' ] ) ) wp_enqueue_style('sd-css-layout', plugin_dir_url(__FILE__).$this->layout[ 'style_file' ] , array( 'sd-style' ) );
+				if( !empty( $this->layout[ 'script_file' ] ) ) wp_enqueue_script('sd-js-layout', plugin_dir_url(__FILE__).$this->layout[ 'script_file' ] , array( 'sd-media-script' ), false, true );
 			}
 
 			wp_localize_script( 'sd-media-script', 
