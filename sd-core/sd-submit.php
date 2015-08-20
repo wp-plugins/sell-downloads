@@ -31,8 +31,8 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
         }    
         
         if($amount > 0){
-            $code = '<form action="https://www.paypal.com/cgi-bin/webscr" name="ppform'.$randval.'" method="post">'.
-            '<input type="hidden" name="business" value="'.$ms_paypal_email.'" />'.
+            $code = '<form action="https://www.'.( ( get_option( 'sd_paypal_sandbox', false ) ) ? 'sandbox.' : '' ).'paypal.com/cgi-bin/webscr" name="ppform'.$randval.'" method="post">'.
+			'<input type="hidden" name="business" value="'.$ms_paypal_email.'" />'.
             '<input type="hidden" name="item_name" value="'.$title.'" />'.
             '<input type="hidden" name="item_number" value="Item Number '.$number.'" />'.
             '<input type="hidden" name="amount" value="'.$amount.'" />'.

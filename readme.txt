@@ -4,7 +4,7 @@ Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments,pdf
 Requires at least: 3.5.0
 Tested up to: 4.3
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -295,6 +295,10 @@ A: The security in the access to products files is determined in different ways.
 
 A: The plugin includes some different designs that can be selected through the settings option "Store Layout", but you can create a new once, duplicating an of available store's layouts, and edit its style.css file
 
+= Q: How to configure the IPN on PayPal Sandbox ? =
+
+A: [https://www.paypal.com/cgi-bin/webscr?cmd=p/sell/ipn-test-outside](https://www.paypal.com/cgi-bin/webscr?cmd=p/sell/ipn-test-outside "Configuring the IPN on PayPal Sandbox")
+
 == Screenshots ==
 01. Sell Downloads Item
 02. Sell Downloads Product Section
@@ -309,6 +313,10 @@ A: The plugin includes some different designs that can be selected through the s
 11. Available layouts
 
 == Changelog ==
+
+= 1.0.13 =
+
+* Allows to enable/disable the PayPal Sandbox in the store's settings for testing the purchases
 
 = 1.0.12 =
 
@@ -391,8 +399,8 @@ A: The plugin includes some different designs that can be selected through the s
 
 == Upgrade Notice ==
 
-= 1.0.12 =
+= 1.0.13 =
 
-* Fixes an issue in the use of friendly URLs in the store's products.
+* Allows to enable/disable the PayPal Sandbox in the store's settings for testing the purchases
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support

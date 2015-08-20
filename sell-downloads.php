@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.12
+Version: 1.0.13
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
@@ -712,6 +712,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				update_option('sd_paypal_email', $_POST['sd_paypal_email']);
 				update_option('sd_paypal_button', ( !empty( $_POST['sd_paypal_button'] ) ) ? $_POST['sd_paypal_button'] : 'button_d.gif' );
 				update_option('sd_paypal_enabled', ((isset($_POST['sd_paypal_enabled'])) ? 1 : 0));
+				update_option('sd_paypal_sandbox', ((isset($_POST['sd_paypal_sandbox'])) ? true : false));
 				update_option('sd_notification_from_email', $_POST['sd_notification_from_email']);
 				update_option('sd_notification_to_email', $_POST['sd_notification_to_email']);
 				update_option('sd_notification_to_payer_subject', $_POST['sd_notification_to_payer_subject']);
@@ -829,6 +830,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 							<tr valign="top">        
 							<th scope="row"><?php _e('Enable Paypal Payments?', SD_TEXT_DOMAIN); ?></th>
 							<td><input type="checkbox" name="sd_paypal_enabled" size="40" value="1" <?php if (get_option('sd_paypal_enabled', SD_PAYPAL_ENABLED)) echo 'checked'; ?> /></td>
+							</tr>    
+						
+							<tr valign="top">        
+							<th scope="row"><?php _e('Use Paypal Sandbox', SD_TEXT_DOMAIN); ?></th>
+							<td><input type="checkbox" name="sd_paypal_sandbox" value="1" <?php if (get_option('sd_paypal_sandbox', false)) echo 'checked'; ?> /></td>
 							</tr>    
 						
 							<tr valign="top">        
