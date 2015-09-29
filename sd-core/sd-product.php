@@ -46,7 +46,7 @@ if(!class_exists('SDProduct')){
 		function __get($name){
 			switch($name){
 				case 'type':
-					return $this->genre;
+					return $this->type;
 				break;
 				case 'cover':
 				case 'file':

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sell Downloads
 Plugin URI: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Version: 1.0.13
+Version: 1.0.14
 Author: <a href="http://www.codepeople.net">CodePeople</a>
 Description: Sell Downloads is an online store for selling downloadable files: audio, video, documents, pictures all that may be published in Internet. Sell Downloads uses PayPal as payment gateway, making the sales process easy and secure.
  */
@@ -151,14 +151,56 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 				add_shortcode('sell_downloads', array(&$this, 'load_store'));
 				add_filter( 'the_content', array( &$this, '_sd_the_content' ), 1 );
 				add_filter( 'the_excerpt', array( &$this, '_sd_the_excerpt' ), 1 ); // For search results
+				add_action( 'wp_head', array( &$this, 'load_meta'));
                 $this->load_templates(); // Load the sell downloads template for songs and collections display
 				
 				// Load public resources
 				add_action( 'wp_enqueue_scripts', array(&$this, 'public_resources'), 10 );
+				
+				// Search functions
+				if( get_option( 'sd_search_taxonomy', false ) )
+				{	
+					add_filter( 'posts_where', array( &$this, 'custom_search_where' ) );
+					add_filter( 'posts_join', array( &$this, 'custom_search_join' ) );
+					add_filter( 'posts_groupby', array( &$this, 'custom_search_groupby' ) );
+				}
 			}
 			// Init action
 			do_action( 'selldownloads_init' );
 		} // End init
+		
+		function load_meta( ){
+            global $post;
+            if( isset( $post ) ){
+                if( $post->post_type == 'sd_product' ) $obj = new SDProduct( $post->ID );
+                
+				if( !empty( $obj ) )
+				{
+					$output = '';
+					
+					if( isset( $obj->cover ) ) $output .= '<meta property="og:image" content="'.esc_attr( $obj->cover ).'" />';
+					if( !empty( $obj->post_title ) ) $output .= '<meta property="og:title" content="'.esc_attr( $obj->post_title ).'" />';
+					if( !empty( $obj->post_excerpt ) ) $output .= '<meta property="og:description" content="'.esc_attr( $obj->post_excerpt ).'" />';
+					elseif( !empty( $obj->post_content ) ) $output .= '<meta property="og:description" content="'.esc_attr( wp_trim_words( $obj->post_content ) ).'" />';
+					
+					$types = array();	
+					if( is_array( $obj->type ) && count( $obj->type ) )
+					{	
+						
+						foreach( $obj->type as $type )
+						{
+							if( !empty( $type->name ) ) $types[] = $type->name;
+						}
+					}
+					if( empty( $types ) ) $types[] = 'product';
+						
+					$output .= '<meta property="og:type" content="'.esc_attr( implode( ',', $types ) ).'" />';
+					$output .= '<meta property="og:url" content="'.esc_attr( get_permalink( $obj->ID ) ).'" />';
+					
+					print $output;
+				}	
+            }
+        }
 		
         function _sd_create_pages( $slug, $title ){
             //if( session_id() == "" || !isset( $_SESSION ) ) session_start();
@@ -695,6 +737,7 @@ Description: Sell Downloads is an online store for selling downloadable files: a
                 update_option('sd_main_page', $_POST['sd_main_page']);
 				update_option('sd_online_demo', ((isset($_POST['sd_online_demo'])) ? 1 : 0));
 				update_option('sd_filter_by_type', ((isset($_POST['sd_filter_by_type'])) ? 1 : 0));
+				update_option('sd_search_taxonomy', ((isset($_POST['sd_search_taxonomy'])) ? true : false));
 				update_option('sd_items_page_selector', ((isset($_POST['sd_items_page_selector'])) ? 1 : 0));
 				update_option('sd_items_page', $_POST['sd_items_page']);
 				update_option('sd_friendly_url', ((isset($_POST['sd_friendly_url'])) ? 1 : 0));
@@ -760,6 +803,11 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 										<input type="text" name="sd_main_page" size="40" value="<?php echo esc_attr(get_option('sd_main_page', SD_MAIN_PAGE)); ?>" />
 										<br />
 										<em><?php _e('Set the URL of page where the Sell Downloads was inserted', SD_TEXT_DOMAIN); ?></em>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th><?php _e('Allow searching by taxonomies', SD_TEXT_DOMAIN); ?></th>
+									<td><input type="checkbox" name="sd_search_taxonomy" value="1" <?php if( get_option( 'sd_search_taxonomy', false ) ) echo 'checked'; ?> />
 									</td>
 								</tr>
 								<tr valign="top">
@@ -2132,6 +2180,47 @@ Description: Sell Downloads is an online store for selling downloadable files: a
 			global $wpdb;
 			return  $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix.SDDB_POST_DATA." WHERE id=%d;",$pid));
 		} // End delete_post
+
+		/******* SEARCHING METHODS *******/
+		
+		function custom_search_where($where)
+		{ 
+			global $wpdb;
+			if( is_search() && get_search_query() )
+			{	
+				$where .= " OR ((t.name LIKE '%".get_search_query()."%' OR t.slug LIKE '%".get_search_query()."%') AND {$wpdb->posts}.ID = tr.object_id AND tt.term_taxonomy_id=tr.term_taxonomy_id AND t.term_id = tt.term_id AND {$wpdb->posts}.post_status = 'publish')";
+			}	
+			return $where;
+		}
+
+		function custom_search_join($join)
+		{
+			global $wpdb;
+			if( is_search() && get_search_query() )
+			{	
+				$join .= ", {$wpdb->term_relationships} tr, {$wpdb->term_taxonomy} tt, {$wpdb->terms} t";
+			}	
+			return $join;
+		}
+
+		function custom_search_groupby($groupby)
+		{
+			global $wpdb;
+
+			// we need to group on post ID
+			$groupby_id = "{$wpdb->posts}.ID";
+			if( !is_search() || strpos( $groupby, $groupby_id ) !== false || !get_search_query() ) 
+			{	
+				return $groupby;
+			}
+			// groupby was empty, use ours
+			if( !strlen( trim( $groupby ) ) )
+			{	
+				return $groupby_id;
+			}
+			// wasn't empty, append ours
+			return $groupby.", ".$groupby_id;
+		}
 
 	} // End SellDownloads class
 	

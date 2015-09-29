@@ -4,7 +4,7 @@ Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments,pdf
 Requires at least: 3.5.0
 Tested up to: 4.3
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,7 @@ Sell Downloads can be set up via the menu: "Sell Downloads > Sell Downloads Sett
 The setup interface of commerce includes the following fields:
 
 *   URL of store page: Enter the URL of the webpage where the ecommerce was inserted. The URL of the store will be used to return from the product page to the shop page.
+*	Allow searching by taxonomies: Modifies the search process of WordPress to allow the products be found by their taxonomies.
 *   Allow to filter by type: Inserts a field into the shopping webpage that allows to filter products by type (jpg, mp3, doc,....)
 *   Store layout: Allows select one of the multiple layouts available for the store.
 *   Allow multiple pages: Allows paging through the shop's products.
@@ -299,6 +300,10 @@ A: The plugin includes some different designs that can be selected through the s
 
 A: [https://www.paypal.com/cgi-bin/webscr?cmd=p/sell/ipn-test-outside](https://www.paypal.com/cgi-bin/webscr?cmd=p/sell/ipn-test-outside "Configuring the IPN on PayPal Sandbox")
 
+= Q: Is possible to search the products by their types, from the search box of my website? =
+
+A: Yes, that's possible. The products types are taxonomies, and for searching by the products' taxonomies, go to the settings page of the store, and tick the checkbox: "Allow searching by taxonomies", and that's all.
+
 == Screenshots ==
 01. Sell Downloads Item
 02. Sell Downloads Product Section
@@ -313,6 +318,11 @@ A: [https://www.paypal.com/cgi-bin/webscr?cmd=p/sell/ipn-test-outside](https://w
 11. Available layouts
 
 == Changelog ==
+
+= 1.0.14 =
+
+* Allows searching by the taxonomies of the products.
+* Includes metatags for including the correct information when the product is shared in Facebook.
 
 = 1.0.13 =
 
@@ -399,8 +409,9 @@ A: [https://www.paypal.com/cgi-bin/webscr?cmd=p/sell/ipn-test-outside](https://w
 
 == Upgrade Notice ==
 
-= 1.0.13 =
+= 1.0.14 =
 
-* Allows to enable/disable the PayPal Sandbox in the store's settings for testing the purchases
+* Allows searching by the taxonomies of the products.
+* Includes metatags for including the correct information when the product is shared in Facebook.
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
