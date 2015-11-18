@@ -1,7 +1,7 @@
 === Sell Downloads ===
 Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
-Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments,pdf
+Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,ip penalization,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments,pdf
 Requires at least: 3.5.0
 Tested up to: 4.3
 Stable tag: 1.0.15
