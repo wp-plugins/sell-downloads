@@ -230,7 +230,7 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 	function sd_check_download_permissions(){
 		if( get_transient( 'sd_penalized_ip_'.sd_getIP() ) !== false )
 		{
-			_e( 'Please, try again in 30 minutes.', SD_TEXT_DOMAIN );
+			_e( 'Please, try again in 3 minutes.', SD_TEXT_DOMAIN );
 			exit;
 		}	
 		delete_transient( 'sd_penalized_ip_'.sd_getIP() );
@@ -266,11 +266,11 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 			if( get_transient( 'sd_suspect_ip_'.sd_getIP() ) !== false )
 			{
 				delete_transient( 'sd_suspect_ip_'.sd_getIP() );
-				set_transient( 'sd_penalized_ip_'.sd_getIP(), true,  1800 );
-				_e( 'The purchase ID is incorrect, please, try again in 30 minutes.', SD_TEXT_DOMAIN );
+				set_transient( 'sd_penalized_ip_'.sd_getIP(), true,  180 );
+				_e( 'The purchase ID is incorrect, please, try again in 3 minutes.', SD_TEXT_DOMAIN );
 				exit;
 			}
-			set_transient( 'sd_suspect_ip_'.sd_getIP(), true,  1800 );
+			set_transient( 'sd_suspect_ip_'.sd_getIP(), true,  180 );
 			
 			if( !isset( $_REQUEST[ 'timeout' ] ) )
             {

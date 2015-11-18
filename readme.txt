@@ -4,7 +4,7 @@ Donate link: http://wordpress.dwbooster.com/content-tools/sell-downloads
 Tags: downloads,sell downloads,sell,sales,ecommerce,commerce,e-commerce,shop,shopping,paypal,files,digital,checkout,configurable,downloadable,store,wordpress ecommerce,images,books,audio,video,audio player,video player,html5,secure download,security,Post,posts,page,shortcode,plugin,admin,google,facebook,twitter,widget,sidebar,comments,pdf
 Requires at least: 3.5.0
 Tested up to: 4.3
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -319,6 +319,10 @@ A: Yes, that's possible. The products types are taxonomies, and for searching by
 
 == Changelog ==
 
+= 1.0.15 =
+
+* Reduces the penalization time by IP if the download link is invalid.
+
 = 1.0.14 =
 
 * Allows searching by the taxonomies of the products.
@@ -409,9 +413,6 @@ A: Yes, that's possible. The products types are taxonomies, and for searching by
 
 == Upgrade Notice ==
 
-= 1.0.14 =
-
-* Allows searching by the taxonomies of the products.
-* Includes metatags for including the correct information when the product is shared in Facebook.
+= 1.0.15 =
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
