@@ -15,6 +15,7 @@ if( !defined( 'SD_H_URL' ) ) { echo 'Direct access not allowed.';  exit; }
 	$item_number = $_POST['item_number'];
 	$payment_status = $_POST['payment_status'];
 	$payment_amount = $_POST['mc_gross'];
+	if( !empty( $_POST[ 'tax' ] ) ) $payment_amount -= $_POST[ 'tax' ];
 	$payment_currency = $_POST['mc_currency'];
 	$txn_id = $_POST['txn_id'];
 	$receiver_email = $_POST['receiver_email'];
